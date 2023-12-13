@@ -1,0 +1,17 @@
+<?php
+if("admin"===$_GET[id]) {
+  echo("<p>not allowed!</p>");
+  exit();
+}
+
+$_GET[id] = urldecode($_GET[id]);
+if($_GET[id] == "admin")
+{
+  echo "<p>Access granted!</p>";
+  echo "<p>Key: xxxxxxx </p>";
+}
+?>
+
+Can you anthenticate to this website?
+
+2次編碼: /?id=%25%36%31%25%36%34%25%36%64%25%36%39%25%36%65

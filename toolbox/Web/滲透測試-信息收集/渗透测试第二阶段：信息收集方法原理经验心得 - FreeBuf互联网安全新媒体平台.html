@@ -1,0 +1,2800 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0048)https://www.freebuf.com/articles/web/215182.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><script type="text/javascript" src="chrome-extension://kajfghlhfkcocafkcjlajldicbikpgnp/catcher.js"><!-- script injected by Request Maker --></script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>
+  渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台</title>
+<meta name="description" content="文章目录信息收集方法、区别及作用信息收集的具体实施方法子域名收集防火墙(waf)识别端口服务收集C段IP信息收集旁站信息收集敏感目录/文件收集IIS短文件名枚举GitHub信息收集网站资产信息探测shodan、fofa、钟馗之…">
+<meta name="keywords" content="信息收集, 情报, 渗透测试, WEB安全渗透测试报告,WEB安全大事件点评,WEB安全技术">
+<meta name="baidu-site-verification" content="nKKKqQxp6R">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta property="qc:admins" content="6620477777662552566375">
+<link rel="stylesheet" id="wpfp-css" href="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/wpfp.css" type="text/css">
+<link rel="stylesheet" id="wp-recentcomments-css" href="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/wp-recentcomments.css" type="text/css" media="screen">
+<link rel="stylesheet" id="toc-screen-css" href="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/screen.css" type="text/css" media="all">
+<link rel="stylesheet" id="mycred-widget-css" href="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/widget.css" type="text/css" media="all">
+<script type="text/javascript" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/jquery.min.js.下載"></script>
+<script type="text/javascript" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/wpfp.js.下載"></script>
+<link rel="prev" title="使用Burp拦截Flutter App与其后端的通信" href="https://www.freebuf.com/articles/terminal/213346.html">
+<link rel="next" title="泛微OA E-cology远程代码执行漏洞原理分析" href="https://www.freebuf.com/vuls/215218.html">
+<link rel="canonical" href="https://www.freebuf.com/articles/web/215182.html">
+<link rel="shortlink" href="https://www.freebuf.com/?p=215182">
+
+<link rel="stylesheet" href="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/highslide.css" type="text/css">
+<script type="text/javascript" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/highslide-with-html.packed.js.下載"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    hs.graphicsDir = "https://www.freebuf.com/buf/plugins/auto-highslide/images/graphics/";
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.addSlideshow({
+        interval: 5000,
+        repeat: true,
+        useControls: true,
+        fixedControls: "fit",
+        overlayOptions: {
+            opacity: 0.75,
+            position: "bottom center",
+            hideOnMouseOut: true
+
+        }
+
+    });
+});
+</script>
+          <script language="JavaScript" type="text/javascript" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/script.js.下載"></script>
+        <script src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/layer.js.下載"></script><link rel="stylesheet" href="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/layer.css" id="layui_layer_skinlayercss" style="">
+      <link rel="stylesheet" type="text/css" href="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/style.css">
+      <script type="text/javascript" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/highlight.pack.js.下載"></script><link type="text/css" rel="stylesheet" href="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/default.css"><style type="text/css">div#toc_container {width: 25%;}</style>	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+<link rel="shortcut icon" href="https://static.freebuf.com/images/favicon.ico">
+<link rel="stylesheet" href="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/header.css">
+<link href="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/bootstrap.min.css" rel="stylesheet" media="screen">
+    <!--轮播图-->
+    <link href="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/swiper-3.4.2.min.css" rel="stylesheet" type="text/css">
+    <link href="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/style(1).css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+#contenttxt hr {
+  display: block;
+  height: 0px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 15px 0;
+  padding: 0;
+}
+#contenttxt table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 15px 0;
+}
+#contenttxt table thead {
+  background-color: #f9f9f9;
+}
+#contenttxt table td, #contenttxt table th {
+  min-width: 40px;
+  height: 30px;
+  border: 1px solid #ccc;
+  vertical-align: top;
+  padding: 2px 4px;
+  text-align: left;
+  box-sizing: border-box;
+  white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;
+}
+#contenttxt table td.active, #contenttxt table th.active {
+  background-color: #ffffee;
+  white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;
+}
+@media (max-width: 480px) {
+    .main-header {
+        position: fixed !important;
+        top: 0;
+    }
+    .column-article {
+        margin-top: 65px;
+    }
+}
+
+</style>
+<script src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/jquery-2.0.3.min.js.下載"></script>
+<script src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/bootstrap.min.js.下載"></script>
+<script src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/slider.js.下載" type="text/javascript"></script>
+<script src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/jquery.sticky.js.下載" type="text/javascript"></script>
+<script src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/bjqs-1.3.min.js.下載" type="text/javascript"></script>
+<script src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/mosaic.1.0.1.min.js.下載" type="text/javascript"></script>
+<script type="text/javascript" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/setint.js.下載"></script>
+    <!--轮播图-->
+    <script src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/swiper-3.4.2.min.js.下載"></script>
+<!--[if lt IE 9]>
+    <script src="https://www.freebuf.com/buf/themes/freebuf/js/html5shiv.min.js"></script>
+    <script src="https://www.freebuf.com/buf/themes/freebuf/js/respond.min.js"></script>
+<![endif]-->
+    <style>
+        @font-face {font-family: 'iconfont';
+            src: url('https://static.3001.net/iconfont/iconfont.eot'); /* IE9*/
+            src: url('https://static.3001.net/iconfont/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('https://static.3001.net/iconfont/iconfont.woff') format('woff'), /* chrome、firefox */
+            url('https://static.3001.net/iconfont/iconfonticonfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+            url('https://static.3001.net/iconfont/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
+        }
+    </style>
+<style type="text/css">.highslide img {cursor: url(https://www.freebuf.com/buf/plugins/auto-highslide/images/graphics/zoomin.cur), pointer !important;}.highslide-viewport-size {position: fixed; width: 100%; height: 100%; left: 0; top: 0}</style><script type="text/javascript" src="chrome-extension://dbjbempljhcmhlfpfacalomonjpalpko/scripts/inspector.js"></script><input type="hidden" id="_w_brink"></head>
+<body style="">
+<!----------header---------->
+<!--头部导航-->
+<div id="undefined-sticky-wrapper" class="sticky-wrapper is-sticky">
+    <div id="undefined-sticky-wrapper" class="sticky-wrapper" style="height: 65px;"><div id="undefined-sticky-wrapper" class="sticky-wrapper" style="height: 65px;"><div class="main-header" style="display: block;">
+        <div class="header">
+            <div class="header-container clearfix">
+                                <div class="header-logo"><a href="http://www.freebuf.com/"></a></div>
+                                        <!-- column -->
+                        <div class="nav">
+                            <ul class="nav-child clearfix">
+                                <li class=" index">
+                                    <a href="http://www.freebuf.com/">首页</a></li>
+                                <li>
+                                    <a href="http://job.freebuf.com/" target="_blank">FB招聘站<!--<b class="icon-news"></b>--></a>
+                                </li>
+                                <li data-value="read-menu">
+                                    <a href="https://www.freebuf.com/articles/web/215182.html#">分类阅读<b class="triangle-down triangle-down-04"></b></a>
+                                </li>
+                                <li data-value="wenku-menu"><a href="javascript:;" target="_blank">文库<b class="triangle-down triangle-down-04"></b></a></li>
+                                <li>
+                                    <a href="http://zhuanlan.freebuf.com/" target="_blank">专栏</a>
+                                </li>
+                                <li><a href="http://live.freebuf.com/" target="_blank">公开课<b class="icon-hot"></b></a></li>
+                                <li data-value="company-menu"><a href="javascript:;">企业服务<b class="triangle-down triangle-down-04"></b></a></li>
+                                <li data-value="user-menu"><a href="javascript:;">用户服务<b class="triangle-down triangle-down-04"></b></a></li>
+                            </ul>
+                        </div>
+                                        <div class="header-right">
+                                    <div class="header-icon">
+                        <ul class="clearfix">
+                                                            <li class="icon-wechat">
+                                    <a href="javascript:void(0)"><span>手机版</span></a>
+                                    <div class="wechatImgdiv">
+                                        <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1561628182_5d148e1668bac.jpg" alt="">
+                                        <p>微信扫一扫</p>
+                                    </div>
+                                </li>
+                                <li class="icon-search"><a href="http://search.freebuf.com/" target="_blank"><span>搜索</span></a></li>
+                                <li class="icon-contribute"><a href="http://www.freebuf.com/oauth" target="_blank"><span>投稿</span></a></li>
+                                                    </ul>
+                    </div>
+                    <div class="loginSign login-before">
+                        <div class="header-icon">
+                            <ul class="clearfix">
+                                <li class="icon-login"><a href="http://www.freebuf.com/oauth" target="_blank"><span>登录</span></a></li>
+                                <li class="icon-reg"><a href="https://account.tophant.com/register.html" target="_blank"><span>注册</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                                </div>
+                <div class="nav-small">
+                    <a href="https://www.freebuf.com/articles/web/215182.html#"></a>
+                    <ul class="nav-child clearfix">
+                                                        <li class=" index">
+                                    <a href="http://www.freebuf.com/">首页</a></li>
+                                <li>
+                                    <a href="http://job.freebuf.com/" target="_blank">FB招聘站</a>
+                                </li>
+                                <li class="read-classify">
+                                    <a href="https://www.freebuf.com/articles/web/215182.html#">分类阅读<b class="icon-arrow"></b></a>
+                                    <ul class="nav-child2 read-classify clearfix">
+                                        <li>
+                                            <strong>黑客</strong>
+                                            <div class="nav-item">
+                                                <a href="http://www.freebuf.com/vuls" target="_blank">漏洞</a>
+                                                <a href="http://www.freebuf.com/sectool" target="_blank">安全工具</a>
+                                                <a href="http://www.freebuf.com/articles/web" target="_blank">WEB安全</a>
+                                                <a href="http://www.freebuf.com/articles/system" target="_blank">系统安全</a>
+                                                <a href="http://www.freebuf.com/articles/network" target="_blank">网络安全</a>
+                                                <a href="http://www.freebuf.com/articles/wireless" target="_blank">无线安全</a>
+                                                <a href="http://www.freebuf.com/articles/terminal" target="_blank">设备/客户端安全</a>
+                                                <a href="http://www.freebuf.com/articles/database" target="_blank">数据库安全</a>
+                                                <a href="http://www.freebuf.com/articles/security-management" target="_blank">安全管理</a>
+                                                <a href="http://www.freebuf.com/articles/es" target="_blank">企业安全</a>
+                                                <a href="http://www.freebuf.com/ics-articles" target="_blank">工控安全</a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <strong>极客</strong>
+                                            <div class="nav-item">
+                                                <a href="http://www.freebuf.com/geek" target="_blank">极客有意思</a>
+                                                <a href="http://www.freebuf.com/news/others" target="_blank">周边</a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <strong>特色</strong>
+                                            <div class="nav-item">
+                                                <a href="http://www.freebuf.com/news/special" target="_blank">头条</a>
+                                                <a href="http://www.freebuf.com/articles/people" target="_blank">人物志</a>
+                                                <a href="http://www.freebuf.com/fevents" target="_blank">活动</a>
+                                                <a href="http://www.freebuf.com/video" target="_blank">视频</a>
+                                                <a href="http://www.freebuf.com/articles/neopoints" target="_blank">观点</a>
+                                                <a href="http://www.freebuf.com/jobs" target="_blank">招聘</a>
+                                                <a href="http://www.freebuf.com/paper/" target="_blank">报告</a>
+                                                <a href="http://www.freebuf.com/news" target="_blank">资讯</a>
+                                                <a href="http://www.freebuf.com/articles/blockchain-articles" target="_blank">区块链安全</a>
+                                                <a href="https://www.freebuf.com/articles/compliance" target="_blank">标准与合规</a>
+                                                <a href="https://www.freebuf.com/articles/container" target="_blank">容器安全</a>
+                                                <a class="last" href="http://www.freebuf.com/open" target="_blank">公开课</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a href="http://zhuanlan.freebuf.com/" target="_blank">专栏</a></li>
+                                <li>
+                                    <a href="http://live.freebuf.com/" target="_blank">公开课<b class="icon-hot"></b></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">企业服务<b class="icon-arrow"></b></a>
+                                    <ul class="nav-child2">
+                                        <li>
+                                            <a href="https://product.freebuf.com/" target="_blank"><strong>产品名录</strong></a>
+                                        </li>
+                                        <!-- <li>
+                                            <a href="https://www.vulbox.com/service/src" target="_blank"><strong>企业SRC</strong></a>
+                                        </li> -->
+                                        
+                                        <li>
+                                            <a href="http://company.freebuf.com/" target="_blank"><strong>企业空间</strong></a>
+                                        </li>
+                                        <!-- <li>
+                                            <a href="https://www.vulbox.com/" target="_blank"><strong>漏洞测试</strong></a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.riskivy.com/" target="_blank"><strong>威胁监测</strong></a>
+                                        </li> -->
+                                        <li>
+                                            <a href="https://www.freebuf.com/vip/" target="_blank"><strong>会员体系（我是甲方）</strong></a>
+                                        </li>
+                                        <li>
+                                            <a href="https://company.freebuf.com/vip/" target="_blank"><strong>会员体系（我是厂商）</strong></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" target="_blank">用户服务<b class="icon-arrow"></b></a>
+                                    <ul class="nav-child2">
+                                        <li>
+                                            <a href="http://shop.freebuf.com/" target="_blank"><strong>商城</strong></a>
+                                        </li>
+                                        <li>
+                                            <a href="http://www.freebuf.com/newsend" target="_blank"><strong>有奖投稿</strong></a>
+                                        </li>
+                                        <li>
+                                            <a href="http://zhuanlan.freebuf.com/" target="_blank">
+                                        </a></li><a href="http://zhuanlan.freebuf.com/" target="_blank">
+                                        </a><li><a href="http://zhuanlan.freebuf.com/" target="_blank">
+                                            </a><a href="https://www.vulbox.com/bounties/detail-72" target="_blank"><strong>提交漏洞</strong></a>
+                                        </li>
+                                        <li class="last">
+                                            <a href="https://www.vulbox.com/bounties" target="_blank"><strong>参与众测</strong></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" target="_blank">文库<b class="icon-arrow"></b></a>
+                                    <ul class="nav-child2">
+                                        <li>
+                                            <a href="http://search.freebuf.com/search" target="_blank"><strong>文库</strong></a>
+                                        </li>
+                                        <li>
+                                            <a href="http://www.freebuf.com/special-subject" target="_blank"><strong>专题</strong></a>
+                                        </li>
+                                        <li><a href="http://www.freebuf.com/report" target="_blank"><strong>报告</strong></a></li>
+                                    </ul>
+                                </li>
+                                                    <li><a href="http://my.freebuf.com/post/edit" target="_blank">投稿</a></li>
+                                                    <li><a href="https://account.tophant.com/register.html" class="login-btn">注册</a>
+                            </li>
+                            <li><a href="http://www.freebuf.com/oauth" class="sign-btn">登录</a></li>
+                                            </ul>
+                </div>
+            </div>
+            <div class="dropdown-menu read-menu" id="read-menu" style="">
+                <div class="container">
+                    <ul class="menu clearfix">
+                        <li>
+                            <strong>黑客</strong>
+                            <div class="nav-item">
+                                <a href="http://www.freebuf.com/vuls" target="_blank">漏洞</a>
+                                <a href="http://www.freebuf.com/sectool" target="_blank">安全工具</a>
+                                <a href="http://www.freebuf.com/articles/web" target="_blank">WEB安全</a>
+                                <a href="http://www.freebuf.com/articles/system" target="_blank">系统安全</a>
+                                <a href="http://www.freebuf.com/articles/network" target="_blank">网络安全</a>
+                                <a href="http://www.freebuf.com/articles/wireless" target="_blank">无线安全</a>
+                                <a href="http://www.freebuf.com/articles/terminal" target="_blank">设备/客户端安全</a>
+                                <a href="http://www.freebuf.com/articles/database" target="_blank">数据库安全</a>
+                                <a href="http://www.freebuf.com/articles/security-management" target="_blank">安全管理</a>
+                                <a href="http://www.freebuf.com/articles/es" target="_blank">企业安全</a>
+                                <a class="last" href="http://www.freebuf.com/ics-articles" target="_blank">工控安全</a>
+                            </div>
+                        </li>
+                        <li>
+                            <strong>极客</strong>
+                            <div class="nav-item">
+                                <a href="http://www.freebuf.com/geek" target="_blank">极客有意思</a>
+                                <a class="last" href="http://www.freebuf.com/news/others" target="_blank">周边</a>
+                            </div>
+                        </li>
+                        <li>
+                            <strong>特色</strong>
+                            <div class="nav-item">
+                                <a href="http://www.freebuf.com/news/special" target="_blank">头条</a>
+                                <a href="http://www.freebuf.com/articles/people" target="_blank">人物志</a>
+                                <a href="http://www.freebuf.com/fevents" target="_blank">活动</a>
+                                <a href="http://www.freebuf.com/video" target="_blank">视频</a>
+                                <a href="http://www.freebuf.com/articles/neopoints" target="_blank">观点</a>
+                                <a href="http://www.freebuf.com/jobs" target="_blank">招聘</a>
+                                <a href="http://www.freebuf.com/paper/" target="_blank">报告</a>
+                                <a href="http://www.freebuf.com/news" target="_blank">资讯</a>
+                                <a href="http://www.freebuf.com/articles/blockchain-articles" target="_blank">区块链安全</a>
+                                <a href="https://www.freebuf.com/articles/compliance" target="_blank">标准与合规</a>
+                                <a href="https://www.freebuf.com/articles/container" target="_blank">容器安全</a>
+                                <a class="last" href="http://www.freebuf.com/open" target="_blank">公开课</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="dropdown-menu company-menu" id="company-menu" style="">
+                <div class="container">
+                    <ul class="menu">
+                        <li>
+                            <a href="https://product.freebuf.com/" target="_blank">
+                                <span class="img"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1573805391_5dce5d4fd4aab.png"></span>
+                                <span class="name">产品名录</span>
+                                <span class="intro">实时更新的企业安全产品指南</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://company.freebuf.com/" target="_blank">
+                                <span class="img"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon-company.png"></span>
+                                <span class="name">企业空间</span>
+                                <span class="intro">为企业定制信息安全专属门户</span>
+                            </a>
+                        </li>
+                        <!-- <li>
+                            <a href="https://www.vulbox.com/" target="_blank">
+                                <span class="img"><img src="https://image.3001.net/images/header/icon-safety.png"></span>
+                                <span class="name">漏洞测试</span>
+                                <span class="intro">国内领先的互联网安全众测服务</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.riskivy.com/" target="_blank">
+                                <span class="img"><img src="https://image.3001.net/images/header/icon-risk.png"></span>
+                                <span class="name">威胁监测</span>
+                                <span class="intro">新一代智能安全监测分析解决方案</span>
+                            </a>
+                        </li> -->
+                        <li class="last">
+                            <a>
+                                <span class="img"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1559122728_5cee5328a1e62.png"></span>
+                                <span class="name" style="cursor: default">会员体系</span>
+                                <span class="intro clearfix"></span></a><a target="_blank" href="https://www.freebuf.com/vip/" style="width:58px;cursor: pointer;font-size: 12px" onmouseover="this.style.color=&#39;#E1C89A&#39;;" onmouseout="this.style.color=&#39;#fff&#39;;">我是甲方</a><span>/</span>
+                                <a target="_blank" href="https://company.freebuf.com/vip/" style="width:55px;cursor: pointer;font-size: 12px" onmouseover="this.style.color=&#39;#E1C89A&#39;;" onmouseout="this.style.color=&#39;#fff&#39;;">我是厂商</a>
+                            
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="dropdown-menu user-menu" id="user-menu" style="">
+                <div class="container">
+                    <ul class="menu">
+                        <li>
+                            <a href="http://shop.freebuf.com/" target="_blank">
+                                <span class="img"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon-shop.png"></span>
+                                <span class="name">商城</span>
+                                <span class="intro">用FB金币购物</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://www.freebuf.com/newsend" target="_blank">
+                                <span class="img"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon-write.png"></span>
+                                <span class="name">有奖投稿</span>
+                                <span class="intro">与整个行业分享你的经验与见解</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://zhuanlan.freebuf.com/" target="_blank">
+                                <span class="img"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon-column.png"></span>
+                                <span class="name">申请专栏</span>
+                                <span class="intro">自由创作，打造自主内容品牌</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.vulbox.com/bounties/detail-72" target="_blank">
+                                <span class="img"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon-leak.png"></span>
+                                <span class="name">提交漏洞</span>
+                                <span class="intro">与数万白帽一起，让互联网更安全</span>
+                            </a>
+                        </li>
+                        <li class="last">
+                            <a href="https://www.vulbox.com/bounties" target="_blank">
+                                <span class="img"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon-test.png"></span>
+                                <span class="name">参与众测</span>
+                                <span class="intro">挖洞开启自由职业之路</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="dropdown-menu wenku-menu" id="wenku-menu" style="">
+                <div class="container">
+                    <ul class="menu">
+                        <li>
+                            <a href="http://search.freebuf.com/search" target="_blank">
+                                <span class="img"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon-write.png"></span>
+                                <span class="name">文库</span>
+                                <span class="intro">FB百科大全</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://www.freebuf.com/special-subject" target="_blank">
+                                <span class="img"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon-test.png"></span>
+                                <span class="name">专题</span>
+                                <span class="intro">浓缩的安全精华汇总</span>
+                            </a>
+                        </li>
+                        <li class="last">
+                            <a href="http://www.freebuf.com/report" target="_blank">
+                                <span class="img"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1556610533_5cc7fde54fd18.png"></span>
+                                <span class="name">报告</span>
+                                <span class="intro">FB研究院专业出品</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="dropdown-menu wenku-menu" id="course-menu" style="">
+                <div class="container">
+                    <ul class="menu">
+                        <li>
+                            <a href="http://live.freebuf.com/" target="_blank">
+                                <span class="img"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon-good-course.png"></span>
+                                <span class="name">精品公开课</span>
+                                <span class="intro">FreeBuf匠心打造精品高端课程</span>
+                            </a>
+                        </li>
+                        <li class="last">
+                            <a href="http://open.freebuf.com/" target="_blank">
+                                <span class="img"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon-common-course.png"></span>
+                                <span class="name">普通公开课</span>
+                                <span class="intro">分享安全领域的知识与智慧</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div></div></div>
+</div>
+<script type="application/ecmascript">
+    $('.icon-wechat').hover(function(){
+        $('.wechatImgdiv').show()
+    },function(){
+        $('.wechatImgdiv').hide()
+    })
+</script>
+<!----------header end---------->
+<script type="text/javascript" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/header.js.下載"></script><script>
+    jQuery(window).load(function(){
+      if(jQuery(window).width()>480){
+        jQuery(".main-header").sticky({ topSpacing: 0 });
+      }else{
+        jQuery(".main-header nav").removeClass("navbar-fixed-top");
+      }
+      jQuery("#mar-right-menu").show()
+      jQuery("#mar-right-menu").sticky({ topSpacing: 75,bottomSpacing: 410 });
+    });
+     
+    // 文章结束隐藏目录
+    jQuery(window).scroll( function (){
+        let  topScroll = jQuery(window).scrollTop();
+        if( jQuery('#my_toc li').length > 0 ) {
+            let h2Margin = jQuery('.article-recommend-div').offset().top - topScroll
+            let tuiMargin = jQuery('#adoutRead').offset().top - topScroll
+            if (tuiMargin < 0 && h2Margin > 0   ) {
+                        jQuery('#mar-right-menu').show()
+                    }else{
+                        jQuery('#mar-right-menu').hide()
+                    }
+                if (h2Margin < 0  ) {
+                    jQuery('#mar-right-menu-out').hide()
+                }else{
+                    jQuery('#mar-right-menu-out').show()
+                    
+                }
+            
+        }else{
+            jQuery('#mar-right-menu').hide()
+            jQuery('#mar-right-menu-out').hide()
+        }
+        // if ( jQuery('#marvellous2') ) {
+        //     console.log('hh')
+        //     let h3Margin = jQuery('#marvellous2').offset().top - topScroll
+        //     if (h3Margin < 400  ) {
+        //         jQuery('#mar-right-div').hide()
+        //     }else{
+        //         jQuery('#mar-right-div').show()
+        //     }
+        // }else{
+        //     console.log('HH')
+        // }
+    });
+</script>
+<script src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/layer.js.下載"></script>
+<script type="text/javascript" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/prettify.js.下載"></script>
+<script type="text/javascript" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/lazyload.js.下載"></script>
+<script type="text/javascript" charset="utf-8">
+      jQuery(function() {
+          jQuery("img").lazyload({
+              effect : "fadeIn"
+          });
+      });
+ </script>
+<script type="text/javascript">
+    window.onload = function(){
+        prettyPrint();
+    }
+</script>
+<script language="JavaScript" type="text/javascript">
+//<![CDATA[
+var va = "您已经点亮过了";
+function acv_vote(id,option, m){
+  if( m==null) m =''; m = m + '';
+  jQuery('#acv_stat_'+m+id).html('Loading...');
+  var url="https://www.freebuf.com/index.php?acv_ajax=true&option="+option+"&ID="+id;
+  jQuery.get(url,function(d){
+    d =d.split('|');var s='#acv_stat_'+m+d[0];
+    var sele = '#cos_support-'+m+id,unsele = '#cos_unsupport-'+m+id,tpjs = 'javascript:alert(va)';
+    jQuery( s ).html( d[1] );jQuery(s).fadeOut(400,function(){jQuery(s).fadeIn();});
+    if( d[2] == 1 ){ jQuery(sele).html(jQuery(sele).html()*1+1); }
+    if( d[2] == -1 ){ jQuery(unsele).html(jQuery(unsele).html()*1+1); }
+    jQuery('#vote4-'+id).attr('href',tpjs);jQuery('#vote4-2'+id).attr('href',tpjs);
+    jQuery('#votea-'+id).attr('href',tpjs);jQuery('#votea-2'+id).attr('href',tpjs);
+  });
+}
+
+$(document).on("mouseenter",".comment-tools",function(){
+  $(this).find(".btn-report").show();
+  $(this).find(".btn-report").addClass("hover");
+}).on("mouseleave",".comment-tools",function(){
+  var $_this = $(this);
+  $(this).find(".btn-report").removeClass("hover");
+  if(!$(this).find(".dropup").hasClass('open')){
+    $(this).find(".btn-report").hide();
+    $_this.find(".dropdown-menu").css("display","none");
+  }else{
+    setTimeout(function(){
+      if(!$_this.find(".btn-report").hasClass("hover")){
+        $_this.find(".dropup").removeClass("open");
+        $_this.find(".dropdown-menu").css("display","none");
+        $_this.find(".btn-report").hide();
+      }
+    },"500");
+  }
+})
+
+$(document).on("click",".click_report",function(){
+  $(this).parent().parent().css("display","none");
+  var id = $(this).attr("data-id");
+  var url="https://www.freebuf.com/index.php?acv_ajax=true&option=0&ID="+id;
+  $_this = $(this);
+  jQuery.get(url,function(d){
+    d =d.split('|');
+    if(d[1]=='您已经点过灯了'){
+      d[1] = '您已经举报过了';
+    }
+    if(d[1]=='Thank you'){
+      d[1] = '举报成功';
+    }
+    $_this.parent().parent().parent().find(".btn-report").text(d[1]);
+    $_this.parent().parent().parent().find(".btn-report").css("display","block");
+  })
+})
+
+$(document).on("click",".btn-report",function(){
+  if($(this).parent().hasClass('open')){
+    $(this).parent().find(".dropdown-menu").css("display","block");
+  }else{
+    $(this).parent().find(".dropdown-menu").css("display","none");
+  }
+})
+//]]>
+</script>
+<div class="column-article" data-column="">
+            <div class="container pad-top35">
+        <div class="row clearfix">
+            <div class="col-md-9" id="getWidth">
+                    <div class="reletive search-xs-wrap">
+                    <div class="form-group has-active search-col search-xs">
+                        <form id="hpsform-new" class="navbar-search navbar-form" onsubmit="return dispatch()">
+                            <div class="form-group">
+                                <input id="q" class="input form-control" type="text" placeholder="关键字查找" autocomplete="off" title="关键字查找" name="q">
+                                <button class="submit" type="submit"></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                    <script type="text/javascript">
+                        var dispatch = function () {
+                            var q = document.getElementById("q");
+                            if (q.value == "") {
+                                q = document.getElementById("bigq");
+                            }
+                            if (q.value != "") {
+                                window.open('http://search.freebuf.com/search/?search=' + q.value, "_blank");
+                                return false;
+                            } else {
+                                return false;
+                            }
+                        }
+                    </script>
+                <div class="article-wrap panel panel-default">
+                                                            <div class="articlecontent" style="position:relative;">
+
+                                                                                    <div class="title clearfix" id="creatTitle" style=" position: relative">
+                                                                    <script>
+                                    if( jQuery(window).width() < 480 ){
+                                        $('#creatTitle').css('max-width','100%')
+                                    }
+                                </script>
+                                                                <div style="position: relative;">
+                                                                            <img id="creatByself" style="width:120px;height:120px;position: absolute;right:16px;bottom:-59px;z-index:500;opacity:0.9" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/tag-original2.svg" alt="">
+                                                                        <h2 style="padding-right: 160px;float: none;">
+                                        渗透测试第二阶段：信息收集方法原理经验心得                                    </h2>
+                                </div>
+                                <div class="property">
+                                                                            <span class="name"><a href="https://www.freebuf.com/author/ZhouDaxian" title="由 ZhouDaxian 发布" rel="author">ZhouDaxian</a></span>
+                                                                        <span class="icon-f"></span>
+                                    <span class="time">2019-10-09</span>
+                                                                                                                <span class="rmb"><img title="现金奖励" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon-m.jpg"></span>
+                                                                        <span class="look">共<strong>384428</strong>人围观
+                                        ，发现 <strong>23</strong> 个不明物体 </span>                                      
+                                                                <span class="tags">
+                                      <a href="https://www.freebuf.com/articles/web">WEB安全</a></span>
+                                    <span class="tags_01"></span>
+                                </div>
+                            </div>
+                                                                                                <div id="contenttxt">
+                            <div id="toc_container" class="toc_white no_bullets"><p class="toc_title">文章目录</p><ul class="toc_list"><li><a href="https://www.freebuf.com/articles/web/215182.html#i">信息收集方法、区别及作用</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-2">信息收集的具体实施方法</a><ul><li><a href="https://www.freebuf.com/articles/web/215182.html#i-3">子域名收集</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#waf">防火墙(waf)识别</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-4">端口服务收集</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#cip">C段IP信息收集</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-5">旁站信息收集</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-6">敏感目录/文件收集</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#iis">IIS短文件名枚举</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#github">GitHub信息收集</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-7">网站资产信息探测</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#shodanfofa">shodan、fofa、钟馗之眼信息收集</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#ip">寻找真实IP</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-8">搜索引擎语法</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-9">爬虫分析</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#awvs-web">AWVS web弱点扫描</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#nessusnbsp">Nessus&nbsp;主机弱点扫描</a></li></ul></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-10">信息收集总结</a></li></ul></div>
+<p style="margin-left: 0px;"><b style="color: rgb(0, 176, 80);">信息收集是渗透测试中第二阶段的工作，也是非常重要的一项。所收集到的情报信息，能直接影响下一阶段的工作及效果。那么具体的信息收集工作应如何实施呢？接下来我会用一此虚构的案例结合原理来进行说明，如有不足之处或有更多更好的信息收集方法或工具，恳请在评论处指正和留下其它信息收集的方法进行技术交流。</b></p>
+<p>正所谓“知己知彼，百战百胜”，信息收集就像一场战争中的“深入敌后”的一项“情报收集”任务。在开始渗透测试工作之前，我们通过要对目标使用各种工具进行信息收集工作，找出目标的漏洞和弱点，然后利用这些漏洞和弱点进行攻击，使得渗透任务得以顺利地完成。在战争中假如你的情报收集工作出错重大错误，战士们牺牲的就是性命，由此可见，情报收集工作的重要性。</p>
+<p>任何工作、任何任务都是有一定方法去进行实施的，信息收集工作也一样，以下是我个人在工作中总结出来的部分信息收集工作经验和原理。</p>
+<p>在进行这项工作之前，我先对一些信息收集的方法信息收集的方法、区别及作用进行简单的介绍：</p>
+<h2><span id="i">信息收集方法、区别及作用</span></h2>
+<p>(1) 主动收集：相当于通过技术手段去侦察目标的情况，此时目标有可能记录下此次事件的信息。例如：我晚上偷偷摸摸地去小明家里，去查看他家用的是什么品牌保险柜？然后记录下收集到的信息。对于这种情况小明家里可能会有摄像头记录下我的行为。</p>
+<p>(2) 被动收集：相当于通过技术手段去收集目标遗留的信息，此时目标并不能感知事件的发生。例如：小明在某个论坛中留下了自己的生日、年龄、学号等信息，根据收集到的信息生成字典，对小明的保险箱进行密码破解。对于这种情况小明又怎么可能发现我在收集他的信息呢。</p>
+<h2><span id="i-2">信息收集的具体实施方法</span></h2>
+<h3><span id="i-3">子域名收集</span></h3>
+<p>子域名枚举/在线子域名枚举扫描：主要是通过工具中的字典，对字典中的二级域名进行轮询查询，从而得出结果，收集到的数据准确性高，但是疏漏洞率也相对较高。</p>
+<p>域传送漏洞：对目标所在的DNS服务器进行漏洞利用，能获取目标所在DNS服务器中的记录，属于很老的漏洞，对于特定的目标几乎很难能找到该漏洞的存在，但在工作中何妨不尝试一下呢？</p>
+<p>DNS数据集平台：基于全网信息持续收集的平台，根据其收录的信息，以快速查找到需要的数据。</p>
+<blockquote><p>(1) DNSdumpster：<a href="https://dnsdumpster.com/">https://dnsdumpster.com/</a>&nbsp;</p>
+<p>(2) VirusTotal：<a href="https://www.virustotal.com/#/home/search">https://www.virustotal.com/#/home/search</a>&nbsp;</p>
+</blockquote>
+<p>另外还有，站长工作和搜索引擎所收录到信息进行查找，在此不作详细介绍。</p>
+<p>案例：通过子域名枚举工具，对目标网站进行子域名收集收集，发现一处名为admin.xxx.com的管理后台，并尝试进行弱口令暴力破解攻击成功。进入后台后，发现高危漏洞，getshell成功。&nbsp;</p>
+<p><a href="https://image.3001.net/images/20190924/1569320030_5d89ec5ef0258.png" class="highslide-image" onclick="return hs.expand(this);" target="_blank"><img alt="image.png" data-original="https://image.3001.net/images/20190924/1569320030_5d89ec5ef0258.png!small" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1569320030_5d89ec5ef0258.png!small" width="690" style="display: block;"></a></p>
+<noscript><img alt="image.png" src="https://image.3001.net/images/20190924/1569320030_5d89ec5ef0258.png!small" width="690" height="218"></p></noscript>
+<p><a href="https://image.3001.net/images/20190924/1569320045_5d89ec6da47d7.png" class="highslide-image" onclick="return hs.expand(this);" target="_blank"><img alt="image.png" data-original="https://image.3001.net/images/20190924/1569320045_5d89ec6da47d7.png!small" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1569320045_5d89ec6da47d7.png!small" width="690" style="display: block;"></a></p>
+<noscript><img alt="image.png" src="https://image.3001.net/images/20190924/1569320045_5d89ec6da47d7.png!small" width="690" height="185"></p></noscript>
+<h3><span id="waf">防火墙(waf)识别</span></h3>
+<p>防火墙识别的原理主要是通过请求中的状态码返回的响应头容、正文内容，进行匹配和判断的。其实跟CMS指纹识别有点类似，只是相对来说规则比较简单，当然也有识别不了的情况，那你就要增加相应的检测规则了。</p>
+<p>当我们在做渗透测试的时候，如果遇到防火墙的话，就通过不断地尝试去绕过他的防火墙规则(黑名单)，或者通过某些方法获得防火墙的源码，去审计规则从而进行绕过；或者根据以前的绕过经验对目标防火墙进行绕过，这个绕过工作需要要足够的时间和耐心才能够完成。&nbsp; &nbsp;&nbsp;</p>
+<p><a href="https://image.3001.net/images/20190924/1569320054_5d89ec76bd7a4.png" class="highslide-image" onclick="return hs.expand(this);" target="_blank"><img alt="image.png" data-original="https://image.3001.net/images/20190924/1569320054_5d89ec76bd7a4.png!small" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1569320054_5d89ec76bd7a4.png!small" width="690" style="display: block;"></a></p>
+<noscript><img alt="image.png" src="https://image.3001.net/images/20190924/1569320054_5d89ec76bd7a4.png!small" width="690" height="609"></p></noscript>
+<p><a href="https://image.3001.net/images/20190924/1569320071_5d89ec878d3c3.png" class="highslide-image" onclick="return hs.expand(this);" target="_blank"><img alt="image.png" data-original="https://image.3001.net/images/20190924/1569320071_5d89ec878d3c3.png!small" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1569320071_5d89ec878d3c3.png!small" width="690" style="display: block;"></a></p>
+<noscript><img alt="image.png" src="https://image.3001.net/images/20190924/1569320071_5d89ec878d3c3.png!small" width="690" height="387"></p></noscript>
+<h3><span id="i-4">端口服务收集</span></h3>
+<p>Nmap是安全相关专业人员使用广泛的安全扫描使用之一，它可以检测目标主机是否在线、端口开放情况、侦测运行的服务类型及版本信息、侦测操作系统与设备类型等信息，甚至还能对主机进行漏洞扫描。</p>
+<p style="text-align: left;">Nmap的端口服务识别的原理是，通过网络发送请求包到服务器中，利用网络的通信请求建立的握手过程(多种方式)进行服务的状态进行判断，服务版本识别主要是通过发送特定的数据包到目标的端口服务中，通过返回的信息进行识别，例如3306(mysql服务)，nmap通过mysql的网络协议通信过程，与mysql建立连接，mysql返回Handshake packet数据包，其中该包中包含mysql版本号信息，nmap从中获取mysql的具体版本信息。</p>
+<p>由于Nmap所提供的功能和选项及使用思路较多，在此不再作详细介绍，有兴趣的同学请利用搜索引擎搜索相关的知识。</p>
+<p>案例：对某企业进行渗透测试时，发现企业服务器中开放了6379(redis中间件服务)，根据以前的经验，redis服务可能存在未授权访问漏洞，能直接获得服务器权限，从而getshell成功。</p>
+<p><a href="https://image.3001.net/images/20190924/1569320100_5d89eca45a8a4.png" class="highslide-image" onclick="return hs.expand(this);" target="_blank"><img alt="image.png" data-original="https://image.3001.net/images/20190924/1569320100_5d89eca45a8a4.png!small" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1569320100_5d89eca45a8a4.png!small" width="690" style="display: block;"></a></p>
+<noscript><img alt="image.png" src="https://image.3001.net/images/20190924/1569320100_5d89eca45a8a4.png!small" width="690" height="395"></p></noscript>
+<h3><span id="cip">C段IP信息收集</span></h3>
+<p>这里的C段指的是并非网络中的C类地址，而是C类地址中子网掩码为255.255.255.0/24中的IP地址段，共254个。对于某些中大型厂商通过有可能使用的是自建的托管机房，他们的业务通常部署在同一个C类地址子网中，这就给了我们可以利用的空间了。</p>
+<p>就好像我们家里的路由器一样，当我破解了一个邻居的wifi密码后，接收他的网络，这个时候我就能使用监听工具，对他所发出/接收的数据进行拦截监听，从中获取得相关的账号、密码及信息，当然也有其它的方法和思路可以获取目标服务器的数据或权限。例如：C段中的业务系统与目标服务器的业务系统有关联，使用的是同一个数据库，那么就有可能直接获取到目标服务器的信息了。</p>
+<p>能够查询C段的工具有很多，在此不一一介绍，我最常用的还是nmap。假如我们能够查询到目标网络的C段IP都是开放的。这时候我们就得找一此比较薄弱的IP来重新进行信息收集工作了。</p>
+<p>案例：在渗透测试测试中，未能在目标服务器寻找到高危漏洞，然后将思路转变到子网中的其它服务器中，此时我们在获得权限的子网。</p>
+<p><img alt="image.png" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1569320131_5d89ecc3b1b4e.png!small" width="690"><img alt="image.png" data-original="https://image.3001.net/images/20190924/1569320137_5d89ecc9e94a3.png!small" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1569320137_5d89ecc9e94a3.png!small" width="690" style="display: block;"></p>
+<noscript><img alt="image.png" src="https://image.3001.net/images/20190924/1569320131_5d89ecc3b1b4e.png!small" width="690" height="125"><img alt="image.png" src="https://image.3001.net/images/20190924/1569320137_5d89ecc9e94a3.png!small" width="690" height="261"></p></noscript>
+<h3><span id="i-5">旁站信息收集</span></h3>
+<p>旁站指的是，不同的web站点部署在同一台服务器中，在渗透测试的时候，如果目标服务器难以寻找突破点，我们也可以通过旁站入手，寻找弱点，然后再想办法对目标服务器进行跨攻击。例如：通过系统提限、跨目录权限、mysql权限，对目标服务器实施攻击。</p>
+<p style="text-align: left;">旁站查询主要是通过各大站长平台，基于对以前的收录信息，通过IP进行分组划分，查找其目标的IP来查询相同IP的解释记录而得出的结果，主要的工具有：</p>
+<p></p>
+<blockquote><p style="text-align: left;"><a href="http://dns.aizhan.com/">http://dns.aizhan.com</a></p>
+<p></p>
+<p style="text-align: left;"><a href="http://s.tool.chinaz.com/same">http://s.tool.chinaz.com/same</a></p>
+<p></p>
+<p style="text-align: left;"><a href="http://i.links.cn/sameip/">http://i.links.cn/sameip/</a></p>
+<p></p>
+<p style="text-align: left;"><a href="http://www.ip2hosts.com/">http://www.ip2hosts.com/</a></p>
+</blockquote>
+<p>案例：在渗透测试工作中，由于未找到目标服务器中的漏洞，继而将思路转变到从旁站入手，先是获到旁站的权限，再是由于系统管理员未对不同的web文件夹权限进行用户权限控制，导致旁站能跨目录写入一句话木马到目标的web文件夹，成功getshell并获取目标服务器的mysql账号及密码。</p>
+<p><img alt="image.png" data-original="https://image.3001.net/images/20190924/1569320298_5d89ed6adf7ba.png!small" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/grey.gif" width="690"></p>
+<noscript><img alt="image.png" src="https://image.3001.net/images/20190924/1569320298_5d89ed6adf7ba.png!small" width="690" height="443"></p></noscript>
+<h3><span id="i-6">敏感目录/文件收集</span></h3>
+<p>该信息收集方法利用的是基本广大的安全行业从业者对常见web的敏感危险目录/文件形成一个汇总字典，当然也可以结合自己的经验，将文件加入到字典中，增加字典的范围，然后利用该字典向目标web服务器发出请求，显示返回的状态码，然后我们根据状态码进行人工进行判断分析有没有敏感文件可以进行利用。</p>
+<p>响应码判断：如200代表请求成功。403|401代表无权限，但文件/目录是存在的，500代表服务器出错。其它的响应有状态码请同学们到搜索引擎进行搜索相关知识。</p>
+<p>收集敏感目录/文件的主要工具有：DirBuster、御剑后台等。本人觉得下面图示的工具不太好用。&nbsp;</p>
+<p><img alt="image.png" data-original="https://image.3001.net/images/20190924/1569320318_5d89ed7eca030.png!small" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1569320318_5d89ed7eca030.png!small" width="690" style="display: block;"></p>
+<noscript><img alt="image.png" src="https://image.3001.net/images/20190924/1569320318_5d89ed7eca030.png!small" width="690" height="497"></p></noscript>
+<h3><span id="iis">IIS短文件名枚举</span></h3>
+<p>此漏洞利用了windows为了对16位MS-DOS程序兼容处理功能来收集信息的。windows为文件名较长的文件（和文件夹）生成了对应的windows 8.3 短文件名，导致攻击者可利用xxx~1字符实施获取长文件名/目录名的信息。当对方的服务器为IIS，不妨可以尝试一下这个漏洞。</p>
+<p>案例：文件名为xxx_login.php的时候，xxx为有特定含义的字符，由于我们所使用的敏感目录/文件收集工具中没有该文件名的字典，所以未能找出该登录后台的地址。此时我们就可以使用IIS短文件名枚举漏洞进行信息收集，得出的结果为xxx_lo~1.php，此时我们就能猜测到这很可能是一个登录页面了。</p>
+<p style="text-align: left;"><img alt="image.png" data-original="https://image.3001.net/images/20190924/1569320679_5d89eee71d11b.png!small" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1569320679_5d89eee71d11b.png!small" width="690" style="display: block;"></p>
+<noscript><img alt="image.png" src="https://image.3001.net/images/20190924/1569320679_5d89eee71d11b.png!small" width="690" height="279"></p></noscript>
+<h3><span id="github">GitHub信息收集</span></h3>
+<p>GitHub是通过Git进行版本控制的软件源代码托管服务平台，当一个项目需要进行协同开发时，就得使用svn或github对代码进行托管及版本控制了。</p>
+<p>GitHub不仅仅是商用的平台，也可以通过该平台对代码进行公开分享并且能获得Star来证明此代码是优秀的。由于此功能的存在，就有可能有部分开发工程师，或者由于公司对代码的管理制度不严谨，造成内部代码公开处理，令攻击者有机可乘。</p>
+<p>案例：某某网站，有部分项目的源代码在github上进行了公开处理，其中，代码中包含敏感的xxx信息，造成重要的信息泄露。</p>
+<p style="text-align: left;">GitHub信息收集工具：<a href="https://github.com/MiSecurity/x-patrol">https://github.com/MiSecurity/x-patrol</a></p>
+<p><img alt="image.png" data-original="https://image.3001.net/images/20190924/1569320647_5d89eec75057e.png!small" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1569320647_5d89eec75057e.png!small" width="690" style="display: block;"></p>
+<noscript><img alt="image.png" src="https://image.3001.net/images/20190924/1569320647_5d89eec75057e.png!small" width="690" height="288"></p></noscript>
+<h3><span id="i-7">网站资产信息探测</span></h3>
+<p>资产信息，这里指的是服务器用的是什么操作系统、中间件、脚本语言、数据库、CMS等等的信息。那么收集到这些信息之后有什么作用呢？比如说目标服务器用的是php语言开发的网站，那么我们就得利用php的一些漏洞去进行渗透了，比如说php的弱类型漏洞等等。如果目标服务器用的是某个cms的源码开发的网站，那么我们就得去查找该cms曾经暴出来的漏洞去进行利用了。</p>
+<p>在这里主要介绍一下CMS指纹识别的原理：是通过请求检查特定的URL或文件是否存在，这个就像sfz的开头的省市都是有特定意义的，每个CMS系统中都存在与众不同的文件或其它信息，这些信息也是由大量前辈汇总而成的，有一些工具只能检测到部分的CMS，因为他们收集的识别信息太少了，CMS指纹识别就是通过这种方式进行检测的。</p>
+<p>以下是我日常中使用到的工具及收集方法：</p>
+<blockquote><p>(1)&nbsp; 云悉：<a href="http://www.yunsee.cn/info.html">http://www.yunsee.cn/info.html</a></p>
+<p>(2)&nbsp;&nbsp;查看数据包响应头</p>
+<p>(3)&nbsp;&nbsp;CMS指纹识别：<a href="http://whatweb.bugscaner.com/look/">http://whatweb.bugscaner.com/look/</a>&nbsp;</p>
+</blockquote>
+<p>案例：在某次的渗透测试工作中，先是对网站进行资产信息探测试，发现目标网站使了</p>
+<p>某个开源的CMS系统，然后通过默认的CMS后台管理地址和默认密码进入后台，再利用该CMS的后台高危漏洞，成功上传一句话木马，成功getshell。</p>
+<p><img alt="image.png" data-original="https://image.3001.net/images/20190924/1569320694_5d89eef6a1432.png!small" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1569320694_5d89eef6a1432.png!small" width="690" style="display: block;"></p>
+<noscript><img alt="image.png" src="https://image.3001.net/images/20190924/1569320694_5d89eef6a1432.png!small" width="690" height="227"></p></noscript>
+<p><img alt="image.png" data-original="https://image.3001.net/images/20190924/1569320726_5d89ef160f546.png!small" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1569320726_5d89ef160f546.png!small" width="690" style="display: block;"></p>
+<noscript><img alt="image.png" src="https://image.3001.net/images/20190924/1569320726_5d89ef160f546.png!small" width="690" height="374"></p></noscript>
+<h3><span id="shodanfofa">shodan、fofa、钟馗之眼信息收集</span></h3>
+<p>shodan、fofa、钟馗之眼，他们所提供的功能同样都类似于搜索引擎，都是通过特定的语法去进行信息收集，但与搜索不同的是，web、可见的页面信息进行爬取收录，而他们则是对全网的在线网络设备进行搜索加入其数据库中，例如：各类服务器，数据库，某个系统的端口信息，并提供POC等信息。</p>
+<p>那么我们应该如何使用上述这几个工具呢？对于无指定目标的渗透测试，我们可以将他们当成是一个高级漏洞扫描器来使用，利用他们来获取大量有已知漏洞的主机来进行渗透测试。对于指定目标的渗透测试，我们也可以利用他来做信息收集，此时也需要一定的运气成分，因为他们都是基于全网的搜索，并不一定能够保证收集到网络上的所有机器。</p>
+<p>案例：在某次渗透测试任务中，使用钟馗之眼对目标服务器进行信息收集，发现高危漏洞，并且利用成功，getshell成功。</p>
+<p><img alt="image.png" data-original="https://image.3001.net/images/20190924/1569320736_5d89ef2065988.png!small" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1569320736_5d89ef2065988.png!small" width="690" style="display: block;"></p>
+<noscript><img alt="image.png" src="https://image.3001.net/images/20190924/1569320736_5d89ef2065988.png!small" width="690" height="377"></p></noscript>
+<h3><span id="ip">寻找真实IP</span></h3>
+<p>为什么要寻找真实IP?，当某个企业使用了CDN/云防线/反向代理等方式对服务进行架构设计时，我们通过ping命令等并不能直接将请求传递到真实的服务器上，而是经过一层设置对该请求进行转向，导致到我们不能获取到真实服务器的开放端口等信息进行收集。</p>
+<p>那么，当我们遇到上述的情况时，我们应该如何才能获取到目标的真实IP呢？下面由我来简述一些比较有趣的方法：</p>
+<p>从子域名入手，一个企业的业务种类繁多，可能只有部分主营业务，访问压力大的域名才使用了CDN，子域名的业务有可能部署在同一台服务器中，或部署在同一个C段中，所以我们就有可能从中找到真实的IP地址。</p>
+<p>历史的DNS平台：<a href="https://dnsdb.io/zh-cn/">https://dnsdb.io/zh-cn/</a>|&nbsp;<a href="https://x.threatbook.cn/">https://x.threatbook.cn/</a>&nbsp;通过平台以前收集到的ip与域名绑定历史记录进行查询。&nbsp;</p>
+<p>邮件原文：通过网站提供的邮件发送功能，如注册时的邮箱验证等，将邮件发送至自己的邮箱中，再查看其邮件原文内容，邮件原文中存在的IP地址有可能就是其真实的IP。</p>
+<p>其它方法在此不一一介绍，有兴趣的同学到搜索引擎去搜索相关的资料吧。</p>
+<p>HTTPS证书查询：工具<a href="https://censys.io/">https://censys.io/</a>，该工具也是能过全网收集站点的https证书及ip地址，也可以利用该工具进行查找。</p>
+<p>案例：某个企业网站使用了CDN服务，无法对其真正的服务器进行Nessus进行弱点扫描分析，然后通过phpinfo.php的信息泄露漏洞获取到真实的IP地址，然后对其真实的服务器进行弱点扫描分析，发现高危漏洞，并且成功getshell。</p>
+<p><img alt="image.png" data-original="https://image.3001.net/images/20190924/1569320747_5d89ef2b2b405.png!small" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1569320747_5d89ef2b2b405.png!small" width="690" style="display: block;"></p>
+<noscript><img alt="image.png" src="https://image.3001.net/images/20190924/1569320747_5d89ef2b2b405.png!small" width="690" height="198"></p></noscript>
+<h3><span id="i-8">搜索引擎语法</span></h3>
+<p>主要是利用搜索引擎所收录的数据，通过特定的语法进行搜索，可以达到迅速发现目标弱点的效果。</p>
+<p>利用该方法需要一定的经验积累，以下是针定特定目标的信息收集思路。例如：对于不同的业务系统，得想出不同的联想词，例如商城系统，联想词可以为商家系统，对于大型的企业，OA登录、CRM等等的联想词。</p>
+<blockquote><p>后台：site:xxx.xxx admin|login|system|管理|登录|内部|系统</p>
+<p>钓鱼：site:xxx.xxx 邮件|email</p>
+<p>社工：site:xxx.xxx qq|群|微信|腾讯</p>
+<p>越权：site:xxx.xxx inurl:uid=1|userid=1</p>
+<p>包含：site:xxx.xxx inurl:php?include=</p>
+</blockquote>
+<p>还有其它很多很多的方法，在此不在一一列举，有兴趣的同学请找相关的资料来学习。总结一下，对于特定的目标利用该方法去做信息收集，效果并不会特别理想，但对于无指定目标的渗透，将会给我们的渗透工作带来极大的便利，能辅助我们快速找到目标的弱点，进行渗透。</p>
+<p>案例：在某次渗透测试工作中，已经对目标进行子域名收集工作，但未能通过收集到的子域名渗透成功，然后通过利用搜索引擎语法（site:xxx.xxx系统）进行搜索，发一个xxx.xxx/staff/login.html的页面，该页面为员工系统登录页面，接下来使用弱口令进行暴力破解登录成功。&nbsp;</p>
+<p><img alt="image.png" data-original="https://image.3001.net/images/20190924/1569320761_5d89ef3927034.png!small" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/grey.gif" width="690"></p>
+<noscript><img alt="image.png" src="https://image.3001.net/images/20190924/1569320761_5d89ef3927034.png!small" width="690" height="49"></p></noscript>
+<h3><span id="i-9">爬虫分析</span></h3>
+<p>爬虫分析，是要把整个网站的网页及目录信息结构爬取出来，通过爬取出来的结果去猜测开发工程师的开发思维及逻辑，从中得到某些信息进而利用。</p>
+<p>案例1：通过某个后台，此时已通过某个漏洞进入后台，此时使用爬虫整个后台进行爬虫，其中发现ad/add.php(广告增加)|ad/edit.php(广告编辑)|user/add.php(增加用户)|user/list(会员列表)等等。从中得知开发工程师使用的是有规律、有规范的页面链接命名，那么根据经验，有可能存在admin/add.php等等的页面，有可能存在越权操作漏洞，进而利用。</p>
+<p>案例2：通过爬虫发现，在使用敏感目录/文件进行信息收集时，未发现有危险和可利用的重要信息，但通过爬虫发现了某个重要的后台链接地址，一般来说，开发工程师对于后台的防护较为薄弱，像此类信息也有可能在渗透测试中利用，也需要记录下来。</p>
+<p><img alt="image.png" data-original="https://image.3001.net/images/20190924/1569320770_5d89ef428beeb.png!small" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1569320770_5d89ef428beeb.png!small" width="690" style="display: block;"></p>
+<noscript><img alt="image.png" src="https://image.3001.net/images/20190924/1569320770_5d89ef428beeb.png!small" width="690" height="319"></p></noscript>
+<h3><span id="awvs-web">AWVS web弱点扫描</span></h3>
+<p>Acunetix Web Vulnerability Scanner（简称AWVS）是一款知名的网络漏洞扫描工具，它通过网络爬虫测试你的网站安全，检测流行安全漏洞，如交叉站点脚本,sql 注入等。在被黑客攻击前扫描购物车，表格、安全区域和其他Web应用程序。75% 的互联网攻击目标是基于Web的应用程序。因为他们时常接触机密数据并且被放置在防火墙之前。</p>
+<p>AWVS如上述所示，主要是通过爬虫来测试你的网站安全，来进行安全漏洞检测，操作及使用方法也相对简单，在此不详细介绍。</p>
+<p>AWVS能检测出的漏洞种类繁多，当然也有可能出现误报的现象，这时就需要我们根据AWVS检测来做难，才能确定漏洞是否存在了。</p>
+<p>AWVS能检测出的漏洞确实很多，我们在短期内也很难完全各种漏洞及原理。不过AWVS官网有一个所有漏洞的列表。同学们可以根据列表的内容去学习自己想要知道的漏洞原理。漏洞列表链接为：<a href="https://www.acunetix.com/vulnerabilities/">https://www.acunetix.com/vulnerabilities/</a></p>
+<p><img alt="image.png" data-original="https://image.3001.net/images/20190924/1569320781_5d89ef4de9839.png!small" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1569320781_5d89ef4de9839.png!small" width="690" style="display: block;"></p>
+<noscript><img alt="image.png" src="https://image.3001.net/images/20190924/1569320781_5d89ef4de9839.png!small" width="690" height="483"></p></noscript>
+<h3><span id="nessusnbsp">Nessus&nbsp;主机弱点扫描</span></h3>
+<p>Nessus 是目前全世界最多人使用的系统漏洞扫描与分析软件。总共有超过75,000个机构使用Nessus 作为扫描该机构电脑系统的软件。，</p>
+<p>Nessus，系统扫描与分析软件，主要针对的是操作系统及操作系统所安装的软件进行漏洞分析，当然也有很多其它附带的功能，例如:web漏洞安全漏洞检测、简单的信息收集。正所谓，专业的人做专业的事，Nessus针对的是操作系统及操作系统所安装的软件进行漏洞分析，因此我们主要的关注点应该在主机漏洞的严重|高|中级别的漏洞，当然Nessus也有误报的情况，这时也需要我们根据其漏洞的编号、信息去进行难。</p>
+<p><img alt="image.png" data-original="https://image.3001.net/images/20190924/1569320795_5d89ef5bcd80c.png!small" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1569320795_5d89ef5bcd80c.png!small" width="690" style="display: block;"></p>
+<noscript><img alt="image.png" src="https://image.3001.net/images/20190924/1569320795_5d89ef5bcd80c.png!small" width="690" height="378"></p></noscript>
+<p>whois信息收集、员工信息、公司名、社工库、云盘搜索</p>
+<p>为什么要将上述几种需要收集的信息放在一起呢？主要是因为以前几种方法针对的通过社工的方法去对目标进行渗透测试。特别需要强调的是云盘搜索，云盘搜索利用原理的是由于企业的管理不善，可能上传了部分的敏感信息资料到云盘中以方便其他员工对需要的资料进行下载，因此我们有可能在这部分的资料中找到一些敏感的信息，从而进行攻击。</p>
+<p>案例：通过信息收集所收集的信息，发展了某个企业的员工系统登录入口，账号为员工的编号，此时我们尚未得知该企业的员工编号规则，然后我们继续通过其它的信息收录方式进行收集，在云盘中发现了该企业曾经上传过一份企业员工基本信息的资料，遂将其下载，并结合自己的所使用的密码字典进行暴力破解，最终成功登录到后台中。</p>
+<p><img alt="image.png" data-original="https://image.3001.net/images/20190924/1569320808_5d89ef68b72fd.png!small" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1569320808_5d89ef68b72fd.png!small" width="690" style="display: block;"></p>
+<noscript><img alt="image.png" src="https://image.3001.net/images/20190924/1569320808_5d89ef68b72fd.png!small" width="690" height="491"></p></noscript>
+<h2><span id="i-10">信息收集总结</span></h2>
+<p>在渗透测试中，信息收集是比较枯燥乏味的一项工作任务，但也是一项很重要的工作，所收集的信息能直接影响到下一步的渗透思路及效果，所以一定要有耐心和准备好持续长期地完成这一项工作任务。</p>
+<p>在这个时代中，信息收集的工具种类繁多，各式各样，咱们要不断尝试新的软件跟以前使用过的软件作对比，找到最适合自己的最顺手的工具来使用。</p>
+<p>最后，如果大家有更好，更优秀的信息收集方法的话，可以在评论区中留言，或者私信我，谢谢。</p>
+<p><b style="color: rgb(239, 71, 71);">*本文原创作者：ZhouDaXian，本文属FreeBuf原创奖励计划，未经许可禁止转载</b></p>
+                        </div>
+                        <div class="wechatcodeDiv">
+                            <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1562564582_5d22d7e6de27c.png" alt="">
+
+                        </div>
+                        <div class="newlabelDiv">
+
+                             更多精彩<a href="https://www.freebuf.com/tag/%e4%bf%a1%e6%81%af%e6%94%b6%e9%9b%86" rel="tag">
+              <div class="leftTop"></div>
+      <div class="leftBottom"></div>
+      <div class="leftCenter"></div>
+      #&nbsp;信息收集</a><a href="https://www.freebuf.com/tag/%e6%83%85%e6%8a%a5" rel="tag">
+              <div class="leftTop"></div>
+      <div class="leftBottom"></div>
+      <div class="leftCenter"></div>
+      #&nbsp;情报</a><a href="https://www.freebuf.com/tag/%e6%b8%97%e9%80%8f%e6%b5%8b%e8%af%95" rel="tag">
+              <div class="leftTop"></div>
+      <div class="leftBottom"></div>
+      <div class="leftCenter"></div>
+      #&nbsp;渗透测试</a>                        </div>
+                        <div class="article-oper article-oper-new">
+                            <style>
+                                @font-face {font-family: 'iconfont';
+                                    src: url('https://static.3001.net/iconfonts/iconfont.eot'); /* IE9*/
+                                    src: url('https://static.3001.net/iconfonts/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+                                    url('https://static.3001.net/iconfonts/iconfont.woff') format('woff'), /* chrome、firefox */
+                                    url('https://static.3001.net/iconfonts/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+                                    url('https://static.3001.net/iconfonts/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
+                                }
+                            </style>
+
+                            <div class="share-new clearfix fixed" style="width: 892px; left: 40px;">
+                                <div class="share-author">
+                                                                            <a href="http://www.freebuf.com/author/ZhouDaxian" title="由 ZhouDaxian 发布" rel="author">
+                                            <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1568959639_5d846c9784d18.jpeg" width="0" height="0" alt="ZhouDaxian" class="avatar avatar-50 wp-user-avatar wp-user-avatar-50 photo">                                            <!--							<img src="http://image.3001.net/2015/06/17.jpg" alt="ArthurKiller">-->
+                                        </a>
+                                        <div class="share-author-info">
+                                                                                        <a class="author-name" href="http://www.freebuf.com/author/ZhouDaxian">ZhouDaxian</a>
+                                            <!--<span class="icon-f"></span>-->
+                                            <span>
+                                <i class="colour-red">
+                                    1                                </i>
+                                篇文章</span>
+                                            <span>等级：
+                                <i class="colour-green">1</i>级
+                            </span>
+                                        </div>
+                                                                                                        </div>
+                                <div class="user-center clearfix">
+                                                                            <a href="http://www.freebuf.com/author/ZhouDaxian" data-toggle="tooltip" data-placement="top" title="" class="home" target="_blank" data-original-title="个人主页"></a>
+                                                                        <a href="http://www.freebuf.com/user/pm?pmaction=newmessage&amp;to=ZhouDaxian" data-toggle="tooltip" data-placement="top" title="" class="letter" target="_blank" data-original-title="私信"></a>
+                                </div>
+                                <div class="share-ctrl clearfix">
+                                                                        <div class="bdsharebuttonbox clearfix bdshare-button-style1-24 columnstatus" data-bd-bind="1489991449190" data-column="" data-title="渗透测试第二阶段：信息收集方法原理经验心得" data-name="">
+                                        <a href="http://service.weibo.com/share/share.php?url=https://www.freebuf.com/articles/web/215182.html&amp;title=%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%EF%BC%9A%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E6%96%B9%E6%B3%95%E5%8E%9F%E7%90%86%E7%BB%8F%E9%AA%8C%E5%BF%83%E5%BE%97&amp;appkey=1343713053&amp;pic=https://image.3001.net/images/20190926/15694985177434.png!small&amp;searchPic=true#_loginLayer_1520574669384" data-toggle="tooltip" data-placement="top" data-cmd="tsina" title="" id="tsina" target="_blank" data-original-title="分享到新浪微博"></a>
+                                        <a href="javascript:;" data-toggle="tooltip" data-placement="top" data-cmd="weixin" title="" id="weixin" class="weixin_down" data-original-title="分享到微信">
+
+                                            <!-- 添加微信二维码显示 -->
+                                            <div class="panel-weixin">
+                                                <section class="weixin-section">
+                                                    <p>
+                                                        <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/qrcode" alt="二维码">
+                                                    </p>
+                                                </section>
+                                                <h3>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</h3>
+                                            </div>
+
+                                        </a>
+                                        <a href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://www.freebuf.com/articles/web/215182.html&amp;title=%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%EF%BC%9A%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E6%96%B9%E6%B3%95%E5%8E%9F%E7%90%86%E7%BB%8F%E9%AA%8C%E5%BF%83%E5%BE%97&amp;desc=%E5%BF%AB%E5%8F%AB%E4%BD%A0%E7%9A%84%E5%B0%8F%E4%BC%99%E4%BC%B4%E6%9D%A5%E5%88%86%E4%BA%AB%E5%90%A7&amp;summary=&amp;pics=https://image.3001.net/images/20190926/15694985177434.png!small" data-toggle="tooltip" data-placement="top" data-cmd="qzone" title="" id="qzone" target="_blank" data-original-title="分享到QQ空间"></a>
+                                        <span class="share-line">|</span>
+                                    </div>
+                                </div>
+                                <div class="user-ctrl clearfix">
+                                                                            <a href="http://www.freebuf.com/oauth" id="collect" data-toggle="tooltip" data-placement="top" title="" data-original-title="收藏"></a>
+                                                                        <a href="https://www.freebuf.com/articles/web/215182.html#respond" data-toggle="tooltip" data-placement="top" title="" id="comments" data-original-title="评论"></a>
+                                                                        <!--					<a href="#" title="文章纠正">&#xe6e3;</a>-->
+                                    <span class="share-line">|</span>
+                                    <span class="info-alert"></span>
+                                </div>
+                            </div>
+                            <style>
+                                .share-ctrl .bdsharebuttonbox #weixin {
+                                    position: relative;
+                                }
+                                .articlecontent .panel-weixin {
+                                    position: absolute;
+                                    bottom: 25px;
+                                    left: -90px;
+                                    margin-bottom: 10px;
+                                    width: 210px;
+                                    padding: 15px;
+                                    border-radius: 2px;
+                                    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+                                    border: solid 1px #e9eaec;
+                                    background: #ffffff;
+                                    display: none;
+                                }
+                                .articlecontent section.weixin-section {
+                                    float: left;
+                                    width: 80px;
+                                    height: 80px;
+                                    margin-right: 10px;
+                                    white-space: normal;
+                                    overflow: hidden;
+                                }
+                                .articlecontent section.weixin-section img {
+                                    width: 100%;
+                                }
+                                .articlecontent .panel-weixin h3 {
+                                    font-size: 12px;
+                                    font-weight: normal;
+                                    line-height: 18px;
+                                    white-space: normal;
+                                    margin: 0px;
+                                    padding: 0px;
+                                    color: #000;
+                                }
+                            </style>
+                                                        <script>
+
+                                var column = $('.columnstatus').attr('data-column');
+                                var text = '';
+                                if(column){
+                                    var title = $('.columnstatus').attr('data-title');
+                                    var name = $('.columnstatus').attr('data-name');
+                                    text = title+' - FreeBuf专栏·'+name;
+                                }
+
+                                var direction_flag, window_w = jQuery(window).width(), afterScrollTop;
+                                if(window_w <= 480) {
+                                    $('.share-ctrl #weixin').click(function() {
+                                        layer.open({
+                                            title: '提示',
+                                            btnAlign: 'c',
+                                            content: '请使用手机浏览器自带的分享功能分享该页面',
+                                            area: '260px'
+                                        });
+                                    });
+                                }else {
+                                    jQuery('.share-ctrl .weixin_down').hover(function() {
+                                        jQuery('.share-ctrl .panel-weixin').show();
+                                    }, function() {
+                                        jQuery('.share-ctrl .panel-weixin').hide();
+                                    });
+                                    jQuery('.share-ctrl .weixin_up').hover(function() {
+                                        jQuery('.share-ctrl .weixin_qcode').show();
+                                    }, function() {
+                                        jQuery('.share-ctrl .weixin_qcode').hide();
+                                    });
+                                }
+                                //控制垂直方向分享模块的定位
+                                function shareFixVertical(){
+                                    var offsetTop = jQuery(".article-oper").get(0).offsetTop;
+                                    var win_h = jQuery(window).height();
+                                    var win_w = jQuery(window).width();
+                                    var scrollTop = document.body.scrollTop||document.documentElement.scrollTop;
+                                    var _height = offsetTop-scrollTop;
+                                    var _flag = $('.column-article').attr('data-column');
+                                    if(_flag == 1) {
+                                        if(_height>=win_h-660&&win_w>975){
+                                            var _width = jQuery("#getWidth").innerWidth()-30;
+                                            var _left = jQuery("#getWidth").offset().left+15;
+                                            jQuery(".share-new").addClass("fixed");
+                                            jQuery(".fixed").css({
+                                                width:_width,
+                                                left:_left
+                                            });
+
+                                        }else{
+                                            jQuery(".share-new").removeClass("fixed");
+                                            jQuery(".share-new").css({
+                                                width: "100%"
+                                            });
+                                        }
+                                    }else {
+                                        if(_height>=win_h-255&&win_w>975){
+                                            var _width = jQuery("#getWidth").innerWidth()-30;
+                                            var _left = jQuery("#getWidth").offset().left+15;
+                                            jQuery(".share-new").addClass("fixed");
+                                            jQuery(".fixed").css({
+                                                width:_width,
+                                                left:_left
+                                            });
+
+                                        }else{
+                                            jQuery(".share-new").removeClass("fixed");
+                                            jQuery(".share-new").css({
+                                                width: "100%"
+                                            });
+                                        }
+                                    }
+                                }
+                                //控制水平方向分享模块的定位
+                                function shareFixHorizontal(){
+                                    var _width = jQuery("#getWidth").innerWidth()-30;
+                                    var _left = jQuery("#getWidth").get(0).offsetLeft+15;
+                                    var win_w = document.documentElement.clientWidth || document.body.clientWidth;
+                                    jQuery(".fixed").css({
+                                        width:_width,
+                                        left:_left
+                                    });
+                                    if(win_w< 975){
+                                        jQuery(".share-new").css({
+                                            width: "100%",
+                                            left: "0"
+                                        });
+                                    }else{
+                                        var _width = jQuery("#getWidth").innerWidth()-30;
+                                        var _left = jQuery("#getWidth").get(0).offsetLeft+15;
+                                        jQuery(".fixed").css({
+                                            width:_width,
+                                            left:_left
+                                        });
+                                    }
+                                }
+
+                                jQuery(window).on("load",function(){
+                                    shareFixVertical();
+                                });
+
+                                jQuery(window).on("resize",function(){
+                                    shareFixHorizontal();
+                                });
+
+                                scroll( function(direction) {
+                                    if(direction == 'down') {
+                                        jQuery(".share-new").removeClass("fixed");
+                                        $(".share-new").css({
+                                            width: "100%"
+                                        });
+                                        if(window_w <= 480) {
+                                            if(afterScrollTop >= 65) {
+                                                jQuery('.main-header .header').addClass('op0');
+                                                jQuery('.main-header .header').removeClass('op1');
+                                            }
+                                        }else {
+                                            jQuery('.main-header').stop().hide();
+                                        }
+                                    }else {
+                                        shareFixVertical();
+                                        if(window_w <= 480) {
+                                            jQuery('.main-header .header').addClass('op1');
+                                            jQuery('.main-header .header').removeClass('op0');
+                                        }else {
+                                            jQuery('.main-header').stop().show();
+                                        }
+                                    }
+                                    return direction;
+                                });
+
+                                function scroll( fn ) {
+                                    var beforeScrollTop = document.body.scrollTop || document.documentElement.scrollTop,
+                                        fn = fn || function() {};
+                                    window.addEventListener("scroll", function() {
+                                        afterScrollTop = document.body.scrollTop || document.documentElement.scrollTop,
+                                            delta = afterScrollTop - beforeScrollTop;
+                                        if( delta === 0 ) return false;
+                                        direction_flag = fn( delta > 0 ? "down" : "up" );
+                                        beforeScrollTop = afterScrollTop;
+                                    }, false);
+                                }
+
+
+
+                                //tooltips提示
+                                $(function () { $("[data-toggle='tooltip']").tooltip(); });
+                            </script>
+                        </div>
+                                                                                                
+                            <!--<div class="article-pager no-pager">
+                                <ul>
+                                    <li class="previous"><span>上一篇：</span>                                    </li>
+                                    <li class="next"><span>下一篇：</span>
+                                                                            </li>
+                                </ul>
+
+                            </div>-->
+                                                </div>
+                </div>
+                <div class="article-recommend-div">
+          <div class="article-recommend-title">
+           相关推荐
+           </div><div class="article-recommend-list">
+                                <div class="swiper-article-recommend swiper-container-horizontal">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide swiper-slide-active" style="width: 207.5px; margin-right: 20px;"><a target="_blank" href="https://www.freebuf.com/column/216532.html" title=""><img class="article-recommend-img" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/column-default.png!420.280" alt=""> <p class="article-recommend-p">【知了堂信安笔记】渗透测试之信息收集（二） </p></a></div><div class="swiper-slide swiper-slide-next" style="width: 207.5px; margin-right: 20px;"><a target="_blank" href="https://www.freebuf.com/articles/web/179043.html" title=""><img class="article-recommend-img" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/15329503095496.png!small" alt=""> <p class="article-recommend-p">经验分享｜谈谈渗透测试中的信息搜集 </p></a></div><div class="swiper-slide" style="width: 207.5px; margin-right: 20px;"><a target="_blank" href="https://www.freebuf.com/articles/web/142767.html" title=""><img class="article-recommend-img" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/09ff9cd8bdc1e9c76ac03e72ea5da38d-220x150.jpeg" alt=""> <p class="article-recommend-p">浅谈Web渗透测试中的信息收集 </p></a></div><div class="swiper-slide" style="width: 207.5px; margin-right: 20px;"><a target="_blank" href="https://www.freebuf.com/articles/web/204883.html" title=""><img class="article-recommend-img" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/15591955087153.png!small" alt=""> <p class="article-recommend-p">渗透测试信息收集心得分享 </p></a></div><div class="swiper-slide" style="width: 207.5px; margin-right: 20px;"><a target="_blank" href="https://www.freebuf.com/articles/database/195169.html" title=""><img class="article-recommend-img" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/15487403394071.png!small" alt=""> <p class="article-recommend-p">全流程信息收集方法总结 </p></a></div><div class="swiper-slide" style="width: 207.5px; margin-right: 20px;"><a target="_blank" href="https://www.freebuf.com/articles/web/190403.html" title=""><img class="article-recommend-img" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/15451912566360.png!small" alt=""> <p class="article-recommend-p">我的信息搜集之道 </p></a></div><div class="swiper-slide" style="width: 207.5px; margin-right: 20px;"><a target="_blank" href="https://www.freebuf.com/column/179519.html" title=""><img class="article-recommend-img" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/column-default.png!420.280" alt=""> <p class="article-recommend-p">【渗透技巧】资产探测与信息收集 </p></a></div><div class="swiper-slide" style="width: 207.5px; margin-right: 20px;"><a target="_blank" href="https://www.freebuf.com/sectool/109944.html" title=""><img class="article-recommend-img" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/kali-linux-220x150.jpg" alt=""> <p class="article-recommend-p">Kali Linux渗透基础知识整理（一）：信息搜集 </p></a></div></div><div class="swiper-button-prev swiper-button-disabled">
+                                        <span></span>
+                                    </div>
+                                    <div class="swiper-button-next">
+                                        <span></span>
+                                    </div>
+                            </div></div><script>
+    let swiper = new Swiper('.swiper-article-recommend', {
+        pagination: '.swiper-pagination',
+        slidesPerView: 4,
+        paginationClickable: true,
+        spaceBetween: 20,
+        prevButton:'.swiper-button-prev',
+        nextButton:'.swiper-button-next',
+    });
+</script>
+</div>                <div class="comment-list">
+      <div class="main-tit02">
+		<a rel="nofollow" class="btnbtn-default btn-comment" href="https://www.freebuf.com/articles/web/215182.html#respond">发表评论</a>
+        <h3>已有 <span class="color_red">23</span> 条评论
+      </h3></div>
+      <ul>
+         <li class="comment even thread-even depth-1" id="li-comment-273780">
+    <div id="comment-273780">
+        <div class="photo">     <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/pic3.png">     </div>
+    <div class="tit"> 
+	    <span class="name"> going </span>
+        		<span class="explain">  </span>
+		<span class="time">&nbsp;2019-10-08</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		        <!-- 正常情况 -->
+           <a onclick="return addComment.moveForm( &#39;comment-273780&#39;,&#39;273780&#39;, &#39;respond&#39;,&#39;215182&#39; ) " href="https://www.freebuf.com/articles/web/215182.html?replytocom=273780#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor">1楼</span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>知己知彼，百战百胜</p>
+<div class="comment-tools">
+<div class="vote" id="vote-273780"><span id="acv_stat_273780"></span><a class="ilike_icon" id="vote4-273780" href="javascript:acv_vote(273780,1);">亮了</a>(<span id="cos_support-273780">2</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="273780" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="273780" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="273780" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="273780" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="273780" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-X odd alt thread-odd thread-alt depth-1" id="li-comment-273790">
+    <div id="comment-273790">
+        <div class="photo"> <a href="http://www.freebuf.com/author/%E7%90%B4%E5%BF%83%E4%B8%B6%E5%89%91%E8%83%86X">
+    <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/wp-user-avatar-96x96.png"></a>
+     </div>
+    <div class="tit"> 
+	    <span class="name"> <a href="http://www.freebuf.com/author/%E7%90%B4%E5%BF%83%E4%B8%B6%E5%89%91%E8%83%86X" target="_blank">琴心丶剑胆X&nbsp;</a>  </span>
+        		
+		<span class="icon-f"> </span>
+		<span class="rank">(1级)</span>
+				<span class="explain">  </span>
+		<span class="time">&nbsp;2019-10-08</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		        <!-- 正常情况 -->
+           <a onclick="return addComment.moveForm( &#39;comment-273790&#39;,&#39;273790&#39;, &#39;respond&#39;,&#39;215182&#39; ) " href="https://www.freebuf.com/articles/web/215182.html?replytocom=273790#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor">2楼</span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>感谢分享</p>
+<div class="comment-tools">
+<div class="vote" id="vote-273790"><span id="acv_stat_273790"></span><a class="ilike_icon" id="vote4-273790" href="javascript:acv_vote(273790,1);">亮了</a>(<span id="cos_support-273790">0</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="273790" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="273790" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="273790" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="273790" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="273790" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-laughingxu even thread-even depth-1" id="li-comment-273794">
+    <div id="comment-273794">
+        <div class="photo"> <a href="http://www.freebuf.com/author/laughingxu">
+    <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1546482257_5c2d7251569c1.png"></a>
+     </div>
+    <div class="tit"> 
+	    <span class="name"> <a href="http://www.freebuf.com/author/laughingxu" target="_blank">laughingxu&nbsp;</a>  </span>
+        		
+		<span class="icon-f"> </span>
+		<span class="rank">(1级)</span>
+				<span class="explain">  </span>
+		<span class="time">&nbsp;2019-10-08</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		        <!-- 正常情况 -->
+           <a onclick="return addComment.moveForm( &#39;comment-273794&#39;,&#39;273794&#39;, &#39;respond&#39;,&#39;215182&#39; ) " href="https://www.freebuf.com/articles/web/215182.html?replytocom=273794#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor">3楼</span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>很干活的分享</p>
+<div class="comment-tools">
+<div class="vote" id="vote-273794"><span id="acv_stat_273794"></span><a class="ilike_icon" id="vote4-273794" href="javascript:acv_vote(273794,1);">亮了</a>(<span id="cos_support-273794">0</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="273794" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="273794" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="273794" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="273794" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="273794" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+<ul class="children">
+<li class="comment byuser comment-author-ZhouDaxian bypostauthor odd alt depth-2" id="li-comment-273806">
+    <div id="comment-273806">
+        <div class="photo"> <a href="http://www.freebuf.com/author/ZhouDaxian">
+    <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1568959639_5d846c9784d18.jpeg"></a>
+     </div>
+    <div class="tit"> 
+	    <span class="name"> <a href="http://www.freebuf.com/author/ZhouDaxian" target="_blank">ZhouDaxian&nbsp;</a>  </span>
+        		
+		<span class="icon-f"> </span>
+		<span class="rank">(1级)</span>
+				<span class="explain">  </span>
+		<span class="time">&nbsp;2019-10-08</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		        <!-- 正常情况 -->
+           <a onclick="return addComment.moveForm( &#39;comment-273806&#39;,&#39;273806&#39;, &#39;respond&#39;,&#39;215182&#39; ) " href="https://www.freebuf.com/articles/web/215182.html?replytocom=273806#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor"></span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>@ laughingxu&nbsp;   很干活的分享？</p>
+<div class="comment-tools">
+<div class="vote" id="vote-273806"><span id="acv_stat_273806"></span><a class="ilike_icon" id="vote4-273806" href="javascript:acv_vote(273806,1);">亮了</a>(<span id="cos_support-273806">0</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="273806" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="273806" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="273806" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="273806" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="273806" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-pikapikachu even thread-odd thread-alt depth-1" id="li-comment-273804">
+    <div id="comment-273804">
+        <div class="photo"> <a href="http://www.freebuf.com/author/pikapikachu">
+    <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/wp-user-avatar-96x96.png"></a>
+     </div>
+    <div class="tit"> 
+	    <span class="name"> <a href="http://www.freebuf.com/author/pikapikachu" target="_blank">pikapikachu&nbsp;</a>  </span>
+        		
+		<span class="icon-f"> </span>
+		<span class="rank">(1级)</span>
+				<span class="explain">  </span>
+		<span class="time">&nbsp;2019-10-08</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		        <!-- 正常情况 -->
+           <a onclick="return addComment.moveForm( &#39;comment-273804&#39;,&#39;273804&#39;, &#39;respond&#39;,&#39;215182&#39; ) " href="https://www.freebuf.com/articles/web/215182.html?replytocom=273804#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor">4楼</span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>总结的比较全面，感谢分享。</p>
+<div class="comment-tools">
+<div class="vote" id="vote-273804"><span id="acv_stat_273804"></span><a class="ilike_icon" id="vote4-273804" href="javascript:acv_vote(273804,1);">亮了</a>(<span id="cos_support-273804">0</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="273804" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="273804" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="273804" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="273804" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="273804" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+<ul class="children">
+<li class="comment byuser comment-author-ZhouDaxian bypostauthor odd alt depth-2" id="li-comment-273807">
+    <div id="comment-273807">
+        <div class="photo"> <a href="http://www.freebuf.com/author/ZhouDaxian">
+    <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1568959639_5d846c9784d18.jpeg"></a>
+     </div>
+    <div class="tit"> 
+	    <span class="name"> <a href="http://www.freebuf.com/author/ZhouDaxian" target="_blank">ZhouDaxian&nbsp;</a>  </span>
+        		
+		<span class="icon-f"> </span>
+		<span class="rank">(1级)</span>
+				<span class="explain">  </span>
+		<span class="time">&nbsp;2019-10-08</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		        <!-- 正常情况 -->
+           <a onclick="return addComment.moveForm( &#39;comment-273807&#39;,&#39;273807&#39;, &#39;respond&#39;,&#39;215182&#39; ) " href="https://www.freebuf.com/articles/web/215182.html?replytocom=273807#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor"></span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>@ pikapikachu&nbsp;    <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_twisted.gif" alt=":twisted:" class="wp-smiley"> </p>
+<div class="comment-tools">
+<div class="vote" id="vote-273807"><span id="acv_stat_273807"></span><a class="ilike_icon" id="vote4-273807" href="javascript:acv_vote(273807,1);">亮了</a>(<span id="cos_support-273807">0</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="273807" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="273807" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="273807" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="273807" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="273807" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-294297 even thread-even depth-1" id="li-comment-273810">
+    <div id="comment-273810">
+        <div class="photo"> <a href="http://www.freebuf.com/author/%E6%B5%AE%E4%BA%91%E9%A5%AD%E7%9C%9F%E7%9A%84%E7%89%9B%E6%89%B9">
+    <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/wp-user-avatar-96x96.png"></a>
+     </div>
+    <div class="tit"> 
+	    <span class="name"> <a href="http://www.freebuf.com/author/%E6%B5%AE%E4%BA%91%E9%A5%AD%E7%9C%9F%E7%9A%84%E7%89%9B%E6%89%B9" target="_blank">浮云饭真的牛批&nbsp;</a>  </span>
+        		
+		<span class="icon-f"> </span>
+		<span class="rank">(1级)</span>
+				<span class="explain">  </span>
+		<span class="time">&nbsp;2019-10-08</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		        <!-- 正常情况 -->
+           <a onclick="return addComment.moveForm( &#39;comment-273810&#39;,&#39;273810&#39;, &#39;respond&#39;,&#39;215182&#39; ) " href="https://www.freebuf.com/articles/web/215182.html?replytocom=273810#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor">5楼</span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>信息收集是第二阶段，那请问一下第一阶段是什么，虚心请教。</p>
+<div class="comment-tools">
+<div class="vote" id="vote-273810"><span id="acv_stat_273810"></span><a class="ilike_icon" id="vote4-273810" href="javascript:acv_vote(273810,1);">亮了</a>(<span id="cos_support-273810">0</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="273810" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="273810" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="273810" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="273810" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="273810" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+<ul class="children">
+<li class="comment byuser comment-author-ZhouDaxian bypostauthor odd alt depth-2" id="li-comment-273828">
+    <div id="comment-273828">
+        <div class="photo"> <a href="http://www.freebuf.com/author/ZhouDaxian">
+    <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1568959639_5d846c9784d18.jpeg"></a>
+     </div>
+    <div class="tit"> 
+	    <span class="name"> <a href="http://www.freebuf.com/author/ZhouDaxian" target="_blank">ZhouDaxian&nbsp;</a>  </span>
+        		
+		<span class="icon-f"> </span>
+		<span class="rank">(1级)</span>
+				<span class="explain">  </span>
+		<span class="time">&nbsp;2019-10-08</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		        <!-- 正常情况 -->
+           <a onclick="return addComment.moveForm( &#39;comment-273828&#39;,&#39;273828&#39;, &#39;respond&#39;,&#39;215182&#39; ) " href="https://www.freebuf.com/articles/web/215182.html?replytocom=273828#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor"></span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>@ 浮云饭真的牛批&nbsp;   第一阶段主要是跟客户沟通，确定渗透目标范围，渗透的方式：如黑/白盒，想达到什么的效果之类的，例如一定要拿到重要的系统权限或敏感的数据吧，还有就是要拿到渗透测试的授权书。</p>
+<div class="comment-tools">
+<div class="vote" id="vote-273828"><span id="acv_stat_273828"></span><a class="ilike_icon" id="vote4-273828" href="javascript:acv_vote(273828,1);">亮了</a>(<span id="cos_support-273828">2</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="273828" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="273828" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="273828" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="273828" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="273828" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+<ul class="children">
+<li class="comment byuser comment-author-294297 even depth-3" id="li-comment-273909">
+    <div id="comment-273909">
+        <div class="photo"> <a href="http://www.freebuf.com/author/%E6%B5%AE%E4%BA%91%E9%A5%AD%E7%9C%9F%E7%9A%84%E7%89%9B%E6%89%B9">
+    <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/wp-user-avatar-96x96.png"></a>
+     </div>
+    <div class="tit"> 
+	    <span class="name"> <a href="http://www.freebuf.com/author/%E6%B5%AE%E4%BA%91%E9%A5%AD%E7%9C%9F%E7%9A%84%E7%89%9B%E6%89%B9" target="_blank">浮云饭真的牛批&nbsp;</a>  </span>
+        		
+		<span class="icon-f"> </span>
+		<span class="rank">(1级)</span>
+				<span class="explain">  </span>
+		<span class="time">&nbsp;2019-10-10</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		           <a onclick="return addComment.moveForm( &#39;comment-273909&#39;,&#39;273828&#39;, &#39;respond&#39;,&#39;215182&#39; )" href="https://www.freebuf.com/articles/web/215182.html?replytocom=273909#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor"></span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>@ ZhouDaxian&nbsp;   了解了，感谢回复</p>
+<div class="comment-tools">
+<div class="vote" id="vote-273909"><span id="acv_stat_273909"></span><a class="ilike_icon" id="vote4-273909" href="javascript:acv_vote(273909,1);">亮了</a>(<span id="cos_support-273909">0</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="273909" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="273909" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="273909" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="273909" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="273909" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-273812">
+    <div id="comment-273812">
+        <div class="photo">     <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/pic5.png">     </div>
+    <div class="tit"> 
+	    <span class="name"> 7 </span>
+        		<span class="explain">  </span>
+		<span class="time">&nbsp;2019-10-08</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		        <!-- 正常情况 -->
+           <a onclick="return addComment.moveForm( &#39;comment-273812&#39;,&#39;273812&#39;, &#39;respond&#39;,&#39;215182&#39; ) " href="https://www.freebuf.com/articles/web/215182.html?replytocom=273812#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor">6楼</span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>看不到亮点.. 都是很常规的..</p>
+<div class="comment-tools">
+<div class="vote" id="vote-273812"><span id="acv_stat_273812"></span><a class="ilike_icon" id="vote4-273812" href="javascript:acv_vote(273812,1);">亮了</a>(<span id="cos_support-273812">5</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="273812" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="273812" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="273812" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="273812" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="273812" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+<ul class="children">
+<li class="comment byuser comment-author-ZhouDaxian bypostauthor even depth-2" id="li-comment-273813">
+    <div id="comment-273813">
+        <div class="photo"> <a href="http://www.freebuf.com/author/ZhouDaxian">
+    <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1568959639_5d846c9784d18.jpeg"></a>
+     </div>
+    <div class="tit"> 
+	    <span class="name"> <a href="http://www.freebuf.com/author/ZhouDaxian" target="_blank">ZhouDaxian&nbsp;</a>  </span>
+        		
+		<span class="icon-f"> </span>
+		<span class="rank">(1级)</span>
+				<span class="explain">  </span>
+		<span class="time">&nbsp;2019-10-08</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		        <!-- 正常情况 -->
+           <a onclick="return addComment.moveForm( &#39;comment-273813&#39;,&#39;273813&#39;, &#39;respond&#39;,&#39;215182&#39; ) " href="https://www.freebuf.com/articles/web/215182.html?replytocom=273813#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor"></span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>@ 7  恳请指教</p>
+<div class="comment-tools">
+<div class="vote" id="vote-273813"><span id="acv_stat_273813"></span><a class="ilike_icon" id="vote4-273813" href="javascript:acv_vote(273813,1);">亮了</a>(<span id="cos_support-273813">0</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="273813" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="273813" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="273813" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="273813" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="273813" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-even depth-1" id="li-comment-273817">
+    <div id="comment-273817">
+        <div class="photo">     <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/pic16.png">     </div>
+    <div class="tit"> 
+	    <span class="name"> www.ShareWAF.com </span>
+        		<span class="explain">  </span>
+		<span class="time">&nbsp;2019-10-08</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		        <!-- 正常情况 -->
+           <a onclick="return addComment.moveForm( &#39;comment-273817&#39;,&#39;273817&#39;, &#39;respond&#39;,&#39;215182&#39; ) " href="https://www.freebuf.com/articles/web/215182.html?replytocom=273817#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor">7楼</span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>大量实践的经验。</p>
+<div class="comment-tools">
+<div class="vote" id="vote-273817"><span id="acv_stat_273817"></span><a class="ilike_icon" id="vote4-273817" href="javascript:acv_vote(273817,1);">亮了</a>(<span id="cos_support-273817">0</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="273817" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="273817" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="273817" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="273817" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="273817" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+</li><!-- #comment-## -->
+<li class="comment even thread-odd thread-alt depth-1" id="li-comment-273818">
+    <div id="comment-273818">
+        <div class="photo">     <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/pic5.png">     </div>
+    <div class="tit"> 
+	    <span class="name"> 乐色 </span>
+        		<span class="explain">  </span>
+		<span class="time">&nbsp;2019-10-08</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		        <!-- 正常情况 -->
+           <a onclick="return addComment.moveForm( &#39;comment-273818&#39;,&#39;273818&#39;, &#39;respond&#39;,&#39;215182&#39; ) " href="https://www.freebuf.com/articles/web/215182.html?replytocom=273818#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor">8楼</span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>把御剑换成dirsearch吧</p>
+<div class="comment-tools">
+<div class="vote" id="vote-273818"><span id="acv_stat_273818"></span><a class="ilike_icon" id="vote4-273818" href="javascript:acv_vote(273818,1);">亮了</a>(<span id="cos_support-273818">1</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="273818" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="273818" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="273818" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="273818" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="273818" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+<ul class="children">
+<li class="comment byuser comment-author-ZhouDaxian bypostauthor odd alt depth-2" id="li-comment-273823">
+    <div id="comment-273823">
+        <div class="photo"> <a href="http://www.freebuf.com/author/ZhouDaxian">
+    <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1568959639_5d846c9784d18.jpeg"></a>
+     </div>
+    <div class="tit"> 
+	    <span class="name"> <a href="http://www.freebuf.com/author/ZhouDaxian" target="_blank">ZhouDaxian&nbsp;</a>  </span>
+        		
+		<span class="icon-f"> </span>
+		<span class="rank">(1级)</span>
+				<span class="explain">  </span>
+		<span class="time">&nbsp;2019-10-08</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		        <!-- 正常情况 -->
+           <a onclick="return addComment.moveForm( &#39;comment-273823&#39;,&#39;273823&#39;, &#39;respond&#39;,&#39;215182&#39; ) " href="https://www.freebuf.com/articles/web/215182.html?replytocom=273823#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor"></span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>@ 乐色  我有一款是自己写的，还没完全开发完，ui差了一点</p>
+<div class="comment-tools">
+<div class="vote" id="vote-273823"><span id="acv_stat_273823"></span><a class="ilike_icon" id="vote4-273823" href="javascript:acv_vote(273823,1);">亮了</a>(<span id="cos_support-273823">0</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="273823" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="273823" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="273823" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="273823" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="273823" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-ZhouDaxian bypostauthor even depth-2" id="li-comment-273824">
+    <div id="comment-273824">
+        <div class="photo"> <a href="http://www.freebuf.com/author/ZhouDaxian">
+    <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1568959639_5d846c9784d18.jpeg"></a>
+     </div>
+    <div class="tit"> 
+	    <span class="name"> <a href="http://www.freebuf.com/author/ZhouDaxian" target="_blank">ZhouDaxian&nbsp;</a>  </span>
+        		
+		<span class="icon-f"> </span>
+		<span class="rank">(1级)</span>
+				<span class="explain">  </span>
+		<span class="time">&nbsp;2019-10-08</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		        <!-- 正常情况 -->
+           <a onclick="return addComment.moveForm( &#39;comment-273824&#39;,&#39;273824&#39;, &#39;respond&#39;,&#39;215182&#39; ) " href="https://www.freebuf.com/articles/web/215182.html?replytocom=273824#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor"></span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>@ 乐色  理解了原理就好。</p>
+<div class="comment-tools">
+<div class="vote" id="vote-273824"><span id="acv_stat_273824"></span><a class="ilike_icon" id="vote4-273824" href="javascript:acv_vote(273824,1);">亮了</a>(<span id="cos_support-273824">0</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="273824" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="273824" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="273824" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="273824" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="273824" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-111 odd alt thread-even depth-1" id="li-comment-273830">
+    <div id="comment-273830">
+        <div class="photo"> <a href="http://www.freebuf.com/author/%E6%98%9F%E7%A9%BA111">
+    <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1584023243_5e6a46cbc26b5.jpg"></a>
+     </div>
+    <div class="tit"> 
+	    <span class="name"> <a href="http://www.freebuf.com/author/%E6%98%9F%E7%A9%BA111" target="_blank">星空111&nbsp;</a>  </span>
+        		
+		<span class="icon-f"> </span>
+		<span class="rank">(5级)</span>
+				<span class="explain"> ZJL </span>
+		<span class="time">&nbsp;2019-10-08</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		        <!-- 正常情况 -->
+           <a onclick="return addComment.moveForm( &#39;comment-273830&#39;,&#39;273830&#39;, &#39;respond&#39;,&#39;215182&#39; ) " href="https://www.freebuf.com/articles/web/215182.html?replytocom=273830#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor">9楼</span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>这种文章一抓一大把。。。。。。。。。</p>
+<div class="comment-tools">
+<div class="vote" id="vote-273830"><span id="acv_stat_273830"></span><a class="ilike_icon" id="vote4-273830" href="javascript:acv_vote(273830,1);">亮了</a>(<span id="cos_support-273830">2</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="273830" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="273830" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="273830" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="273830" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="273830" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+<ul class="children">
+<li class="comment byuser comment-author-ZhouDaxian bypostauthor even depth-2" id="li-comment-273832">
+    <div id="comment-273832">
+        <div class="photo"> <a href="http://www.freebuf.com/author/ZhouDaxian">
+    <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1568959639_5d846c9784d18.jpeg"></a>
+     </div>
+    <div class="tit"> 
+	    <span class="name"> <a href="http://www.freebuf.com/author/ZhouDaxian" target="_blank">ZhouDaxian&nbsp;</a>  </span>
+        		
+		<span class="icon-f"> </span>
+		<span class="rank">(1级)</span>
+				<span class="explain">  </span>
+		<span class="time">&nbsp;2019-10-08</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		        <!-- 正常情况 -->
+           <a onclick="return addComment.moveForm( &#39;comment-273832&#39;,&#39;273832&#39;, &#39;respond&#39;,&#39;215182&#39; ) " href="https://www.freebuf.com/articles/web/215182.html?replytocom=273832#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor"></span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>@ 星空111&nbsp;   等我学完二进制，再多写一些高质量的文章。</p>
+<div class="comment-tools">
+<div class="vote" id="vote-273832"><span id="acv_stat_273832"></span><a class="ilike_icon" id="vote4-273832" href="javascript:acv_vote(273832,1);">亮了</a>(<span id="cos_support-273832">0</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="273832" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="273832" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="273832" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="273832" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="273832" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-273853">
+    <div id="comment-273853">
+        <div class="photo">     <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/pic13.png">     </div>
+    <div class="tit"> 
+	    <span class="name"> 77374465 </span>
+        		<span class="explain">  </span>
+		<span class="time">&nbsp;2019-10-09</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		        <!-- 正常情况 -->
+           <a onclick="return addComment.moveForm( &#39;comment-273853&#39;,&#39;273853&#39;, &#39;respond&#39;,&#39;215182&#39; ) " href="https://www.freebuf.com/articles/web/215182.html?replytocom=273853#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor">10楼</span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>希望多出几个阶段 <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_mrgreen.gif" alt=":mrgreen:" class="wp-smiley"> </p>
+<div class="comment-tools">
+<div class="vote" id="vote-273853"><span id="acv_stat_273853"></span><a class="ilike_icon" id="vote4-273853" href="javascript:acv_vote(273853,1);">亮了</a>(<span id="cos_support-273853">0</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="273853" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="273853" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="273853" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="273853" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="273853" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+<ul class="children">
+<li class="comment byuser comment-author-ZhouDaxian bypostauthor even depth-2" id="li-comment-273862">
+    <div id="comment-273862">
+        <div class="photo"> <a href="http://www.freebuf.com/author/ZhouDaxian">
+    <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1568959639_5d846c9784d18.jpeg"></a>
+     </div>
+    <div class="tit"> 
+	    <span class="name"> <a href="http://www.freebuf.com/author/ZhouDaxian" target="_blank">ZhouDaxian&nbsp;</a>  </span>
+        		
+		<span class="icon-f"> </span>
+		<span class="rank">(1级)</span>
+				<span class="explain">  </span>
+		<span class="time">&nbsp;2019-10-09</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		        <!-- 正常情况 -->
+           <a onclick="return addComment.moveForm( &#39;comment-273862&#39;,&#39;273862&#39;, &#39;respond&#39;,&#39;215182&#39; ) " href="https://www.freebuf.com/articles/web/215182.html?replytocom=273862#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor"></span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>@ 77374465  等我。</p>
+<div class="comment-tools">
+<div class="vote" id="vote-273862"><span id="acv_stat_273862"></span><a class="ilike_icon" id="vote4-273862" href="javascript:acv_vote(273862,1);">亮了</a>(<span id="cos_support-273862">0</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="273862" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="273862" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="273862" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="273862" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="273862" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-252391 odd alt thread-even depth-1" id="li-comment-273912">
+    <div id="comment-273912">
+        <div class="photo"> <a href="http://www.freebuf.com/author/%E5%85%AD%E7%BF%BC">
+    <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/15099444828689.jpeg"></a>
+     </div>
+    <div class="tit"> 
+	    <span class="name"> <a href="http://www.freebuf.com/author/%E5%85%AD%E7%BF%BC" target="_blank">六翼&nbsp;</a>  </span>
+        		
+		<span class="icon-f"> </span>
+		<span class="rank">(4级)</span>
+				<span class="explain">  </span>
+		<span class="time">&nbsp;2019-10-10</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		        <!-- 正常情况 -->
+           <a onclick="return addComment.moveForm( &#39;comment-273912&#39;,&#39;273912&#39;, &#39;respond&#39;,&#39;215182&#39; ) " href="https://www.freebuf.com/articles/web/215182.html?replytocom=273912#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor">11楼</span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>恕我直言，又是一篇没有啥营养的水文，，，</p>
+<div class="comment-tools">
+<div class="vote" id="vote-273912"><span id="acv_stat_273912"></span><a class="ilike_icon" id="vote4-273912" href="javascript:acv_vote(273912,1);">亮了</a>(<span id="cos_support-273912">5</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="273912" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="273912" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="273912" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="273912" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="273912" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+<ul class="children">
+<li class="comment byuser comment-author-ZhouDaxian bypostauthor even depth-2" id="li-comment-274047">
+    <div id="comment-274047">
+        <div class="photo"> <a href="http://www.freebuf.com/author/ZhouDaxian">
+    <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1568959639_5d846c9784d18.jpeg"></a>
+     </div>
+    <div class="tit"> 
+	    <span class="name"> <a href="http://www.freebuf.com/author/ZhouDaxian" target="_blank">ZhouDaxian&nbsp;</a>  </span>
+        		
+		<span class="icon-f"> </span>
+		<span class="rank">(1级)</span>
+				<span class="explain">  </span>
+		<span class="time">&nbsp;2019-10-12</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		        <!-- 正常情况 -->
+           <a onclick="return addComment.moveForm( &#39;comment-274047&#39;,&#39;274047&#39;, &#39;respond&#39;,&#39;215182&#39; ) " href="https://www.freebuf.com/articles/web/215182.html?replytocom=274047#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor"></span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>表哥好</p>
+<div class="comment-tools">
+<div class="vote" id="vote-274047"><span id="acv_stat_274047"></span><a class="ilike_icon" id="vote4-274047" href="javascript:acv_vote(274047,1);">亮了</a>(<span id="cos_support-274047">0</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="274047" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="274047" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="274047" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="274047" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="274047" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-274437">
+    <div id="comment-274437">
+        <div class="photo">     <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/pic10.png">     </div>
+    <div class="tit"> 
+	    <span class="name"> wione </span>
+        		<span class="explain">  </span>
+		<span class="time">&nbsp;2019-10-19</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		        <!-- 正常情况 -->
+           <a onclick="return addComment.moveForm( &#39;comment-274437&#39;,&#39;274437&#39;, &#39;respond&#39;,&#39;215182&#39; ) " href="https://www.freebuf.com/articles/web/215182.html?replytocom=274437#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor">12楼</span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>jsfinder</p>
+<div class="comment-tools">
+<div class="vote" id="vote-274437"><span id="acv_stat_274437"></span><a class="ilike_icon" id="vote4-274437" href="javascript:acv_vote(274437,1);">亮了</a>(<span id="cos_support-274437">0</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="274437" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="274437" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="274437" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="274437" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="274437" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-Junl97 even thread-even depth-1" id="li-comment-275579">
+    <div id="comment-275579">
+        <div class="photo"> <a href="http://www.freebuf.com/author/Junl97">
+    <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1573785106_5dce0e1284d6f.jpg"></a>
+     </div>
+    <div class="tit"> 
+	    <span class="name"> <a href="http://www.freebuf.com/author/Junl97" target="_blank">Junl97&nbsp;</a>  </span>
+        		
+		<span class="icon-f"> </span>
+		<span class="rank">(1级)</span>
+				<span class="explain">  </span>
+		<span class="time">&nbsp;2019-11-15</span>
+		<span class="time">
+                    </span>
+        <span class="useragent_output_custom"></span>
+        <span class="useragent_output_custom"></span> 
+		<span class="reply">
+		        <!-- 正常情况 -->
+           <a onclick="return addComment.moveForm( &#39;comment-275579&#39;,&#39;275579&#39;, &#39;respond&#39;,&#39;215182&#39; ) " href="https://www.freebuf.com/articles/web/215182.html?replytocom=275579#respond" class="comment-reply-link" rel="nofollow">回复</a>
+        	    </span>
+		<span class="floor">13楼</span>
+	</div>
+	    <div class="txt">
+	  <p class="useragent_output_custom"></p>
+      <p>nmap扫C段，用-P0真的可以吗，-P0不是跳过主机发现吗。。。</p>
+<div class="comment-tools">
+<div class="vote" id="vote-275579"><span id="acv_stat_275579"></span><a class="ilike_icon" id="vote4-275579" href="javascript:acv_vote(275579,1);">亮了</a>(<span id="cos_support-275579">0</span>)</div>
+<div class="dropup"><a class="dropdown-toggle btn-report" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none;"> 举报</a>
+<ul class="dropdown-menu" style="display:none;bottom:auto;">
+<li><a data-id="275579" class="click_report" href="javascript:;">广告等垃圾信息</a></li>
+<li><a data-id="275579" class="click_report" href="javascript:;">不友善内容</a></li>
+<li><a data-id="275579" class="click_report" href="javascript:;">违反法律法规的内容</a></li>
+<li><a data-id="275579" class="click_report" href="javascript:;">不宜公开讨论的政治内容</a></li>
+<li><a data-id="275579" class="click_report" href="javascript:;">其他</a></li>
+</ul></div>
+</div>
+	</div></div>
+</li><!-- #comment-## -->
+      </ul>
+      <div class="commentnav page01" style="padding-top:10px; text-align: center;">
+               </div>
+	  
+<script src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/ajaxfileupload.js.下載" type="text/javascript"></script>
+<div id="respond" class="comment-box">
+<input type="file" id="uploadUnit" name="upfile" class="hidden" value="">
+    <form action="https://www.freebuf.com/wp-comments-post.php" method="post" id="commentform">
+        <div id="comment-author-info">
+	    <div class="login-other">
+		  <div class="login_button login_icon_sina" title="使用新浪微博登陆" onclick="login_button_click(&#39;sina&#39;)"></div>
+          <div class="login_button login_icon_qq" title="使用腾讯QQ登陆" onclick="login_button_click(&#39;qq&#39;)"></div></div>
+        <div class="login-input">
+	    <p><label for="author">昵称</label>
+		          <input type="text" name="author" id="author" value="" size="14" tabindex="1" aria-required="true" placeholder="请输入昵称" required="">
+        </p><span>必须</span><span>您当前尚未登录。<a class="simplemodal-login" href="http://www.freebuf.com/oauth" title="登录">登录？</a><a href="https://account.tophant.com/register.html" target="_blank">注册</a></span></div>
+		<div class="login-input">
+		  <p><label for="email">邮箱</label><input type="text" name="email" id="email" value="" size="25" tabindex="2" aria-required="true" placeholder="请输入邮箱地址" required=""></p>
+		<span>必须（保密）</span>
+		</div>
+    </div>
+
+        <div id="test" class="post-area">
+      <div class="holiday"></div>
+	    <div class="comment-editor">
+			<a id="comment-smiley" href="javascript:;">表情</a><a href="javascript:;" id="imageThumb">插图</a>
+	    </div>
+        <div id="smileys">
+           <a title="mrgreen" href="javascript:grin(&#39;:mrgreen:&#39;)"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_mrgreen.gif"></a><a title="razz" href="javascript:grin(&#39;:razz:&#39;)"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_razz.gif"></a><a title="sad" href="javascript:grin(&#39;:sad:&#39;)"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_sad.gif"></a><a title="smile" href="javascript:grin(&#39;:smile:&#39;)"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_smile.gif"></a><a title="oops" href="javascript:grin(&#39;:oops:&#39;)"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_redface.gif"></a><a title="grin" href="javascript:grin(&#39;:grin:&#39;)"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_biggrin.gif"></a><a title="eek" href="javascript:grin(&#39;:eek:&#39;)"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_surprised.gif"></a><a title="???" href="javascript:grin(&#39;:???:&#39;)"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_confused.gif"></a><a title="cool" href="javascript:grin(&#39;:cool:&#39;)"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_cool.gif"></a><a title="lol" href="javascript:grin(&#39;:lol:&#39;)"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_lol.gif"></a><a title="mad" href="javascript:grin(&#39;:mad:&#39;)"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_mad.gif"></a><a title="twisted" href="javascript:grin(&#39;:twisted:&#39;)"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_twisted.gif"></a><a title="roll" href="javascript:grin(&#39;:roll:&#39;)"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_rolleyes.gif"></a><a title="wink" href="javascript:grin(&#39;:wink:&#39;)"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_wink.gif"></a><a title="idea" href="javascript:grin(&#39;:idea:&#39;)"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_idea.gif"></a><a title="arrow" href="javascript:grin(&#39;:arrow:&#39;)"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_arrow.gif"></a><a title="neutral" href="javascript:grin(&#39;:neutral:&#39;)"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_neutral.gif"></a><a title="cry" href="javascript:grin(&#39;:cry:&#39;)"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_cry.gif"></a><a title="?" href="javascript:grin(&#39;:?:&#39;)"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_question.gif"></a><a title="evil" href="javascript:grin(&#39;:evil:&#39;)"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_evil.gif"></a><a title="shock" href="javascript:grin(&#39;:shock:&#39;)"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_eek.gif"></a><a title="!" href="javascript:grin(&#39;:!:&#39;)"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/icon_exclaim.gif"></a>        </div>
+         <textarea name="comment" id="comment" cols="100%" rows="7" tabindex="4" style="overflow-x:hidden; overflow-y:hidden; border:0; width:100%;" onkeydown="if(event.ctrlKey&amp;&amp;event.keyCode==13){document.getElementById(&#39;submit&#39;).click();return false};"></textarea><div id="loading" style="display: none;"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/wpspin_light.gif" style="vertical-align:middle;" alt=""> 正在提交, 请稍候...</div><div id="error" style="display: none;">#</div>
+    </div>
+      <div class="subcon but">
+      <input class="btn btn-success" type="submit" name="submit" id="submit" tabindex="5" value="提交评论(Ctrl+Enter)">
+      <a rel="nofollow" class="btn btn-default" id="cancel-comment-reply-link" href="javascript:;">取消</a>
+      <div class="checkbox"><input type="hidden" name="comment_post_ID" value="215182" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+<label for="comment_mail_notify" class="comment_mail"><input type="checkbox" name="comment_mail_notify" id="comment_mail_notify" value="comment_mail_notify" checked="checked">有人回复时邮件通知我</label></div>
+      </div>
+    <input name="Token" id="Token" type="hidden" value="xei6vg">
+  </form>
+  </div>
+</div>	  
+<div class="commentshow">
+<div class="comments-loading">Loading...</div>
+</div>
+<script language="javascript">
+jQuery(document).ready(function($){ //Begin jQuery
+    $('.reply').click(function() {
+    var atid = '"#' + $(this).parent().attr("id") + '"';
+    var atname = $(this).parent().find('span:first').text();
+    $("#comment").val("@" + atname + " ").focus();
+});
+    $('.cancel-comment-reply a').click(function() { //点击取消回复评论清空评论框的内容
+    $("#comment").val('');
+});
+}) 
+
+jQuery(document).ready(function($) {
+    $body = (window.opera) ? (document.compatMode == "CSS1Compat" ? $('html') : $('body')) : $('html,body');//commentnav ajax
+    $(document).on('click', '.commentnav a', function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: "GET",
+            url: $(this).attr('href'),
+            beforeSend: function() {
+                $('.commentnav').remove();
+                $('.comment-list').remove();
+                $('.comments-loading').slideDown();
+            },
+            dataType: "html",
+            success: function(out) {
+                result = $(out).find('.comment-list');
+                nextlink = $(out).find('.commentnav');
+                $('.comments-loading').slideUp(550);
+                $('.comments-loading').after(result.fadeIn(800));
+                $(".comment-list img").each(function(){
+                  var url = $(this).attr("data-original");
+                  $(this).attr("src",url);
+                })
+            }
+        });
+    });    
+});
+</script>            </div>
+                    <div class="col-md-3 visible-md-block visible-lg-block">
+                <div class="panel panel-default">
+                    <div class="author-top">
+                         <div class="author-wrap">
+                            <div class="author-header"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1568959639_5d846c9784d18.jpeg" width="0" height="0" alt="ZhouDaxian" class="avatar avatar-100 wp-user-avatar wp-user-avatar-100 photo">                            </div>
+                            <p class="name"><a href="https://www.freebuf.com/author/ZhouDaxian" title="由 ZhouDaxian 发布" rel="author">ZhouDaxian</a><span></span></p>
+                            <p class="signature">这家伙太懒，还未填写个人描述！</p>
+                            <p class="art-com clearfix">
+                                <span class="aut-article">
+                                    <a href="https://www.freebuf.com/author/ZhouDaxian" target="_blank">
+                                        <i>1</i>
+                                        <i>文章数</i>
+                                    </a>
+                                </span>
+                                <span class="aut-comment">
+                                    <a href="https://www.freebuf.com/author/ZhouDaxian?comment=1" target="_blank">
+                                        <i>10</i>
+                                        <i>评论数</i>
+                                    </a>
+                                </span>
+                                <span class="aut-follow">
+                                    <a href="https://www.freebuf.com/author/ZhouDaxian?follow=3" target="_blank">
+                                        <i>1</i>
+                                        <i>关注者</i>
+                                    </a>
+                                </span>
+                            </p>
+                             <p>
+                                 <span>
+
+                                     </span></p><div class="course-btn btn-box">
+                                     <div><a class="btn-new" href="http://www.freebuf.com/oauth">关注</a></div>                                     </div>
+                                 
+                             <p></p>
+                        </div>
+                    </div>
+<!--                    关注作者js-->
+                    <script>
+                        $(document).on('click', '.follow-submit', function () {
+                            var token = $("#report-follow-token").val();
+                            var id = $('#report-follow-id').val();
+                            var _url='https://www.freebuf.com/?action=ajax_follow_author';
+                            var _this = window.location.href;
+                            let typeSize = $("#report-follow-token").attr('name');
+                            $.ajax({
+                                type: "post",
+                                url: _url,
+                                data: {'token':token,'id':id,'type':typeSize},
+                                success: function(data){
+                                    var data = JSON.parse(data)
+                                    if(data.token){
+                                        jQuery('#report-follow-token').val(data.token)
+                                    }
+                                    if(data.code == 200){
+                                        jQuery('.follow-submit').html('已关注')
+                                        jQuery('.follow-submit').addClass('unfollow-submit')
+                                        jQuery('.follow-submit').removeClass('follow-submit')
+                                    }else{
+                                        if(data.msg){
+                                            $('.report-error').empty().append(data.msg).show();
+                                        }
+                                    }
+                                }
+                            });
+                        });
+                        $(document).on('click', '.unfollow-submit', function () {
+                            var token = $("#report-follow-token").val();
+                            var id = $('#report-follow-id').val();
+                            var _url='https://www.freebuf.com/?action=ajax_not_follow_author';
+                            var _this = window.location.href;
+                            let typeSize = $("#report-follow-token").attr('name');
+                            $.ajax({
+                                type: "post",
+                                url: _url,
+                                data: {'token':token,'id':id,'type':typeSize},
+                                success: function(data){
+                                    var data = JSON.parse(data)
+                                    if(data.token){
+                                        jQuery('#report-follow-token').val(data.token)
+                                    }
+                                    if(data.code == 200){
+                                        jQuery('.unfollow-submit').html('关注')
+                                        jQuery('.unfollow-submit').addClass('follow-submit')
+                                        jQuery('.unfollow-submit').removeClass('unfollow-submit')
+                                    }else{
+                                        if(data.msg){
+                                            $('.report-error').empty().append(data.msg).show();
+                                        }
+                                    }
+                                }
+                            });
+                        });
+                        var atten_this = '';
+                        //取消关注
+                        jQuery('.author-wrap .course-btn button').mouseover(function() {
+                            atten_this = this;
+                            if(jQuery(this).html() == '已关注') {
+                                jQuery(this).html('取消关注');
+                            }
+                        }).mouseout(function() {
+                            if(jQuery(this).html() == '取消关注') {
+                                jQuery(atten_this).html('已关注');
+                            }
+                        });
+
+                    </script>
+                    <div class="author-bottom">
+                        <div class="author-wrap">
+                            <h3 class="last-title">最近文章</h3>
+                            <div class="last-item-wrap">
+                                                                        <div class="last-item">
+                                            <a href="https://www.freebuf.com/articles/web/215182.html" target="_blank"><span class="point"></span>渗透测试第二阶段：信息收集方法原理经验心得</a>
+                                            <p class="last-time">2019.10.09</p>
+                                        </div>
+                                                                </div>
+                        </div>
+
+                        <div class="more-wrap">
+                            <a href="http://www.freebuf.com/author/ZhouDaxian" target="_blank" class="btn-new">浏览更多</a>
+                        </div>
+                    </div>
+                </div>
+                                <div id="mar-right-menu-out">
+                        <div class="tuijianDiv">
+                            <p class="tuijain">文章目录</p>
+                        </div>
+                        <div class="article-menu-right">
+                            <ul id="my_toc"><li><a href="https://www.freebuf.com/articles/web/215182.html#i">信息收集方法、区别及作用</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-2">信息收集的具体实施方法</a><ul><li><a href="https://www.freebuf.com/articles/web/215182.html#i-3">子域名收集</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#waf">防火墙(waf)识别</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-4">端口服务收集</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#cip">C段IP信息收集</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-5">旁站信息收集</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-6">敏感目录/文件收集</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#iis">IIS短文件名枚举</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#github">GitHub信息收集</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-7">网站资产信息探测</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#shodanfofa">shodan、fofa、钟馗之眼信息收集</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#ip">寻找真实IP</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-8">搜索引擎语法</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-9">爬虫分析</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#awvs-web">AWVS web弱点扫描</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#nessusnbsp">Nessus&nbsp;主机弱点扫描</a></li></ul></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-10">信息收集总结</a></li></ul>                        </div>
+                </div>
+                <div class="panel panel-default" id="adoutRead" style="margin-top:20px">
+                    <div class="read visible-md-block visible-lg-block">
+                        <div class="main-tit02">
+                            <h3>相关阅读</h3>
+                        </div>
+                        <ul>
+  <li><a href="https://www.freebuf.com/articles/system/227532.html" target="_blank">杀软对抗：利用图床匿名上传恶意PE文件</a></li>
+  
+  <li><a href="https://www.freebuf.com/articles/web/217899.html" target="_blank">DVWA渗透测试之旅与代码分析</a></li>
+  
+  <li><a href="https://www.freebuf.com/sectool/1442.html" target="_blank">开放式漏洞评估系统OpenVAS 5发布</a></li>
+  
+  <li><a href="https://www.freebuf.com/sectool/3399.html" target="_blank">web渗透测试套件-WebSploit 1.8</a></li>
+  
+  <li><a href="https://www.freebuf.com/articles/5108.html" target="_blank">攻击SharePoint</a></li>
+  </ul>                    </div>
+                </div>
+                <!--<div class="ad-wrap"><a href="http://www.ijiami.cn/?freebuf.com" target="_blank"><img width="100%" src="http://image.3001.net/images/20141201/14174039186901.jpg"></a></div>-->
+                <div class="panel panel-default rec-spe">
+                    <div class="main-tit03 colour-blue">
+                        <h3>特别推荐</h3>
+                    </div>
+                                                    <div class="rec-img"><a href="http://www.freebuf.com/show?id=3" target="_blank"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/15641231091305.jpeg" width="220"></a></div>
+                                                </div>
+                <!-- <div id="mar-right-menu-out">
+                        <div class="tuijianDiv">
+                            <p class="tuijain">文章目录</p>
+                        </div>
+                        <div class="article-menu-right">
+                            <ul id="my_toc"><li><a href="#i">信息收集方法、区别及作用</a></li><li><a href="#i-2">信息收集的具体实施方法</a><ul><li><a href="#i-3">子域名收集</a></li><li><a href="#waf">防火墙(waf)识别</a></li><li><a href="#i-4">端口服务收集</a></li><li><a href="#cip">C段IP信息收集</a></li><li><a href="#i-5">旁站信息收集</a></li><li><a href="#i-6">敏感目录/文件收集</a></li><li><a href="#iis">IIS短文件名枚举</a></li><li><a href="#github">GitHub信息收集</a></li><li><a href="#i-7">网站资产信息探测</a></li><li><a href="#shodanfofa">shodan、fofa、钟馗之眼信息收集</a></li><li><a href="#ip">寻找真实IP</a></li><li><a href="#i-8">搜索引擎语法</a></li><li><a href="#i-9">爬虫分析</a></li><li><a href="#awvs-web">AWVS web弱点扫描</a></li><li><a href="#nessusnbsp">Nessus&nbsp;主机弱点扫描</a></li></ul></li><li><a href="#i-10">信息收集总结</a></li></ul>                        </div>
+                </div> -->
+                <div id="mar-right-div">
+                    
+                    <div id="mar-right">
+                        <div class="tuijianDiv">
+                            <p class="tuijain">推荐关注</p>
+                        </div>
+                        <div class="tuijian-lunbo">
+                          <div class="tuijian-img">
+                            <div>
+                                <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/ewm.jpg" alt="">
+                                <p class="tuijian-img-name">官方公众号</p>
+                            </div>
+                            <div></div>
+                            <div>
+                                <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/15547780952724.png" alt="">
+                                <p class="tuijian-img-name">聚焦企业安全</p>
+                            </div>
+                          </div>
+                          <div class="tuijian-more">
+                            <a target="_blank" href="https://jq.qq.com/?_wv=1027&amp;k=5S0cofZ"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1576736236_5dfb15ec54fb9.png" alt="">官方QQ群</a>
+                            <span></span>
+                            <a href="https://weibo.com/freebuf" target="_blank"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1576736256_5dfb16007cba6.png" alt="">FreeBuf官方微博</a>
+                          </div>
+
+                        </div>
+                        
+                    </div>
+                    <div id="mar-right-menu-sticky-wrapper" class="sticky-wrapper" style="height: 362px;"><div id="mar-right-menu" style="margin-top: 20px; display: none;">
+                        <div class="tuijianDiv">
+                            <p class="tuijain">文章目录</p>
+                        </div>
+                        <div class="article-menu-right">
+                            <ul id="my_toc"><li><a href="https://www.freebuf.com/articles/web/215182.html#i">信息收集方法、区别及作用</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-2">信息收集的具体实施方法</a><ul><li><a href="https://www.freebuf.com/articles/web/215182.html#i-3">子域名收集</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#waf">防火墙(waf)识别</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-4">端口服务收集</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#cip">C段IP信息收集</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-5">旁站信息收集</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-6">敏感目录/文件收集</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#iis">IIS短文件名枚举</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#github">GitHub信息收集</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-7">网站资产信息探测</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#shodanfofa">shodan、fofa、钟馗之眼信息收集</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#ip">寻找真实IP</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-8">搜索引擎语法</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-9">爬虫分析</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#awvs-web">AWVS web弱点扫描</a></li><li><a href="https://www.freebuf.com/articles/web/215182.html#nessusnbsp">Nessus&nbsp;主机弱点扫描</a></li></ul></li><li><a href="https://www.freebuf.com/articles/web/215182.html#i-10">信息收集总结</a></li></ul>                        </div>
+                    </div></div>
+                </div>
+                
+            </div>
+                </div>
+                        <div class="row marvellous marvellous2 visible-lg-block marvellous-activity" id="marvellous2">
+                    <h3>活动预告</h3>
+                    <ul>
+                                                    <li>
+                                <p class="info">
+                                    <span class="time">6月</span>
+                                                                    </p>
+                                <a class="title" href="https://live.freebuf.com/activity/7f03ebd1302dc46e601510b76c9c4d1f/l_e0e21d71ebe4b235637b3f125b7af4fc" target="_blank" title="HTTPS在互联网安全领域的应用与实践">HTTPS在互联网安全领域的应用与实践</a>
+                                <div class="intro"><b class="btn-status btn-over">已结束</b></div>
+                                                            </li>
+                                                    <li>
+                                <p class="info">
+                                    <span class="time">6月</span>
+                                                                    </p>
+                                <a class="title" href="https://live.freebuf.com/activity/eb981fa6807c1211d0728dd54728225a/l_aea3958ff2d31b22506e6f78166c8147" target="_blank" title="字节跳动「安全范儿」">字节跳动「安全范儿」</a>
+                                <div class="intro"><b class="btn-status btn-over">已结束</b></div>
+                                                            </li>
+                                                    <li>
+                                <p class="info">
+                                    <span class="time">5月</span>
+                                                                    </p>
+                                <a class="title" href="https://live.freebuf.com/detail/313c9d9e27091f2d628e3a388a87c781" target="_blank" title="安全从业者必备职业技能">安全从业者必备职业技能</a>
+                                <div class="intro"><b class="btn-status btn-over">已结束</b></div>
+                                                            </li>
+                                                    <li>
+                                <p class="info">
+                                    <span class="time">5月</span>
+                                                                    </p>
+                                <a class="title" href="https://live.freebuf.com/detail/d1b7e764dfce545168e15f480e53e94e" target="_blank" title="传统SDL已过时 如何用安全基建理念打造新一代泛应用安全体系">传统SDL已过时 如何用安全基建理念打造新一代泛应用安全体系</a>
+                                <div class="intro"><b class="btn-status btn-over">已结束</b></div>
+                                                                    <div class="more"><a class="last-url" href="https://live.freebuf.com/detail/d1b7e764dfce545168e15f480e53e94e" target="_blank"></a><a href="http://www.freebuf.com/activity" target="_blank" class="btn-more"></a></div>
+                                                            </li>
+                                            </ul>
+                </div>
+                </div>
+</div>
+
+<div class="report-bg"></div>
+<div class="course-container" id="report-form">
+        <div class="course-con">
+            <p class="close report-close"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1557046213_5ccea3c5f1ff3.png" alt=""></p>
+            <div class="course-tit01"><h3>填写个人信息</h3></div>
+            <input type="hidden" id="report-id" value="215182">
+            <div class="course-form" data-id="">
+                <div class="form-item clearfix item-input " data-type="1">
+                    <div class="lable-con">姓名</div>
+                    <div class="input-con" data-must="1">
+                        <input type="text" id="form-name" class="form-control" placeholder="" value="">
+                    </div>
+                </div>
+            </div>
+            <div class="course-form" data-id="">
+                <div class="form-item clearfix item-input " data-type="1">
+                    <div class="lable-con">电话</div>
+                    <div class="input-con" data-must="1">
+                        <input type="text" id="form-phone" class="form-control" placeholder="" value="">
+                    </div>
+                </div>
+            </div>
+            <div class="course-form" data-id="">
+                <div class="form-item clearfix item-input " data-type="1">
+                    <div class="lable-con">邮箱</div>
+                    <div class="input-con" data-must="1">
+                        <input type="text" id="form-email" class="form-control" placeholder="" value="">
+                    </div>
+                </div>
+            </div>
+            <div class="course-form" data-id="">
+                <div class="form-item clearfix item-input " data-type="1">
+                    <div class="lable-con">公司</div>
+                    <div class="input-con" data-must="1">
+                        <input type="text" id="form-company" class="form-control" placeholder="" value="">
+                    </div>
+                </div>
+            </div>
+            <div class="course-form" data-id="">
+                <div class="form-item clearfix item-input " data-type="1">
+                    <div class="lable-con">行业</div>
+                    <div class="input-con" data-must="1">
+                        <input type="text" id="form-trade" class="form-control" placeholder="" value="">
+                    </div>
+                </div>
+            </div>
+            <div class="course-form" data-id="">
+                <div class="form-item clearfix item-input " data-type="1">
+                    <div class="lable-con">职位</div>
+                    <div class="input-con" data-must="1">
+                        <input type="text" id="form-job" class="form-control" placeholder="" value="">
+                    </div>
+                </div>
+            </div>
+            <div class="error-tips report-error"></div>
+            <div class="course-btn btn-box"><button type="button" class="btn-success btn-lg btn-round report-submit">提交</button></div>
+        </div>
+    </div>
+<script type="text/javascript">
+  $(window).load(function() {
+    $('#slider').nivoSlider();
+  });
+  // 判断是否显示目录
+  if( jQuery('#my_toc li').length > 0 ){
+  }else{
+      jQuery('#mar-right-menu').hide()
+      jQuery('#mar-right-menu-out').hide()
+  }
+  // 锚点滚到距离顶部80px
+  jQuery('#my_toc a').click(function(){
+        let index = jQuery(this).attr('href');
+        $('html,body').animate({scrollTop:$(''+index+'').offset().top-80},200)
+        return false;
+    });
+  $('#contenttxt img').removeAttr('height');
+  $('#contenttxt img').wrap(function(){
+    if(!$(this).parent().attr('href')){
+      var imgurl = $(this).attr('data-original');
+      if(imgurl.substr(-6)=='!small'){
+        imgurl = imgurl.substring(0,imgurl.length-6);
+      }
+      return '<a href="' + imgurl + '" class="highslide-image" onclick="return hs.expand(this);" target="_blank"></a>';
+    }
+  })
+</script>
+    <script type="text/javascript">
+        getWidth();
+
+        $(window).resize(function () {
+            getWidth();
+        });
+        function getWidth() {
+            var windowWidth = $(window).width();
+            $('#contenttxt iframe').each(function(index) {
+                var src = $(this).attr('src');
+                if (windowWidth < 768) {
+                    $(this).attr('src', src + '&width=270&height=200');
+                } else {
+                    $(this).attr('src', src + '&width=640&height=498');
+                }
+            })
+        }
+        $('.collect-form').on('click',function () {
+            $('#report-form').show();
+            $('.report-bg').show();
+        })
+        $('.report-close').click(function () {
+            $('#report-form').hide();
+            $('.report-bg').hide();
+            $('.report-error').hide();
+        });
+        $(document).on('click', '.report-submit', function () {
+            var token = $("#report-token").val();
+            var name = $('#form-name').val();
+            var id = $('#report-id').val();
+            var email = $('#form-email').val();
+            var phone = $('#form-phone').val();
+            var company = $('#form-company').val();
+            var trade = $('#form-trade').val();
+            var job = $('#form-job').val();
+            var _url = 'https://www.freebuf.com/verify';
+            var _this = window.location.href;
+            var file = $('.dowloadBtn').attr('data-url');
+            if(!name){
+                $('#form-name').focus();
+                $('.report-error').empty().append('姓名不能为空').show();
+                return;
+            }
+            if(!phone){
+                $('#form-phone').focus();
+                $('.report-error').empty().append('电话不能为空').show();
+                return;
+            }
+            if(!email){
+                $('#form-email').focus();
+                $('.report-error').empty().append('邮箱不能为空').show();
+                return;
+            }
+            if(!company){
+                $('#form-company').focus();
+                $('.report-error').empty().append('公司不能为空').show();
+                return;
+            }
+            if(!trade){
+                $('#form-trade').focus();
+                $('.report-error').empty().append('行业不能为空').show();
+                return;
+            }
+            if(!job){
+                $('#form-job').focus();
+                $('.report-error').empty().append('职位不能为空').show();
+                return;
+            }
+            $.ajax({
+                type: "post",
+                url: _url,
+                data: {'token':token,'id':id,'report':name,'email':email,'phone':phone,'company':company,'trade':trade,'job':job,'report_status':1},
+                success: function(data){
+                    if(data.token){
+                        jQuery('#report-token').val(data.token)
+                    }
+                    if(data.code == 200){
+                        if(file){
+                            jQuery('<a href="'+file+'" target="_blank"></a>').appendTo('body').click().remove();
+                        }else {
+                            jQuery('<form action="'+_this+'" method="post" ><input type="text" name="report_download" value="1"></form>').appendTo('body').submit().remove();
+                        }
+                        $('#report-form').hide();
+                        $('.report-bg').hide();
+                    }else{
+                        if(data.msg){
+                            $('.report-error').empty().append(data.msg).show();
+                        }
+                    }
+                }
+            });
+        })
+        $('.download-form').on('click',function () {
+            var _url = window.location.href;
+            var file = $('.dowloadBtn').attr('data-url');
+            if(file){
+                jQuery('<a href="'+file+'" target="_blank"></a>').appendTo('body').click().remove();
+            }else {
+                jQuery('<form action="'+ _url +'" method="post" ><input type="text" name="report_download" value="1"></form>').appendTo('body').submit().remove();
+            }
+        })
+    </script>
+<script src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/comments-ajax.js.下載" type="text/javascript"></script>
+<script type="text/javascript" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/jquery.nivo.slider.pack.js.下載"></script>
+<!----------footer---------->
+<!-- <div class="footer">
+  <div class="container">
+    <div class="footer-list ">
+      <h3>FREEBUF</h3>
+      <ul>
+        <li><a href="http://www.freebuf.com/dis">免责声明</a></li>
+        <li><a href="http://my.freebuf.com/AgreeProtocol/duty">协议条款</a></li>
+        <li><a href="http://www.freebuf.com/news/others/864.html">关于我们</a></li>
+        <li><a href="http://www.freebuf.com/jobs/40386.html">加入我们</a></li>
+      </ul>
+    </div>
+    <div class="footer-list ">
+      <h3>广告及服务</h3>
+      <ul>
+        <li><a target="_blank" href="mailto:root@freebuf.com">寻求报道</a></li>
+        <li><a href="http://www.freebuf.com/advertise">广告合作</a></li>
+        <li><a target="_blank" href="mailto:help@freebuf.com">联系我们</a></li>
+        <li><a href="http://www.freebuf.com/friends">友情链接</a></li>
+      </ul>
+    </div>
+    <div class="footer-list ">
+      <h3>关注我们</h3>
+      <ul>
+        <li><div class="weixin-pannel weixin"><a class="qr" href="javascript:void(0);"><span class="g-icon-qr1">官方微信</span><i></i></a></div></li>
+        <li><a rel="nofollow" target="_blank" href="http://weibo.com/freebuf">新浪微博</a></li>
+        <li><a rel="nofollow" target="_blank" href="http://t.qq.com/freebuf">腾讯微博</a></li>
+        <li><a rel="nofollow" target="_blank" href="http://twitter.com/freebuf">Twitter</a></li>
+      </ul>
+    </div>
+    <div class="footer-list ">
+      <h3>赞助商</h3>
+      <ul>
+        <li style="padding:6px 0 6px;"><a rel="nofollow" target="_blank" href="http://www.aliyun.com/?freebuf"><img src="https://image.3001.net/images/ad/ali.png"></a></li>
+          <li><a rel="nofollow" target="_blank" href="http://www.upyun.com/?freebuf"><img src="https://image.3001.net/images/ad/upyun.png"></a></li>
+        <li style="padding:6px 0 0;"><a rel="nofollow" target="_blank" href="https://www.trustasia.com/?freebuf"><img src="https://image.3001.net/images/ad/ad-yzcx.png"></a></li>
+      </ul>
+    </div>
+    <div class="footer-list ">
+      <ul>
+      </ul>
+    </div>
+    <div class="footer-logo  pull-right"><img src="https://image.3001.net/images/index/freebufrobot_shendanjie.png" ></div>
+  </div>
+  <div class="copyright"><div class="container"><p>Copyright &copy; 2020 WWW.FREEBUF.COM All Rights Reserved <a rel="nofollow" target="_blank" href="http://www.miitbeian.gov.cn">沪ICP备13033796号</a></p><span><a rel="nofollow" target="_blank" href="http://click.aliyun.com/m/1336/?freebuf"><img src="https://image.3001.net/images/new/icon-aly.png"></a></span></div></div>
+</div> -->
+<div class="footer">
+    <div class="container">
+        <div class="footer-left">
+            <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1571712545_5dae6e2131312.png" alt="">
+            <p><span>本站由</span>阿里云 提供计算与安全服务</p>
+            <p>官方QQ群：590717869</p>
+        </div>
+        <div class="footer-center clearfix">
+            <div class="footer-list">
+                <h3>用户服务</h3>
+                <ul>
+                    <li><a target="_blank" href="https://my.freebuf.com/post/edit/">有奖投稿</a></li>
+                    <li><a target="_blank" href="https://zhuanlan.freebuf.com/apply">申请专栏</a></li>
+                    <li><a target="_blank" href="https://www.vulbox.com/bounties/detail-72">提交漏洞</a></li>
+                    <li><a target="_blank" href="https://www.vulbox.com/bounties">参与众测</a></li>
+                    <li><a target="_blank" href="http://shop.freebuf.com/">商城</a></li>
+                </ul>
+            </div>
+            <div class="footer-list">
+                <h3>企业服务</h3>
+                <ul>
+                    <li><a target="_blank" href="https://www.freebuf.com/vip/">甲方会员</a></li>
+                    <li><a target="_blank" href="https://company.freebuf.com/vip/">厂商会员</a></li>
+                    <li><a target="_blank" href="https://company.freebuf.com/">企业空间</a></li>
+                    <li><a target="_blank" href="https://www.vulbox.com/service/src">企业SRC</a></li>
+                    <li><a target="_blank" href="https://www.vulbox.com/">漏洞众测</a></li>
+                    <li><a target="_blank" href="https://www.riskivy.com/">智能安全</a></li>
+                </ul>
+            </div>
+            <div class="footer-list">
+                <h3>合作信息</h3>
+                <ul>
+                    <li><a target="_blank" href="http://freebuf2019.mikecrm.com/B9fQZDt">寻求报道</a></li>
+                    <li><a target="_blank" href="https://www.freebuf.com/advertise">广告投放</a></li>
+                    <li><a target="_blank" href="mailto:help@freebuf.com">联系我们</a></li>
+                    <li><a target="_blank" href="https://www.freebuf.com/friends">友情链接</a></li>
+                </ul>
+            </div>
+            <div class="footer-list">
+                <h3>关于我们</h3>
+                <ul>
+                    <li><a target="_blank" href="https://www.freebuf.com/news/others/864.html">关于我们</a></li>
+                    <li><a target="_blank" href="http://www.freebuf.com/jobs/40386.html">加入我们</a></li>
+                    <li><div class="weixin-pannel weixin"><a class="qr" href="javascript:void(0);"><span class="g-icon-qr1">微信公众号</span><i></i></a></div></li>
+                    <li><a target="_blank" href="http://weibo.com/freebuf">新浪微博</a></li>
+                </ul>
+            </div>
+            <div class="footer-list">
+                <h3>战略伙伴</h3>
+                <ul>
+                    <li style="padding:0px 0 10px;"><a rel="nofollow" target="_blank" href="http://www.aliyun.com/?freebuf"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1571306518_5da83c1686dd9.png"></a></li>
+                    <li style="padding:0px 0 10px;"><a rel="nofollow" target="_blank" href="http://www.upyun.com/?freebuf"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1571310907_5da84d3bbdf2c.png"></a></li>
+                    <li style="padding:0 0 10px;"><a rel="nofollow" target="_blank" href="https://www.trustasia.com/?freebuf"><img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1571306606_5da83c6e8de1c.png"></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-right">
+            <h3>FreeBuf+小程序</h3>
+            <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1561628182_5d148e1668bac.jpg" alt="">
+            <p>扫码把安全装进口袋</p>
+        </div>
+        <div class="foot-mobel">
+            <img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1571712545_5dae6e2131312.png" alt="">
+        </div>
+    </div>
+    <div class="copyright">
+        <div class="container">
+            <ul class="clearfix">
+                <li><a href="https://www.tophant.com/" title="" target="_blank">斗象科技</a></li>
+                <li><a href="https://www.freebuf.com/" title="" target="_blank">FreeBuf</a></li>
+                <li><a href="https://www.vulbox.com/" title="" target="_blank">漏洞盒子</a></li>
+                <li><a href="https://www.riskivy.com/" title="" target="_blank">斗象智能安全平台</a></li>
+                <li><a href="https://www.freebuf.com/dis" title="" target="_blank">免责条款</a></li>
+                <li><a href="http://my.freebuf.com/AgreeProtocol/duty" title="" target="_blank">协议条款</a></li>
+            </ul>
+            <p>Copyright © 2020 WWW.FREEBUF.COM All Rights Reserved <a rel="nofollow" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31011502009321">&nbsp;沪公网安备 31011502009321号<img src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/1578291342_5e12d08ec2379.png" alt="" style="height: 13px;margin-left: 2px;margin-top: -2px;"></a></p>
+        </div>
+    </div>
+</div>
+<div class="bottom_tools" style="bottom: 40px;">
+    <ul>
+        <li class="scroll-up" id="scrollUp" style="display: none;"><a href="javascript:;" title="飞回顶部"></a></li>
+        <li class="fb-tips">
+            <a href="javascript:;" title="意见反馈"></a>
+            <div class="tips-wrap">
+                <div class="item">
+                    <label>反馈内容</label>
+                    <textarea id="feedback-content" placeholder="请留下您对FreeBuf的意见和建议，我们将为您提供更好的产品和服务！"></textarea>
+                </div>
+                <div class="item">
+                    <label>联系方式</label>
+                    <input type="text" id="feedback-contact" placeholder="请输入您的邮箱联系方式">
+                </div>
+                <div class="item">
+                    <div class="star_score">
+                        <a href="javascript:void(0)" data-id="1"></a>
+                        <a href="javascript:void(0)" data-id="2"></a>
+                        <a href="javascript:void(0)" data-id="3"></a>
+                        <a href="javascript:void(0)" data-id="4"></a>
+                        <a href="javascript:void(0)" data-id="5"></a>
+                    </div>
+                    <p class="score-text">可以给我们打个分吗？</p>
+                </div>
+                                <div class="item item-code">
+                    <label>验证码</label>
+                    <input type="text" id="yzm" placeholder="请输入验证码">
+                    <img id="captcha" width="80px" height="30px" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/captcha" onclick="this.src = &#39;/captcha?sid=&#39; + Math.random(); this.blur(); return false">
+                </div>
+                                <div class="btn-wrap">
+                    <a href="javascript:;" class="feedback">提交</a>
+                    <p class="error feedback-error"></p>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<script>
+    $('.star_score > a').click(function() {
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+    });
+    $('.star_score > a').hover(function() {
+        $(this).siblings().removeClass('active');
+    });
+    $(document).on('click', function() {
+        $('.bottom_tools .tips-wrap').hide(500);
+    });
+    $('.bottom_tools ul li.fb-tips').click(function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $(this).find('.tips-wrap').toggle(500);
+    });
+    $('.bottom_tools .tips-wrap').click(function(event) {
+        var evt = evt || event;
+        evt.stopPropagation();
+        $(this).show();
+    });
+    $('.feedback').on('click',function () {
+        var content = $('#feedback-content').val();
+        if(!content){
+            $('#feedback-content').focus();
+            $('.feedback-error').text('反馈内容不能为空！').show();
+            return;
+        }
+        var contact = $('#feedback-contact').val();
+        if(!contact){
+            $('#feedback-contact').focus();
+            $('.feedback-error').text('联系方式不能为空！').show();
+            return;
+        }
+        var score = $('.star_score').children('.active').attr('data-id')
+        if(!score){
+            $('.feedback-error').text('给FreeBuf打个分吧！').show();
+            return;
+        }
+        var yzm = $('#yzm').val();
+        var _url = 'https://www.freebuf.com/verify';
+        $.ajax({
+            type: "post",
+            url: _url,
+            data: {'content':content,'contact':contact,'score':score,'feedback_status':1,'yzm':yzm},
+            success: function (data) {
+                $("#captcha").trigger('click')
+                if(data.code ==200){
+                    layer.open({
+                        title: '系统提示',
+                        btnAlign: 'c',
+                        content: data.msg,
+                        area: '278px',
+                    });
+                }else {
+                    layer.open({
+                        title: '系统提示',
+                        btnAlign: 'c',
+                        content: data.msg,
+                        area: '278px',
+                    });
+                }
+            },
+        })
+    })
+
+    $(document).on('click', '.appeal-wrap-public .appeal-main', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap-public').show();
+    });
+    $(document).on('click', '.appeal-main .close', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap').hide();
+    });
+    $(document).on('click', '.appeal-main .appeal-footer .btn-sure', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap-public').hide();
+    });
+
+    $('.complain').on('click',function () {
+        var _url = 'https://www.freebuf.com/verify';
+        var token = $('#complain_token').val();
+        $.ajax({
+            type: "post",
+            url: _url,
+            data: {'complain_token':token,'complain_status':1},
+            success: function (data) {
+            },
+        })
+    })
+</script>
+
+<!----------footer end----------> 
+<script src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/backtop.js.下載"></script>
+<script type="text/javascript">
+jQuery(function(){	
+	jQuery('.tabPanes ul li').click(function(){
+		jQuery(this).addClass('hit').siblings().removeClass('hit');
+		jQuery('.panesl>div:eq('+jQuery(this).index()+')').show().siblings().hide();	
+	})
+	jQuery('.vulbox-nav').click(function(e) { 
+        e.stopPropagation(); 
+    });  
+})
+</script>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fcc53db168808048541c6735ce30421f5' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/h.js.下載" type="text/javascript"></script>
+<img alt="css.php" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/css.php" width="1" height="1"><script type="text/javascript">
+jQuery(function() {
+    jQuery(".simditor pre").each(function(i, block){
+        hljs.highlightBlock(block);    
+    });
+    hljs.initHighlightingOnLoad();
+});
+</script>
+<script>
+/* <![CDATA[ */
+var rcGlobal = {
+	serverUrl		:'https://www.freebuf.com',
+	infoTemp		:'%REVIEWER% on %POST%',
+	loadingText		:'Loading',
+	noCommentsText	:'No comments',
+	newestText		:'&laquo; 最新',
+	newerText		:'&laquo; 新一点',
+	olderText		:'旧一点 &raquo;',
+	showContent		:'1',
+	external		:'1',
+	avatarSize		:'32',
+	avatarPosition	:'left',
+	anonymous		:'Anonymous'
+};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/wp-recentcomments-jquery.js.下載"></script>
+<script type="text/javascript" src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/front.js.下載"></script>
+
+
+<div class="highslide-container" style="padding: 0px; border: none; margin: 0px; position: absolute; left: 0px; top: 0px; width: 100%; z-index: 1001; direction: ltr;"><a class="highslide-loading" title="点击关闭" href="javascript:;" style="position: absolute; top: -9999px; opacity: 0.75; z-index: 1;">正在加载中...</a><div style="display: none;"></div><div class="highslide-viewport highslide-viewport-size" style="padding: 0px; border: none; margin: 0px; visibility: hidden;"></div><table cellspacing="0" style="padding: 0px; border: none; margin: 0px; visibility: hidden; position: absolute; border-collapse: collapse; width: 0px;"><tbody style="padding: 0px; border: none; margin: 0px;"><tr style="padding: 0px; border: none; margin: 0px; height: auto;"><td style="padding: 0px; border: none; margin: 0px; line-height: 0; font-size: 0px; background: url(&quot;https://www.freebuf.com/buf/plugins/auto-highslide/images/graphics/outlines/rounded-white.png&quot;) 0px 0px; height: 20px; width: 20px;"></td><td style="padding: 0px; border: none; margin: 0px; line-height: 0; font-size: 0px; background: url(&quot;https://www.freebuf.com/buf/plugins/auto-highslide/images/graphics/outlines/rounded-white.png&quot;) 0px -40px; height: 20px; width: 20px;"></td><td style="padding: 0px; border: none; margin: 0px; line-height: 0; font-size: 0px; background: url(&quot;https://www.freebuf.com/buf/plugins/auto-highslide/images/graphics/outlines/rounded-white.png&quot;) -20px 0px; height: 20px; width: 20px;"></td></tr><tr style="padding: 0px; border: none; margin: 0px; height: auto;"><td style="padding: 0px; border: none; margin: 0px; line-height: 0; font-size: 0px; background: url(&quot;https://www.freebuf.com/buf/plugins/auto-highslide/images/graphics/outlines/rounded-white.png&quot;) 0px -80px; height: 20px; width: 20px;"></td><td class="rounded-white highslide-outline" style="padding: 0px; border: none; margin: 0px; position: relative;"></td><td style="padding: 0px; border: none; margin: 0px; line-height: 0; font-size: 0px; background: url(&quot;https://www.freebuf.com/buf/plugins/auto-highslide/images/graphics/outlines/rounded-white.png&quot;) -20px -80px; height: 20px; width: 20px;"></td></tr><tr style="padding: 0px; border: none; margin: 0px; height: auto;"><td style="padding: 0px; border: none; margin: 0px; line-height: 0; font-size: 0px; background: url(&quot;https://www.freebuf.com/buf/plugins/auto-highslide/images/graphics/outlines/rounded-white.png&quot;) 0px -20px; height: 20px; width: 20px;"></td><td style="padding: 0px; border: none; margin: 0px; line-height: 0; font-size: 0px; background: url(&quot;https://www.freebuf.com/buf/plugins/auto-highslide/images/graphics/outlines/rounded-white.png&quot;) 0px -60px; height: 20px; width: 20px;"></td><td style="padding: 0px; border: none; margin: 0px; line-height: 0; font-size: 0px; background: url(&quot;https://www.freebuf.com/buf/plugins/auto-highslide/images/graphics/outlines/rounded-white.png&quot;) -20px -20px; height: 20px; width: 20px;"></td></tr></tbody></table></div><iframe src="./渗透测试第二阶段：信息收集方法原理经验心得 - FreeBuf互联网安全新媒体平台_files/globalstorage.html" style="position: absolute; width: 1px; height: 1px; left: -9999px;"></iframe></body></html>

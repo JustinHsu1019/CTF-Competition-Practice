@@ -1,0 +1,42 @@
+跨目錄讀取文件
+
+../../../../../../../../../../../../../../../../../../../../../../../../flag.php
+
+/etc/passwd/
+
+/
+
+/root/
+
+/var/www/html/
+
+sqlmap {
+
+-r --> POST 加上 * , BP right click download post txt put in sqlmap... ...
+
+--current-db
+
+--is-dba
+
+--sql-shell
+
+--os-shell
+
+}
+
+BP Decoder
+
+GET 請求 默認URL解碼一次
+
+Mime 類型
+
+Content-Type: image/jpeg
+
+tools:
+Github
+經驗
+wechat 公眾號
+
+https://thisislegal.com/
+
+https://www.sojson.com/jsjiemi.html

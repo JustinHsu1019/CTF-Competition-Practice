@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)https://www.ciuvo.com/ciuvo/globalstorage?version=2.1.3 -->
+<html><script type="text/javascript" src="chrome-extension://kajfghlhfkcocafkcjlajldicbikpgnp/catcher.js"><!-- script injected by Request Maker --></script><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><script type="text/javascript" src="chrome-extension://dbjbempljhcmhlfpfacalomonjpalpko/scripts/inspector.js"></script><input type="hidden" id="_w_brink"></head><body>
+    <script type="text/javascript">
+    (function() {
+
+        function migrateCookies(names) {
+            var cookies = document.cookie.split(";");
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                var eqPos = cookie.indexOf("=");
+                var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                if (names.indexOf(name) > -1) {
+                    var value = eqPos > -1 ? cookie.substr(eqPos + 1) : "";
+                    document.cookie = name + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+                    localStorage.setItem(name, value);
+                }
+            }
+        }
+
+        function snoozeCheck(key, localStorage) {
+            // we got no proper partner tag, snooze all?
+            if (key.startsWith('com.ciuvo.') && key.endsWith('-settings')) {
+                //TODO : snooze check
+                try {
+                    var settings = JSON.parse(localStorage.getItem(key));
+                    for (skey in settings) {
+                        if (skey.startsWith('snoozed')) {
+                            var now = new Date(), until = new Date(parseInt(settings[skey]));
+                            if (now < until) {
+                                   console.log("Toolbar is snoozed until: ", until);
+                                return true;
+                            } else {
+                                delete settings[skey];
+                                localStorage.setItem(key, JSON.stringify(settings));
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.log("Could not read settings", e);
+                }
+            }
+            return false;
+        }
+
+        function handleRequest(event) {
+            var data = JSON.parse(event.data),
+                response = {id: data.id, key: data.key};
+
+            switch (data.method) {
+                case "getAll":
+                    response.value = {};
+                    for (var key in localStorage) {
+                        if (snoozeCheck(key, localStorage)) {
+                            return;
+                        } else {
+                            response.value[key] = localStorage.getItem(key);
+                        }
+                    }
+                    break;
+                case "getItem":
+                    response.value = localStorage.getItem(data.key);
+                    break;
+                case "setItem":
+                    localStorage.setItem(data.key, data.value);
+                    break;
+                case "removeItem":
+                    localStorage.removeItem(data.key);
+                    break;
+                case "length":
+                    response.length = localStorage.length;
+                    break;
+                default:
+                    break;
+            }
+            event.source.postMessage(JSON.stringify(response), event.origin);
+        }
+
+        if(window.addEventListener){
+            window.addEventListener("message", handleRequest, false);
+        } else if (window.attachEvent){
+            window.attachEvent("onmessage", handleRequest);
+        }
+        
+    })();
+    </script>
+
+
+</body></html>

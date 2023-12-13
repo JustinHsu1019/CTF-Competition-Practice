@@ -1,0 +1,97 @@
+1 收集域名信息-whois查询
+
+	Whois是啥？
+	whois（读作“Whois”，非缩写）是用来查询域名的IP以及所有者等信息的传输协议。简单说，whois就是一个用来查询域名是否已经被注册，以及注册域名的详细信息的数据库（如域名所有人、域名注册商）。
+
+	注：根据ICANN公布的《通用顶级域名注册数据临时政策细则》和欧盟通用数据保护条例合规要求，全面调整 WHOIS 公开显示的信息。即：注册商提供WHOIS查询公开信息中将不再显示域名注册人、管理联系人和技术联系人的个人数据，包括姓名、邮箱、电话、街道地址等，只会显示注册商及到期日期等。而且该调整已于2018年5月25日开始生效。
+
+	查询途径：
+	1. 爱站工具网（ https://whois.aizhan.com/）
+	2. 站长之家（ http://whois.chinaz.com）
+	3. VirusTotal（ https://www.virustotal.com ）
+
+2 收集域名信息-备案信息查询
+	什么是备案
+	网站备案是根据国家法律法规规定，需要网站的所有者向国家有关部 门申请的 备案，这是国家信息产业部对网站的一种管理，为了防止在网上从事非法的网站经营活动的发生
+
+	注意：主要针对内陆网站，如果网站搭建在其他国家，则不需要进行备案
+	备案查询常用网站：
+	1. ICP备案查询网： http://www.beianbeian.com/
+	2. 天眼查： https://beian.tianyancha.com/
+	3. 站长工具： http://icp.chinaz.com/
+	4. 工业和信息化部： http://www.beian.miit.gov.cn/
+
+
+
+3 收集域名信息-敏感信息收集（Google语法）
+基本技巧：
+	inurl:php?id=1    url存在关键字的网页
+	site:baidu.com    指定域名
+	filetype: pdf     指定文件类型
+	intitle: 大学     网页标题中的关键字
+	intext:后台       网页正文中的关键字
+	
+	组合：
+    Site:edu.cn intext:后台管理
+	
+技巧：intitle:index.of .bash_history
+	title 表示标题
+	index.of 表示包含index.of字段，出现该字段表示网站目录是对我们开放的，我们可以查看到网站目录下的所有文件信息
+	.bash_history 表示我们要筛选的文件名称，也可以替换成其他敏感信息文件，该文件记录了用户的历史命令记录
+	https://www.klsp.co.kr/namucyber/
+	http://45.33.113.141/bmt/
+	• 例：查找mysql的配置文件my.cnf（一般存放MySQL账号 密码）：intitle:index.of my.cnf
+	https://www.artila.com/download/9200/Linux/Utility/mysql-all/mysqld/etc/
+	• 例：查找discuz论坛中存储mysql密码的配置文件config_global.php
+	intitle:index.of config_global.php
+	https://www.andrew.cmu.edu/user//qzhou/discuz/config/
+
+技巧：cache  一些页面被删除了，但还是可以通过cache访问
+
+
+网络摄像头：
+1. Inurl:”CgiStart?page=”
+2. inurl:/view.shtml
+3. intitle:”Live View / – AXIS
+4. inurl:view/view.shtml
+5. inurl:ViewerFrame?Mode=
+6. inurl:ViewerFrame?Mode=Refresh
+7. inurl:axis-cgi/jpg
+8. inurl:axis-cgi/mjpg (motion-JPEG) (disconnected)
+9. inurl:view/indexFrame.shtml
+10. inurl:view/index.shtml
+11. inurl:view/view.shtml
+12. liveapplet
+13. intitle:”live view” intitle:axis
+14. intitle:liveapplet
+15. allintitle:”Network Camera NetworkCamera” (disconnected)
+16. intitle:axis intitle:”video server”
+17. intitle:liveapplet inurl:LvAppl
+18. intitle:”EvoCam” inurl:”webcam.html”
+19. intitle:”Live NetSnap Cam-Server feed”
+20. intitle:”Live View / – AXIS”
+21. inurl:indexFrame.shtml Axis
+
+
+
+
+3 收集域名信息-敏感信息收集（其他）
+	IP地址：ping  
+	网站指纹识别：
+		1. BugScaner：http://whatweb.bugscaner.com/look/
+		2. 云悉指纹：http://www.yunsee.cn/finger.html
+		3. WhatWeb：https://whatweb.net/
+		网站用的可能是同样的CMS，就可以使用该CMS的漏洞  通用漏洞 
+	查看网站容器iis apache nginx：（用上面的网站也可以查到）
+		burp抓包
+	脚本类型：直接看网址 php ，asp
+	查看数据库类型：
+		常见搭配：	asp，aspx=====sql sever，access
+					php ==== mysql，postgreSQL
+					jsp ======= oracle ，mysql
+	
+
+
+
+
+

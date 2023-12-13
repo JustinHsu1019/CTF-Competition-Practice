@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html><head>
+<title>公众号kali整理</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+<!-- base href="file:///C:/Users/BanBooO/Desktop/" -->
+</head>
+<body>
+<p>kali linux web渗透测试手册(第二版) --- 翻译 持续整理ing……
+一共十章，现在在持续整理中，后续都整理完了会弄个PDF版，现在大家先将就着看。</p>
+<h1>目录：</h1>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483733&amp;idx=1&amp;sn=1d757422bb2cbca4baa5f47f8f905ed1&amp;chksm=fcb92343cbceaa559c536ef0ff2470113be8920d2935c5c6f2d55936407dc4a8b9d79e9a3a94#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483733&amp;idx=1&amp;sn=1d757422bb2cbca4baa5f47f8f905ed1&amp;chksm=fcb92343cbceaa559c536ef0ff2470113be8920d2935c5c6f2d55936407dc4a8b9d79e9a3a94#rd</a></p>
+<h1>第一章：</h1>
+<h2>1.1 - 渗透测试环境搭建</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483836&amp;idx=1&amp;sn=3e531c50f04123818d657e22ab7d83b3&amp;chksm=fcb923aacbceaabc93fca0d0aed2861d0eae7a293f63d62c1db4b1e5b492ba66a00055de15ae#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483836&amp;idx=1&amp;sn=3e531c50f04123818d657e22ab7d83b3&amp;chksm=fcb923aacbceaabc93fca0d0aed2861d0eae7a293f63d62c1db4b1e5b492ba66a00055de15ae#rd</a></p>
+<h2>1.2 - Firefox浏览器下安装一些常用的插件</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483845&amp;idx=1&amp;sn=f5b3bdca7a75db9790c8ec9c147c9477&amp;chksm=fcb923d3cbceaac5708cab52256923460ea8714da4546944abfc26109960496db9890788e79b#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483845&amp;idx=1&amp;sn=f5b3bdca7a75db9790c8ec9c147c9477&amp;chksm=fcb923d3cbceaac5708cab52256923460ea8714da4546944abfc26109960496db9890788e79b#rd</a></p>
+<h2>1.3 - 靶机的安装</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483869&amp;idx=1&amp;sn=8bd98ef7e917ac4421dce17db006b33d&amp;chksm=fcb923cbcbceaadd53bad8790e8e7196d4a24edf8edd5e6d4fea5982d1ed264c8946a58c08b1#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483869&amp;idx=1&amp;sn=8bd98ef7e917ac4421dce17db006b33d&amp;chksm=fcb923cbcbceaadd53bad8790e8e7196d4a24edf8edd5e6d4fea5982d1ed264c8946a58c08b1#rd</a></p>
+<h1>第二章：</h1>
+<h2>2.1 - 被动信息收集</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483879&amp;idx=1&amp;sn=fffc2a1a39a06164ec35d7d1c44ad894&amp;chksm=fcb923f1cbceaae7be06d719c3e5256b78de053f5688060d470f432c718b637366053a1fda4c#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483879&amp;idx=1&amp;sn=fffc2a1a39a06164ec35d7d1c44ad894&amp;chksm=fcb923f1cbceaae7be06d719c3e5256b78de053f5688060d470f432c718b637366053a1fda4c#rd</a></p>
+<h2>2.2 - 使用Recon-ng收集信息</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483889&amp;idx=1&amp;sn=dec77a8f633b68bc846b3f6f6c91ab95&amp;chksm=fcb923e7cbceaaf146168f7d4036b56347dca43f81f924eb91e1843a92eb74321b52bb6be04f#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483889&amp;idx=1&amp;sn=dec77a8f633b68bc846b3f6f6c91ab95&amp;chksm=fcb923e7cbceaaf146168f7d4036b56347dca43f81f924eb91e1843a92eb74321b52bb6be04f#rd</a></p>
+<h2>2.3 - 使用Nmap进行扫描和识别应用服务</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483897&amp;idx=1&amp;sn=237f5274aa848706e33110c70d0f28ed&amp;chksm=fcb923efcbceaaf95c93b063441dd91c2ed264858bff73241c78558ed40158150c1aec4a45b5#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483897&amp;idx=1&amp;sn=237f5274aa848706e33110c70d0f28ed&amp;chksm=fcb923efcbceaaf95c93b063441dd91c2ed264858bff73241c78558ed40158150c1aec4a45b5#rd</a></p>
+<h2>2.4 - 识别Web应用防火墙</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483904&amp;idx=1&amp;sn=fd23aa536e316a7d602bd2fe3bb7b0ca&amp;chksm=fcb92016cbcea900e6174bcba8241278bf0b783478e3f7da4bbce12f11368353c99891f2eba8#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483904&amp;idx=1&amp;sn=fd23aa536e316a7d602bd2fe3bb7b0ca&amp;chksm=fcb92016cbcea900e6174bcba8241278bf0b783478e3f7da4bbce12f11368353c99891f2eba8#rd</a></p>
+<h2>2.5 - 识别HTTPS加密参数</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483912&amp;idx=1&amp;sn=b45768a05c21befdf4ab9913e9275b99&amp;chksm=fcb9201ecbcea908c340361ee8da0840c14cbecb77da399840f96a1c0e6e84e0e5da04ea147a#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483912&amp;idx=1&amp;sn=b45768a05c21befdf4ab9913e9275b99&amp;chksm=fcb9201ecbcea908c340361ee8da0840c14cbecb77da399840f96a1c0e6e84e0e5da04ea147a#rd</a></p>
+<h2>2.6 - 使用浏览器自带的开发工具来做基本的分析和修改</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483919&amp;idx=1&amp;sn=81bf654511033dae65582f86c5f5fce0&amp;chksm=fcb92019cbcea90fef85b6c04e08d51f70ecad771261fc89e1d64c1b9bacb4f72123f7f402b5#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483919&amp;idx=1&amp;sn=81bf654511033dae65582f86c5f5fce0&amp;chksm=fcb92019cbcea90fef85b6c04e08d51f70ecad771261fc89e1d64c1b9bacb4f72123f7f402b5#rd</a></p>
+<h2>2.7 - 获取和修改cookie</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483926&amp;idx=1&amp;sn=406cb916dae8fdd6913a170a1bdc9ad7&amp;chksm=fcb92000cbcea916d6785b71579091a061cc487f25ab5378462fc0e1cb9ba5c54282e94e7496#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483926&amp;idx=1&amp;sn=406cb916dae8fdd6913a170a1bdc9ad7&amp;chksm=fcb92000cbcea916d6785b71579091a061cc487f25ab5378462fc0e1cb9ba5c54282e94e7496#rd</a></p>
+<h2>2.8 - 利用robots.txt</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483934&amp;idx=1&amp;sn=fa84e2b4f4e8f17afcdc8467f5d6b1bc&amp;chksm=fcb92008cbcea91e3e2eda4a841330c1507da049fc50436d8013ad88641a6703a4799071ae94#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483934&amp;idx=1&amp;sn=fa84e2b4f4e8f17afcdc8467f5d6b1bc&amp;chksm=fcb92008cbcea91e3e2eda4a841330c1507da049fc50436d8013ad88641a6703a4799071ae94#rd</a></p>
+<h1>第三章</h1>
+<h2>3.1 - 使用DirBuster寻找敏感文件和目录</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483941&amp;idx=1&amp;sn=7293c3782fa9ca1db7ef07a117437e1c&amp;chksm=fcb92033cbcea92504d8b30934b1c9b205f9cc81582027e45d40a851c3a9538862f04d44b0a5#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483941&amp;idx=1&amp;sn=7293c3782fa9ca1db7ef07a117437e1c&amp;chksm=fcb92033cbcea92504d8b30934b1c9b205f9cc81582027e45d40a851c3a9538862f04d44b0a5#rd</a></p>
+<h2>3.2 - 使用ZAP寻找敏感文件和目录</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483950&amp;idx=1&amp;sn=7cf2e2a00e977919aaa7cd078bc0ae54&amp;chksm=fcb92038cbcea92e08de2cd8943dda008a22d17bb09da43b1d91e92e99257088b35e01d6f3ed#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483950&amp;idx=1&amp;sn=7cf2e2a00e977919aaa7cd078bc0ae54&amp;chksm=fcb92038cbcea92e08de2cd8943dda008a22d17bb09da43b1d91e92e99257088b35e01d6f3ed#rd</a></p>
+<h2>3.3 - 使用Burp Suite查看和修改请求</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483964&amp;idx=1&amp;sn=4775eb17517f466d1e1e76c3b1cdab27&amp;chksm=fcb9202acbcea93c7a1b96e8583c6d6e987955d7b4c0fd57024db9d6e8d8c17c056bdb1590c9#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483964&amp;idx=1&amp;sn=4775eb17517f466d1e1e76c3b1cdab27&amp;chksm=fcb9202acbcea93c7a1b96e8583c6d6e987955d7b4c0fd57024db9d6e8d8c17c056bdb1590c9#rd</a></p>
+<h2>3.4 - 使用Burp Suite的Intruder模块发现敏感目录</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483973&amp;idx=1&amp;sn=f5edf1df52b0b31635b291408a56eee2&amp;chksm=fcb92053cbcea945ba9d17a04c3d2a52be52a46d35c241edf2c9379ca0e8cb79b9036fe77a49#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483973&amp;idx=1&amp;sn=f5edf1df52b0b31635b291408a56eee2&amp;chksm=fcb92053cbcea945ba9d17a04c3d2a52be52a46d35c241edf2c9379ca0e8cb79b9036fe77a49#rd</a></p>
+<h2>3.5 - 使用ZAP代理查看和修改请求</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483981&amp;idx=1&amp;sn=c41df061be8c22bed837fc68dbae9222&amp;chksm=fcb9205bcbcea94da5afd907e2ca21fe9320c5e4d0bf78305c6304faf8d9957e69a00f270219#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483981&amp;idx=1&amp;sn=c41df061be8c22bed837fc68dbae9222&amp;chksm=fcb9205bcbcea94da5afd907e2ca21fe9320c5e4d0bf78305c6304faf8d9957e69a00f270219#rd</a></p>
+<h2>3.6 - 使用ZAP的爬虫功能</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483990&amp;idx=1&amp;sn=adca31cc5b0d4dbbe1f2664ff54fb4c3&amp;chksm=fcb92040cbcea95680f2fc90295c2fb0483a8079edda847b355ca4608b31e33c46bfc5aabcef#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483990&amp;idx=1&amp;sn=adca31cc5b0d4dbbe1f2664ff54fb4c3&amp;chksm=fcb92040cbcea95680f2fc90295c2fb0483a8079edda847b355ca4608b31e33c46bfc5aabcef#rd</a></p>
+<h2>3.7 - 使用burp爬取网站页面</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483999&amp;idx=1&amp;sn=7da70265390932b1a3d605d7e4d59b70&amp;chksm=fcb92049cbcea95f36c207af7620c0cc81800d4e42c278ee1b7f4261030eccb9cb4e447e05d1#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247483999&amp;idx=1&amp;sn=7da70265390932b1a3d605d7e4d59b70&amp;chksm=fcb92049cbcea95f36c207af7620c0cc81800d4e42c278ee1b7f4261030eccb9cb4e447e05d1#rd</a></p>
+<h2>3.8 - 使用Burp Suite的重放功能</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484008&amp;idx=1&amp;sn=70ab02ce3b302374917ca01fb5e481e0&amp;chksm=fcb9207ecbcea968dff2e0da8213356a255fcc44888fc90d65209446a5fb4db6024d45dca237#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484008&amp;idx=1&amp;sn=70ab02ce3b302374917ca01fb5e481e0&amp;chksm=fcb9207ecbcea968dff2e0da8213356a255fcc44888fc90d65209446a5fb4db6024d45dca237#rd</a></p>
+<h2>3.9 - WebScarab的使用</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484017&amp;idx=1&amp;sn=36651e013e459e42583891c27713d9e7&amp;chksm=fcb92067cbcea971ca282ab8a3a15bef5b89fe4005b998bb63cb17d42b3359478ed8e5b07155#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484017&amp;idx=1&amp;sn=36651e013e459e42583891c27713d9e7&amp;chksm=fcb92067cbcea971ca282ab8a3a15bef5b89fe4005b998bb63cb17d42b3359478ed8e5b07155#rd</a></p>
+<h2>4.1 - 介绍+用户名枚举</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484036&amp;idx=1&amp;sn=93b2074a6ab95e2deeb4bad7a695fd40&amp;chksm=fcb92092cbcea984a3d3d7d34df85a018e686f19ccbb2214131c5014169d6ae15da9fef44499#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484036&amp;idx=1&amp;sn=93b2074a6ab95e2deeb4bad7a695fd40&amp;chksm=fcb92092cbcea984a3d3d7d34df85a018e686f19ccbb2214131c5014169d6ae15da9fef44499#rd</a></p>
+<h2>4.2- 使用Burp Suite进行登陆页面的字典攻击</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484049&amp;idx=1&amp;sn=347ac4c1a4c507282d4552f9bc6ee8e0&amp;chksm=fcb92087cbcea991992f88f648fc4cfc0d4cff17f075ec9c29f2feb0b6d13086153daaabff70#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484049&amp;idx=1&amp;sn=347ac4c1a4c507282d4552f9bc6ee8e0&amp;chksm=fcb92087cbcea991992f88f648fc4cfc0d4cff17f075ec9c29f2feb0b6d13086153daaabff70#rd</a></p>
+<h2>4.3- 使用Hydra对基本身份验证进行暴力破解攻击</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484073&amp;idx=1&amp;sn=a78e6f35ea48a54c97ff943d8bdb97e1&amp;chksm=fcb920bfcbcea9a952cecd4194f6ea695401530f87e086da3cf8639eae751e9ef25b0b9d2706#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484073&amp;idx=1&amp;sn=a78e6f35ea48a54c97ff943d8bdb97e1&amp;chksm=fcb920bfcbcea9a952cecd4194f6ea695401530f87e086da3cf8639eae751e9ef25b0b9d2706#rd</a></p>
+<h2>4.4- 用metasploit爆破tomcat密码</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484084&amp;idx=1&amp;sn=ff6445a5a47648fade18c8533665655c&amp;chksm=fcb920a2cbcea9b4f9bf04fcf39e89aef1e2dba801e7c606ee8c5857e5a4aafbf97cead9ac8b#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484084&amp;idx=1&amp;sn=ff6445a5a47648fade18c8533665655c&amp;chksm=fcb920a2cbcea9b4f9bf04fcf39e89aef1e2dba801e7c606ee8c5857e5a4aafbf97cead9ac8b#rd</a></p>
+<h2>4.5- 手动识别Cookie中的漏洞</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484091&amp;idx=1&amp;sn=f161d469989dc7dea008617fb4e0825e&amp;chksm=fcb920adcbcea9bb936bc9454164aebbade94c105a21e841b3d6435bd45be54838c47f9a1ccd#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484091&amp;idx=1&amp;sn=f161d469989dc7dea008617fb4e0825e&amp;chksm=fcb920adcbcea9bb936bc9454164aebbade94c105a21e841b3d6435bd45be54838c47f9a1ccd#rd</a></p>
+<h2>4.6- 会话固定攻击漏洞</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484101&amp;idx=1&amp;sn=7db1be7034258d9fdfbd89d26584d9a7&amp;chksm=fcb920d3cbcea9c521030b1069fe66a1fed58dcb481b9f84c79f2f8ef33445f11eb8e336f2b1#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484101&amp;idx=1&amp;sn=7db1be7034258d9fdfbd89d26584d9a7&amp;chksm=fcb920d3cbcea9c521030b1069fe66a1fed58dcb481b9f84c79f2f8ef33445f11eb8e336f2b1#rd</a></p>
+<h2>4.7- 使用Burp Sequencer评估会话标识符的质量</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484114&amp;idx=1&amp;sn=405ff6c5a4314579b8217d9864d951ab&amp;chksm=fcb920c4cbcea9d2837118a4748493697a07f0a83aca090c2463b9877049b54e1f4bf0a0f5ae#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484114&amp;idx=1&amp;sn=405ff6c5a4314579b8217d9864d951ab&amp;chksm=fcb920c4cbcea9d2837118a4748493697a07f0a83aca090c2463b9877049b54e1f4bf0a0f5ae#rd</a></p>
+<h2>4.8- 不安全对象的直接引用</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484123&amp;idx=1&amp;sn=40bc7bb4ed4ba8c581eb011bf62aad2a&amp;chksm=fcb920cdcbcea9dbe0731e3827b8604765a0271e5ba0331ce303cdfc2b24a447873fbd74fd20#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484123&amp;idx=1&amp;sn=40bc7bb4ed4ba8c581eb011bf62aad2a&amp;chksm=fcb920cdcbcea9dbe0731e3827b8604765a0271e5ba0331ce303cdfc2b24a447873fbd74fd20#rd</a></p>
+<h2>4.9- 执行跨站点请求伪造攻击</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484148&amp;idx=2&amp;sn=2ee96b8414044b3a7735d5b18e764c7c&amp;chksm=fcb920e2cbcea9f46328a923e73f28fd64fafe5f28796b3a4eeb3ade2232e1b657dba1b6806f#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484148&amp;idx=2&amp;sn=2ee96b8414044b3a7735d5b18e764c7c&amp;chksm=fcb920e2cbcea9f46328a923e73f28fd64fafe5f28796b3a4eeb3ade2232e1b657dba1b6806f#rd</a></p>
+<h1>第五章：</h1>
+<h2>5.1 - 使用浏览器绕过客户端控制</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484148&amp;idx=1&amp;sn=6b27ae064b4be18b97332997bf34364c&amp;chksm=fcb920e2cbcea9f41d63856c8d6b67d022e389def7025bc2d0bca13c0ad205cb4a878b107d23#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484148&amp;idx=1&amp;sn=6b27ae064b4be18b97332997bf34364c&amp;chksm=fcb920e2cbcea9f41d63856c8d6b67d022e389def7025bc2d0bca13c0ad205cb4a878b107d23#rd</a></p>
+<h2>5.2 - 识别跨站脚本漏洞</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484158&amp;idx=1&amp;sn=f9b7b6929749fc64f5c7b74cdd42673e&amp;chksm=fcb920e8cbcea9fe37b81ea0920f229f1a3a0b5b321c0096689653e47ec275ffd82b7b10cd1c#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484158&amp;idx=1&amp;sn=f9b7b6929749fc64f5c7b74cdd42673e&amp;chksm=fcb920e8cbcea9fe37b81ea0920f229f1a3a0b5b321c0096689653e47ec275ffd82b7b10cd1c#rd</a></p>
+<h2>5.3 - 利用XSS获取Cookie</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484166&amp;idx=1&amp;sn=bb490609177854336173935d35a66f24&amp;chksm=fcb92110cbcea8067bd1ab5d7840a2c56b64d6530a649a5507f378d66ac3b52ca9eb241326db#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484166&amp;idx=1&amp;sn=bb490609177854336173935d35a66f24&amp;chksm=fcb92110cbcea8067bd1ab5d7840a2c56b64d6530a649a5507f378d66ac3b52ca9eb241326db#rd</a></p>
+<h2>5.4 - 利用DOM XSS</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484188&amp;idx=3&amp;sn=fe68a26044297a9c3fac9cacb6022a40&amp;chksm=fcb9210acbcea81ca8b3f8abc647138cab5a75fcd33a8e0b26daff3c8fac152e1d3698cd8830#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484188&amp;idx=3&amp;sn=fe68a26044297a9c3fac9cacb6022a40&amp;chksm=fcb9210acbcea81ca8b3f8abc647138cab5a75fcd33a8e0b26daff3c8fac152e1d3698cd8830#rd</a></p>
+<h2>5.5 - 利用BeEF执行xss攻击</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484188&amp;idx=1&amp;sn=c54518bc9ec2857643edc98d9102b079&amp;chksm=fcb9210acbcea81c3e28bc9eb805dcae197f55af0ba2d7ea01277cfc6ab90d3ef1001f57a316#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484188&amp;idx=1&amp;sn=c54518bc9ec2857643edc98d9102b079&amp;chksm=fcb9210acbcea81c3e28bc9eb805dcae197f55af0ba2d7ea01277cfc6ab90d3ef1001f57a316#rd</a></p>
+<h2>5.6 - 从Web存储中提取信息</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484196&amp;idx=1&amp;sn=fa99e5b9e80ee372c7c19663f08dc46a&amp;chksm=fcb92132cbcea82420ccc32179ec27763087a6f260bae9e95b6aa2c6411f22e5f0c1fe63e9ed#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484196&amp;idx=1&amp;sn=fa99e5b9e80ee372c7c19663f08dc46a&amp;chksm=fcb92132cbcea82420ccc32179ec27763087a6f260bae9e95b6aa2c6411f22e5f0c1fe63e9ed#rd</a></p>
+<h2>5.7 - 使用ZAP测试WebSokets</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484213&amp;idx=1&amp;sn=51fb4e9d4bcb582755a3afa8a7dd9893&amp;chksm=fcb92123cbcea835a2e4f9351d87205f15ea58739182c844346f9ffb4a1d38c3a0e61d81be0a#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484213&amp;idx=1&amp;sn=51fb4e9d4bcb582755a3afa8a7dd9893&amp;chksm=fcb92123cbcea835a2e4f9351d87205f15ea58739182c844346f9ffb4a1d38c3a0e61d81be0a#rd</a></p>
+<h2>5.8 - 使用XSS和Metasploit获取远程shell</h2>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484224&amp;idx=1&amp;sn=f2348cca2d81490dcf05608394b1aa7c&amp;chksm=fcb92156cbcea840cefc68df0462fdf93959ba25713b37d9dd5b667d2afffb74fb9e718c5f87#rd">https://mp.weixin.qq.com/s?__biz=MzU2NTY1NTQxNw==&amp;mid=2247484224&amp;idx=1&amp;sn=f2348cca2d81490dcf05608394b1aa7c&amp;chksm=fcb92156cbcea840cefc68df0462fdf93959ba25713b37d9dd5b667d2afffb74fb9e718c5f87#rd</a></p>
+
+
+
+
+</body></html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) --><SCRIPT Language=VBScript><!--
+
+//--></SCRIPT>

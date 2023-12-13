@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-TW" prefix="og: http://ogp.me/ns#">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="profile" href="https://gmpg.org/xfn/11">
+<title>assets/prettify.css </title>
+<script>document.documentElement.className = document.documentElement.className.replace("no-js","js");</script>
+ <script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+<script>
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+</script>
+
+<script>
+googletag.cmd.push(function() {
+googletag.defineSlot('/109765683/728_Banner', [728, 90], 'div-gpt-ad-1533118052929-0').addService(googletag.pubads());
+googletag.pubads().enableSingleRequest();
+googletag.enableServices();
+});
+</script>
+<script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+<script>
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+</script>
+
+<script>
+googletag.cmd.push(function() {
+googletag.defineSlot('/109765683/300x250', [[300, 75], [300, 100], [300, 250]], 'div-gpt-ad-1533118295286-0').addService(googletag.pubads());
+googletag.pubads().enableSingleRequest();
+googletag.enableServices();
+});
+</script>
+<link rel="canonical" href="https://itread01.com/" />
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+display: inline !important;
+border: none !important;
+box-shadow: none !important;
+height: 1em !important;
+width: 1em !important;
+margin: 0 .07em !important;
+vertical-align: -0.1em !important;
+background: none !important;
+padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='hueman-main-style-css'href='/img/css/main.min.css' type='text/css' media='all' />
+<style id='hueman-main-style-inline-css' type='text/css'>
+body { font-family:'Source Sans Pro', Arial, sans-serif;font-size:1.00rem }@media only screen and (min-width: 720px) {
+.nav > li { font-size:1.00rem; }
+}::selection { background-color: #fca61b; }
+::-moz-selection { background-color: #fca61b; }a,.themeform label .required,#flexslider-featured .flex-direction-nav .flex-next:hover,#flexslider-featured .flex-direction-nav .flex-prev:hover,.post-hover:hover .post-title a,.post-title a:hover,.sidebar.s1 .post-nav li a:hover i,.content .post-nav li a:hover i,.post-related a:hover,.sidebar.s1 .widget_rss ul li a,#footer .widget_rss ul li a,.sidebar.s1 .widget_calendar a,#footer .widget_calendar a,.sidebar.s1 .alx-tab .tab-item-category a,.sidebar.s1 .alx-posts .post-item-category a,.sidebar.s1 .alx-tab li:hover .tab-item-title a,.sidebar.s1 .alx-tab li:hover .tab-item-comment a,.sidebar.s1 .alx-posts li:hover .post-item-title a,#footer .alx-tab .tab-item-category a,#footer .alx-posts .post-item-category a,#footer .alx-tab li:hover .tab-item-title a,#footer .alx-tab li:hover .tab-item-comment a,#footer .alx-posts li:hover .post-item-title a,.comment-tabs li.active a,.comment-awaiting-moderation,.child-menu a:hover,.child-menu .current_page_item > a,.wp-pagenavi a{ color: #fca61b; }.themeform input[type="submit"],.themeform button[type="submit"],.sidebar.s1 .sidebar-top,.sidebar.s1 .sidebar-toggle,#flexslider-featured .flex-control-nav li a.flex-active,.post-tags a:hover,.sidebar.s1 .widget_calendar caption,#footer .widget_calendar caption,.author-bio .bio-avatar:after,.commentlist li.bypostauthor > .comment-body:after,.commentlist li.comment-author-admin > .comment-body:after{ background-color: #fca61b; }.post-format .format-container { border-color: #fca61b; }.sidebar.s1 .alx-tabs-nav li.active a,#footer .alx-tabs-nav li.active a,.comment-tabs li.active a,.wp-pagenavi a:hover,.wp-pagenavi a:active,.wp-pagenavi span.current{ border-bottom-color: #fca61b!important; }.sidebar.s2 .post-nav li a:hover i,
+.sidebar.s2 .widget_rss ul li a,
+.sidebar.s2 .widget_calendar a,
+.sidebar.s2 .alx-tab .tab-item-category a,
+.sidebar.s2 .alx-posts .post-item-category a,
+.sidebar.s2 .alx-tab li:hover .tab-item-title a,
+.sidebar.s2 .alx-tab li:hover .tab-item-comment a,
+.sidebar.s2 .alx-posts li:hover .post-item-title a { color: #3bcfe2; }
+.sidebar.s2 .sidebar-top,.sidebar.s2 .sidebar-toggle,.post-comments,.jp-play-bar,.jp-volume-bar-value,.sidebar.s2 .widget_calendar caption{ background-color: #3bcfe2; }.sidebar.s2 .alx-tabs-nav li.active a { border-bottom-color: #3bcfe2; }
+.post-comments span:before { border-right-color: #3bcfe2; }
+.search-expand,
+#nav-topbar.nav-container { background-color: #303030}@media only screen and (min-width: 720px) {
+#nav-topbar .nav ul { background-color: #303030; }
+}.is-scrolled #header .nav-container.desktop-sticky,
+.is-scrolled #header .search-expand { background-color: #303030; background-color: rgba(48,48,48,0.90) }.is-scrolled .topbar-transparent #nav-topbar.desktop-sticky .nav ul { background-color: #303030; background-color: rgba(48,48,48,0.95) }#header { background-color: #363944; }
+.post-title a{color:#333; font-family:"Microsoft JhengHei,微軟正黑體,arial,sans-serif,Verdana"; font-size:24px; }
+@media only screen and (min-width: 720px) {
+#nav-header .nav ul { background-color: #363944; }
+}
+.is-scrolled #header #nav-mobile { background-color: #454e5c; background-color: rgba(69,78,92,0.90) }body { background-color: #eaeaea; }
+
+.pagination { display: inline-block; padding-left: 0; margin: 20px 0; border-radius: 4px; }
+ .selected { background:#666}
+.pagination li { display: inline; }
+.pagination li a { position: relative; float: left; padding: 6px 12px; margin-left: -1px; line-height: 1.428571429; text-decoration: none; background-color: #fff; border: 1px solid #ddd; }
+.pagination li:first-child a { margin-left: 0; border-bottom-left-radius: 4px; border-top-left-radius: 4px; }
+.pagination li:last-child a { border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
+.pagination li a:hover, .pagination li a:focus { background-color: #eee; }
+.pagination .active a, .pagination .active a:hover, .pagination .active a:focus { z-index: 2; color: #fff; cursor: default; background-color: #428bca; border-color: #428bca; }
+.pagination .disabled a, .pagination .disabled a:hover, .pagination .disabled a:focus { color: #999; cursor: not-allowed; background-color: #fff; border-color: #ddd; }
+.pagination-lg li a { padding: 10px 16px; font-size: 18px; }
+.pagination-sm li a, .pagination-sm li span { padding: 5px 10px; font-size: 12px; }
+</style>
+<link rel='stylesheet' id='hueman-font-awesome-css'href='/img/css/font-awesome.min.css' type='text/css' media='all' />
+<script type='text/javascript'>
+/* <![CDATA[ */
+var monsterinsights_frontend = {"js_events_tracking":"true","is_debug_mode":"false","download_extensions":"","inbound_paths":"","home_url":"https:\/\/hkitblog.com","track_download_as":"event","internal_label":"int","hash_tracking":"false"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='/img/css/js/jquery.js'></script>
+<script type='text/javascript' src='/img/css/js/jquery-migrate.min.js'></script>
+<script type='text/javascript' src='/img/css/js/jquery.flexslider.min.js'></script>
+<meta name="generator" content="WordPress 4.8.2" />
+<style data-context="foundation-flickity-css">/*! Flickity v2.0.2
+http://flickity.metafizzy.co
+---------------------------------------------- */.flickity-enabled{position:relative}.flickity-enabled:focus{outline:0}.flickity-viewport{overflow:hidden;position:relative;height:100%}.flickity-slider{position:absolute;width:100%;height:100%}.flickity-enabled.is-draggable{-webkit-tap-highlight-color:transparent;tap-highlight-color:transparent;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.flickity-enabled.is-draggable .flickity-viewport{cursor:move;cursor:-webkit-grab;cursor:grab}.flickity-enabled.is-draggable .flickity-viewport.is-pointer-down{cursor:-webkit-grabbing;cursor:grabbing}.flickity-prev-next-button{position:absolute;top:50%;width:44px;height:44px;border:none;border-radius:50%;background:#fff;background:hsla(0,0%,100%,.75);cursor:pointer;-webkit-transform:translateY(-50%);transform:translateY(-50%)}.flickity-prev-next-button:hover{background:#fff}.flickity-prev-next-button:focus{outline:0;box-shadow:0 0 0 5px #09F}.flickity-prev-next-button:active{opacity:.6}.flickity-prev-next-button.previous{left:10px}.flickity-prev-next-button.next{right:10px}.flickity-rtl .flickity-prev-next-button.previous{left:auto;right:10px}.flickity-rtl .flickity-prev-next-button.next{right:auto;left:10px}.flickity-prev-next-button:disabled{opacity:.3;cursor:auto}.flickity-prev-next-button svg{position:absolute;left:20%;top:20%;width:60%;height:60%}.flickity-prev-next-button .arrow{fill:#333}.flickity-page-dots{position:absolute;width:100%;bottom:-25px;padding:0;margin:0;list-style:none;text-align:center;line-height:1}.flickity-rtl .flickity-page-dots{direction:rtl}.flickity-page-dots .dot{display:inline-block;width:10px;height:10px;margin:0 8px;background:#333;border-radius:50%;opacity:.25;cursor:pointer}.flickity-page-dots .dot.is-selected{opacity:1}</style><style data-context="foundation-slideout-css">.slideout-menu{position:fixed;left:0;top:0;bottom:0;right:auto;z-index:0;width:256px;overflow-y:auto;-webkit-overflow-scrolling:touch;display:none}.slideout-menu.pushit-right{left:auto;right:0}.slideout-panel{position:relative;z-index:1;will-change:transform}.slideout-open,.slideout-open .slideout-panel,.slideout-open body{overflow:hidden}.slideout-open .slideout-menu{display:block}.pushit{display:none}</style><!--[if lt IE 9]>
+<script src="css/js/html5shiv-printshiv.min.js"></script>
+<script src="css/js/selectivizr.js"></script>
+<![endif]-->
+<style type="text/css">
+.si_captcha_small { width:175px; height:45px; padding-top:10px; padding-bottom:10px; }
+.si_captcha_large { width:250px; height:60px; padding-top:10px; padding-bottom:10px; }
+img#si_image_com { border-style:none; margin:0; padding-right:5px; float:left; }
+img#si_image_reg { border-style:none; margin:0; padding-right:5px; float:left; }
+img#si_image_log { border-style:none; margin:0; padding-right:5px; float:left; }
+img#si_image_side_login { border-style:none; margin:0; padding-right:5px; float:left; }
+img#si_image_checkout { border-style:none; margin:0; padding-right:5px; float:left; }
+img#si_image_jetpack { border-style:none; margin:0; padding-right:5px; float:left; }
+img#si_image_bbpress_topic { border-style:none; margin:0; padding-right:5px; float:left; }
+.si_captcha_refresh { border-style:none; margin:0; vertical-align:bottom; }
+div#si_captcha_input { display:block; padding-top:15px; padding-bottom:5px; }
+label#si_captcha_code_label { margin:0; }
+input#si_captcha_code_input { width:65px; }
+p#si_captcha_code_p { clear: left; padding-top:10px; }
+.si-captcha-jetpack-error { color:#DC3232; }
+</style>
+<!-- end SI CAPTCHA Anti-Spam - login/register form style -->
+<style>.ios7.web-app-mode.has-fixed header{ background-color: rgba(45,53,63,.88);}</style></head>
+<body data-rsssl=1 class="post-template-default single single-post postid-43193 single-format-standard wp-custom-logo col-2cl full-width topbar-enabled header-desktop-sticky header-mobile-sticky chrome">
+<div id="wrapper">
+<header id="header" class="specific-mobile-menu-on one-mobile-menu mobile_menu header-ads-desktop header-ads-mobile topbar-transparent no-header-img">
+<nav class="nav-container group mobile-menu mobile-sticky " id="nav-mobile" data-menu-id="header-1">
+<div class="mobile-title-logo-in-header"><p class="site-title"><a class="custom-logo-link" href="https://www.itread01.com/" rel="home" title="首頁"><img src="https://www.itread01.com/logo.png"></a></p>
+</div>
+<div class="ham__navbar-toggler-two collapsed" title="Menu" aria-expanded="false">
+<div class="ham__navbar-span-wrapper">
+<span class="line line-1"></span>
+<span class="line line-2"></span>
+<span class="line line-3"></span>
+</div>
+</div>
+
+<div class="nav-text"></div>
+<div class="nav-wrap container">
+<ul class="nav container-inner group mobile-search">
+<li>
+<form class="searchform themeform" onSubmit="return searchKw(this)">
+<div>
+<input type="text" name="kw" class="search" onBlur="if(this.value=='')this.value='輸入關鍵字後搜尋';" onFocus="if(this.value=='輸入關鍵字後搜尋')this.value='';" value="輸入關鍵字後搜尋" />
+</div>
+</form>
+<script>function searchKw(c){var b=c.getElementsByTagName("input")[0],a=b.value.replace(/^\s+|\s+$/g,"");a=a.replace(/['"]/g,"");location.href="https://www.itread01.com/search/"+encodeURIComponent(a)+"";return false};</script></li>
+</ul>
+<ul id="menu-top" class="nav container-inner group">
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-290"><a href="/">首頁</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-290"><a href="https://www.itread01.com/%E7%A7%91%E6%8A%80/">科技</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-290"><a href="https://www.itread01.com/info/">程式語言</a></li>
+ 
+</ul></div>
+</nav><!--/#nav-topbar-->
+<nav class="nav-container group desktop-menu desktop-sticky " id="nav-topbar" data-menu-id="header-2">
+<div class="nav-text"></div>
+<div class="topbar-toggle-down">
+<i class="fas fa-angle-double-down" aria-hidden="true" data-toggle="down" title="展開功能表清單"></i>
+<i class="fas fa-angle-double-up" aria-hidden="true" data-toggle="up" title="折疊功能表清單"></i>
+</div>
+<div class="nav-wrap container">
+<ul id="menu-footer" class="nav container-inner group"> 
+<li id="menu-item-1907" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1907"><a href="https://www.itread01.com/" rel="nofollow">首頁</a></li>
+<li id="menu-item-1907" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1907"><a href="/study/mysql-tutorial.html">MySQL教學</a></li>
+<li id="menu-item-1907" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1907"><a href="/t/網站技巧/1/">網站技巧</a></li>
+<li id="menu-item-1907" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1907"><a href="/t/網路程式設計/1/">網路程式設計</a></li>
+<li id="menu-item-1907" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1907"><a href="/t/軟體程式設計/1/">軟體程式設計</a></li>
+<li id="menu-item-1907" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1907"><a href="/t/資料庫/1/">資料庫</a></li>
+<li id="menu-item-1907" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1907"><a href="/t/作業系統/1/">作業系統</a></li>
+<li id="menu-item-1907" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1907"><a href="/t/指令碼專欄/1/">其它</a></li>
+ 
+</ul></div>
+<div id="topbar-header-search" class="container">
+<div class="container-inner">
+<div class="toggle-search"><i class="fas fa-search"></i></div>
+<div class="search-expand">
+<div class="search-expand-inner"><form class="searchform themeform" onSubmit="return searchKw(this)">
+<div>
+<input type="text" class="search" name="kw" onBlur="if(this.value=='')this.value='輸入關鍵字後搜尋';" onFocus="if(this.value=='輸入關鍵字後搜尋')this.value='';" value="輸入關鍵字後搜尋" />
+</div>
+</form></div>
+</div>
+</div><!--/.container-inner-->
+</div><!--/.container-->
+
+</nav><!--/#nav-topbar-->
+<div class="container group">
+<div class="container-inner">
+
+<div class="group pad central-header-zone">
+<div class="logo-tagline-group">
+<p class="site-title"><a class="custom-logo-link" href="https://www.itread01.com/" rel="home" ><img src="https://www.itread01.com/logo.png"></a></p>
+</div>
+
+<div id="header-widgets">
+<div id="custom_html-2" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><!-- /109765683/728_Banner -->
+ </div></div></div><!--/#header-ads-->
+</div>
+<nav class="nav-container group desktop-menu " id="nav-header" data-menu-id="header-3">
+<div class="nav-text"><!-- put your mobile menu text here --></div>
+<div class="nav-wrap container">
+<ul id="menu-top-1" class="nav container-inner group">
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-290"><a href="/">首頁</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-290"><a href="https://www.itread01.com/%E7%A7%91%E6%8A%80/">科技</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-290"><a href="https://www.itread01.com/info/">程式語言</a></li>
+</ul></div>
+</nav><!--/#nav-header-->
+</div><!--/.container-inner-->
+</div><!--/.container-->
+</header><!--/#header-->
+<div class="container" id="page">
+<div class="container-inner">
+<div class="main">
+<div class="main-inner group">
+
+<section class="content">
+<div class="page-title pad group">
+<h2><span class="hu-blog-subheading">assets/prettify.css</span></h2>
+
+</div><!--/.page-title-->
+<div class="pad group">
+<div id="grid-wrapper" class="post-list-standard">
+<article id="post-43193" class="group post-standard grid-item post-43193 post type-post status-publish format-standard has-post-thumbnail hentry category-news tag-stripe tag-32305 tag-32306 tag-4550 tag-5237 tag-31545 tag-6260">
+ <div class="post-inner post-hover">
+<div class="post-thumbnail"><a href="/hkyfxfp.html"><img class="lazyload" src="https://www.itread01.com/images/no.jpg"> </a></div>
+
+<div class="post-content">
+<h2 class="post-title entry-title"><a href="/hkyfxfp.html">《三分鐘閱讀》CSS對話方塊小尾巴的覆盤之旅</a></h2>
+<div class="post-meta group">
+<p class="post-category"><a href="" rel="category tag">稀土掘金</a></p>
+<p class="post-date"><time class="published updated" >2019-05-15 22:18:47</time></p> 
+</div>
+<div class="entry excerpt entry-summary">
+<p> 
+
+
+
+ 對話方塊小尾巴，估計大家在實際開發中應該經常遇到過，省事點的就是叫設計小姐姐給切個帶小尾巴的背景圖，那不省事的呢？ 
+ 邊框的魔法 
+ 在css3出來之前，若通過css來實現小尾巴效果，可能</p>
+</div>
+</div>
+</div>
+</article>
+ <article id="post-43193" class="group post-standard grid-item post-43193 post type-post status-publish format-standard has-post-thumbnail hentry category-news tag-stripe tag-32305 tag-32306 tag-4550 tag-5237 tag-31545 tag-6260">
+ <div class="post-inner post-hover">
+<div class="post-thumbnail"><a href="/hkyeqcq.html"><img class="lazyload" src="https://images.itread01.com/20190513/d8db192774bb7eb0a7007df53acb3f02.jpg"> </a></div>
+
+<div class="post-content">
+<h2 class="post-title entry-title"><a href="/hkyeqcq.html">CSS 聖盃佈局 / 雙飛翼佈局的實現</a></h2>
+<div class="post-meta group">
+<p class="post-category"><a href="" rel="category tag">簡書</a></p>
+<p class="post-date"><time class="published updated" >2019-05-13 12:20:01</time></p> 
+</div>
+<div class="entry excerpt entry-summary">
+<p> 
+ 工作的越久，有些基礎知識我們可能就逐漸淡忘了，今天我們來回顧一下css的聖盃佈局和雙飛翼佈局， 
+ 這兩個名詞你可能不熟， 那三欄佈局你肯定就非常熟悉了， 
+ 就是兩邊定寬， 中間自適應 的 佈局 
+ 1 ， </p>
+</div>
+</div>
+</div>
+</article>
+ <article id="post-43193" class="group post-standard grid-item post-43193 post type-post status-publish format-standard has-post-thumbnail hentry category-news tag-stripe tag-32305 tag-32306 tag-4550 tag-5237 tag-31545 tag-6260">
+ <div class="post-inner post-hover">
+<div class="post-thumbnail"><a href="/hkyelqe.html"><img class="lazyload" src="https://www.itread01.com/images/no.jpg"> </a></div>
+
+<div class="post-content">
+<h2 class="post-title entry-title"><a href="/hkyelqe.html">CSS之定位和堆疊屬性</a></h2>
+<div class="post-meta group">
+<p class="post-category"><a href="" rel="category tag"></a></p>
+<p class="post-date"><time class="published updated" >2019-05-12 23:38:29</time></p> 
+</div>
+<div class="entry excerpt entry-summary">
+<p>
+CSS之定位:
+定位有：
+
+絕對定位
+相對定位
+固定定位
+
+絕對定位：
+屬性：position屬性值：absolute
+相對定位：
+屬性：position屬性</p>
+</div>
+</div>
+</div>
+</article>
+ <article id="post-43193" class="group post-standard grid-item post-43193 post type-post status-publish format-standard has-post-thumbnail hentry category-news tag-stripe tag-32305 tag-32306 tag-4550 tag-5237 tag-31545 tag-6260">
+ <div class="post-inner post-hover">
+<div class="post-thumbnail"><a href="/hkyepec.html"><img class="lazyload" src="https://www.itread01.com/images/no.jpg"> </a></div>
+
+<div class="post-content">
+<h2 class="post-title entry-title"><a href="/hkyepec.html">Font-Awesome</a></h2>
+<div class="post-meta group">
+<p class="post-category"><a href="" rel="category tag">SegmentFault部落格</a></p>
+<p class="post-date"><time class="published updated" >2019-05-11 15:34:26</time></p> 
+</div>
+<div class="entry excerpt entry-summary">
+<p> 
+ Font-Awesome（一套絕佳的圖示字型庫和CSS框架） 
+ 它跟阿里向量庫不同的是：他不需要引入一些繁瑣的檔案。只需要幾個命令就可以直接使用icon圖示 
+ 方法一 : css匯入 
+ &lt;link </p>
+</div>
+</div>
+</div>
+</article>
+ <article id="post-43193" class="group post-standard grid-item post-43193 post type-post status-publish format-standard has-post-thumbnail hentry category-news tag-stripe tag-32305 tag-32306 tag-4550 tag-5237 tag-31545 tag-6260">
+ <div class="post-inner post-hover">
+<div class="post-thumbnail"><a href="/hkycxyhk.html"><img class="lazyload" src="https://images.itread01.com/20190511/9c7080d03175525e7c679e47c5e2ad88.jpg"> </a></div>
+
+<div class="post-content">
+<h2 class="post-title entry-title"><a href="/hkycxyhk.html">10個有趣的javascript和css庫（2019年最新）</a></h2>
+<div class="post-meta group">
+<p class="post-category"><a href="" rel="category tag">SegmentFault部落格</a></p>
+<p class="post-date"><time class="published updated" >2019-05-11 12:34:24</time></p> 
+</div>
+<div class="entry excerpt entry-summary">
+<p> 
+ 我們的使命是讓您瞭解最新和最酷的Web開發趨勢。這就是為什麼我們每個月都會發布一些精選的資源，這些資源是我們偶然發現並認為值得您關注的。 
+
+1.Cube.js
+ 強大的開源框架，用於開發複</p>
+</div>
+</div>
+</div>
+</article>
+ <article id="post-43193" class="group post-standard grid-item post-43193 post type-post status-publish format-standard has-post-thumbnail hentry category-news tag-stripe tag-32305 tag-32306 tag-4550 tag-5237 tag-31545 tag-6260">
+ <div class="post-inner post-hover">
+<div class="post-thumbnail"><a href="/hkycilq.html"><img class="lazyload" src="https://images.itread01.com/20190510/4c15978f67a90ada9cc28a6e0f9815d4.jpg"> </a></div>
+
+<div class="post-content">
+<h2 class="post-title entry-title"><a href="/hkycilq.html">CSS基礎知識(一)</a></h2>
+<div class="post-meta group">
+<p class="post-category"><a href="" rel="category tag"></a></p>
+<p class="post-date"><time class="published updated" >2019-05-10 23:41:05</time></p> 
+</div>
+<div class="entry excerpt entry-summary">
+<p> 
+ 一、什麼是CSS 
+
+CSS全稱為層疊樣式表(Cascading Style Sheets)，通常又稱為風格樣式表(Style Sheets)，它是用來進行網頁設計的；
+在網頁製作時採用CS</p>
+</div>
+</div>
+</div>
+</article>
+ <article id="post-43193" class="group post-standard grid-item post-43193 post type-post status-publish format-standard has-post-thumbnail hentry category-news tag-stripe tag-32305 tag-32306 tag-4550 tag-5237 tag-31545 tag-6260">
+ <div class="post-inner post-hover">
+<div class="post-thumbnail"><a href="/hkycief.html"><img class="lazyload" src="https://www.itread01.com/images/no.jpg"> </a></div>
+
+<div class="post-content">
+<h2 class="post-title entry-title"><a href="/hkycief.html">CSS裡的BFC和IFC的用法</a></h2>
+<div class="post-meta group">
+<p class="post-category"><a href="" rel="category tag">SegmentFault部落格</a></p>
+<p class="post-date"><time class="published updated" >2019-05-11 00:34:30</time></p> 
+</div>
+<div class="entry excerpt entry-summary">
+<p>
+
+一、BFC
+Block Formatting Contexts (BFC，塊級格式化上下文)，就是 一個塊級元素 的渲染顯示規則。
+（可以把 BFC 理解為一個封閉的大箱子，容器裡面的子元素不會影</p>
+</div>
+</div>
+</div>
+</article>
+ <article id="post-43193" class="group post-standard grid-item post-43193 post type-post status-publish format-standard has-post-thumbnail hentry category-news tag-stripe tag-32305 tag-32306 tag-4550 tag-5237 tag-31545 tag-6260">
+ <div class="post-inner post-hover">
+<div class="post-thumbnail"><a href="/hkycqpy.html"><img class="lazyload" src="https://images.itread01.com/20190510/901640373478bff04086406a9ca84e25.jpg"> </a></div>
+
+<div class="post-content">
+<h2 class="post-title entry-title"><a href="/hkycqpy.html">奇舞週刊第 305 期：Web 技術的現在與未來</a></h2>
+<div class="post-meta group">
+<p class="post-category"><a href="" rel="category tag">奇舞週刊</a></p>
+<p class="post-date"><time class="published updated" >2019-05-10 19:06:17</time></p> 
+</div>
+<div class="entry excerpt entry-summary">
+<p> 
+
+記得點選文章末尾的“ 閱讀原文 ”檢視喲~
+下面先一起看下本期週刊 摘要 吧~
+ 週末愉快~ 
+
+奇舞推薦
+■   ■   ■
+ W3C 新技術彙總：</p>
+</div>
+</div>
+</div>
+</article>
+ <article id="post-43193" class="group post-standard grid-item post-43193 post type-post status-publish format-standard has-post-thumbnail hentry category-news tag-stripe tag-32305 tag-32306 tag-4550 tag-5237 tag-31545 tag-6260">
+ <div class="post-inner post-hover">
+<div class="post-thumbnail"><a href="/hkycyhky.html"><img class="lazyload" src="https://www.itread01.com/images/no.jpg"> </a></div>
+
+<div class="post-content">
+<h2 class="post-title entry-title"><a href="/hkycyhky.html">前端面試會遇到的問題</a></h2>
+<div class="post-meta group">
+<p class="post-category"><a href="" rel="category tag">簡書</a></p>
+<p class="post-date"><time class="published updated" >2019-05-10 16:15:38</time></p> 
+</div>
+<div class="entry excerpt entry-summary">
+<p>
+前端考察內容比較廣泛，大概分為四類：
+1.初級：html，css，js基礎。
+考察基本的佈局，html5和 css3 常用特性。js會考一些基本型別，語言特性之類。
+2.中級：會上升</p>
+</div>
+</div>
+</div>
+</article>
+ <article id="post-43193" class="group post-standard grid-item post-43193 post type-post status-publish format-standard has-post-thumbnail hentry category-news tag-stripe tag-32305 tag-32306 tag-4550 tag-5237 tag-31545 tag-6260">
+ <div class="post-inner post-hover">
+<div class="post-thumbnail"><a href="/hkycpip.html"><img class="lazyload" src="https://www.itread01.com/images/no.jpg"> </a></div>
+
+<div class="post-content">
+<h2 class="post-title entry-title"><a href="/hkycpip.html">實現點選按鈕後CSS載入效果</a></h2>
+<div class="post-meta group">
+<p class="post-category"><a href="" rel="category tag">SegmentFault部落格</a></p>
+<p class="post-date"><time class="published updated" >2019-05-09 13:34:34</time></p> 
+</div>
+<div class="entry excerpt entry-summary">
+<p> 
+ 由於自己公司產品裡頭，有個按鈕在點選之後，會有一兩秒的等待時間（寄認證信），因此為了避免點選後一兩秒的載入時間空窗，就做個loading動畫來強化使用者體驗，原本想說直接用張gif來解決，但又想借著這個機會練功</p>
+</div>
+</div>
+</div>
+</article>
+ <article id="post-43193" class="group post-standard grid-item post-43193 post type-post status-publish format-standard has-post-thumbnail hentry category-news tag-stripe tag-32305 tag-32306 tag-4550 tag-5237 tag-31545 tag-6260">
+ <div class="post-inner post-hover">
+<div class="post-thumbnail"><a href="/hkycpcx.html"><img class="lazyload" src="https://www.itread01.com/images/no.jpg"> </a></div>
+
+<div class="post-content">
+<h2 class="post-title entry-title"><a href="/hkycpcx.html">前端效能優化</a></h2>
+<div class="post-meta group">
+<p class="post-category"><a href="" rel="category tag">稀土掘金</a></p>
+<p class="post-date"><time class="published updated" >2019-05-09 11:57:57</time></p> 
+</div>
+<div class="entry excerpt entry-summary">
+<p>
+首先思考 從輸入 URL 到頁面載入完成，發生了什麼？
+
+
+
+DNS 解析
+
+
+
+
+TCP連線
+
+</p>
+</div>
+</div>
+</div>
+</article>
+ <article id="post-43193" class="group post-standard grid-item post-43193 post type-post status-publish format-standard has-post-thumbnail hentry category-news tag-stripe tag-32305 tag-32306 tag-4550 tag-5237 tag-31545 tag-6260">
+ <div class="post-inner post-hover">
+<div class="post-thumbnail"><a href="/hkycpcl.html"><img class="lazyload" src="https://www.itread01.com/images/no.jpg"> </a></div>
+
+<div class="post-content">
+<h2 class="post-title entry-title"><a href="/hkycpcl.html">webpack4-03-生成html、css3字首、babel配置等..</a></h2>
+<div class="post-meta group">
+<p class="post-category"><a href="" rel="category tag">稀土掘金</a></p>
+<p class="post-date"><time class="published updated" >2019-05-09 11:57:52</time></p> 
+</div>
+<div class="entry excerpt entry-summary">
+<p>
+lesson-03
+|- build
+|- webpack-config.js// 配置檔案
+|- dist// 生成打包結果
+|- nod</p>
+</div>
+</div>
+</div>
+</article>
+ <article id="post-43193" class="group post-standard grid-item post-43193 post type-post status-publish format-standard has-post-thumbnail hentry category-news tag-stripe tag-32305 tag-32306 tag-4550 tag-5237 tag-31545 tag-6260">
+ <div class="post-inner post-hover">
+<div class="post-thumbnail"><a href="/hkyhkxlf.html"><img class="lazyload" src="https://images.itread01.com/20190509/ad9d9df076e2594a3db01d44c0bb0fcf.jpg"> </a></div>
+
+<div class="post-content">
+<h2 class="post-title entry-title"><a href="/hkyhkxlf.html">編寫高效的 CSS 選擇器 – CSS魔法</a></h2>
+<div class="post-meta group">
+<p class="post-category"><a href="" rel="category tag">SegmentFault部落格</a></p>
+<p class="post-date"><time class="published updated" >2019-05-09 09:04:30</time></p> 
+</div>
+<div class="entry excerpt entry-summary">
+<p> 
+ 高效的CSS已經不是一個新的話題了，也不是我一個非得重拾的話題，但它卻是我在工作之時，所感興趣的，關注已久的話題。 
+ 有很多人都忘記了，或在簡單的說沒有意識到，CSS在我們手中，既能很高效，也可以變得很低能。</p>
+</div>
+</div>
+</div>
+</article>
+ <article id="post-43193" class="group post-standard grid-item post-43193 post type-post status-publish format-standard has-post-thumbnail hentry category-news tag-stripe tag-32305 tag-32306 tag-4550 tag-5237 tag-31545 tag-6260">
+ <div class="post-inner post-hover">
+<div class="post-thumbnail"><a href="/hkyhkile.html"><img class="lazyload" src="https://www.itread01.com/images/no.jpg"> </a></div>
+
+<div class="post-content">
+<h2 class="post-title entry-title"><a href="/hkyhkile.html">2019“寒冬”前端面試必備（持續更新...）</a></h2>
+<div class="post-meta group">
+<p class="post-category"><a href="" rel="category tag">稀土掘金</a></p>
+<p class="post-date"><time class="published updated" >2019-05-08 22:23:14</time></p> 
+</div>
+<div class="entry excerpt entry-summary">
+<p>
+
+最近也在準備面試，就把前端面試中常考的知識點梳理了出來，為了複習起來更方便，更有針對性，也希望能夠幫到寒冬面試的一些朋友。本文包括 CSS，JS，ES6，瀏覽器，服務端與網路，VUE，HTTP，web</p>
+</div>
+</div>
+</div>
+</article>
+ <article id="post-43193" class="group post-standard grid-item post-43193 post type-post status-publish format-standard has-post-thumbnail hentry category-news tag-stripe tag-32305 tag-32306 tag-4550 tag-5237 tag-31545 tag-6260">
+ <div class="post-inner post-hover">
+<div class="post-thumbnail"><a href="/hkyhkife.html"><img class="lazyload" src="https://images.itread01.com/20190508/e65e9be1badf3f8f2af86be0a0b85ef9.jpg"> </a></div>
+
+<div class="post-content">
+<h2 class="post-title entry-title"><a href="/hkyhkife.html">Filter Effects in Web (1)：CSS filter</a></h2>
+<div class="post-meta group">
+<p class="post-category"><a href="" rel="category tag">奇舞週刊</a></p>
+<p class="post-date"><time class="published updated" >2019-05-08 21:54:25</time></p> 
+</div>
+<div class="entry excerpt entry-summary">
+<p> 
+ 編者按：本文作者高峰，360奇舞團前端工程師，W3C效能工作組/WOT工作組成員。 
+ 過濾器效果可以在元素展示之前對元素的渲染進行處理。它是基於圖片的效果，主要接受0或多個圖片作為輸入，然後指定特定的效果引數</p>
+</div>
+</div>
+</div>
+</article>
+ </div>
+
+<nav class="pagination group">
+<ul class="group">
+<ul class="yiiPager clearfix" id="yw0"><li class="first hidden"><a href="/assets%2Fprettify.css/">&lt;&lt; First</a></li>
+<li class="previous hidden"><a href="/assets%2Fprettify.css/">&lt; Previous</a></li>
+<li class="page selected"><a href="/assets%2Fprettify.css/">1</a></li>
+<li class="page"><a href="/assets%2Fprettify.css/2/">2</a></li>
+<li class="page"><a href="/assets%2Fprettify.css/3/">3</a></li>
+<li class="page"><a href="/assets%2Fprettify.css/4/">4</a></li>
+<li class="page"><a href="/assets%2Fprettify.css/5/">5</a></li>
+<li class="page"><a href="/assets%2Fprettify.css/6/">6</a></li>
+<li class="page"><a href="/assets%2Fprettify.css/7/">7</a></li>
+<li class="page"><a href="/assets%2Fprettify.css/8/">8</a></li>
+<li class="page"><a href="/assets%2Fprettify.css/9/">9</a></li>
+<li class="page"><a href="/assets%2Fprettify.css/10/">10</a></li>
+<li class="next"><a href="/assets%2Fprettify.css/2/">Next &gt;</a></li>
+<li class="last"><a href="/assets%2Fprettify.css/34/">Last &gt;&gt;</a></li></ul></ul>
+</nav><!--/.pagination-->
+
+</div><!--/.pad-->
+</section><!--/.content-->
+
+
+<div class="sidebar s1 collapsed" data-position="right" data-layout="col-2cl" data-sb-id="s1">
+
+<a class="sidebar-toggle" title="延伸側邊欄位"><i class="fas icon-sidebar-toggle"></i></a>
+
+<div class="sidebar-content">
+
+<div class="sidebar-top group">
+<p>贊助商廣告</p>
+
+</div>
+
+
+
+<div id="custom_html-3" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><script type='text/javascript' src='/js/auto.js'></script>
+</div></div> 
+<div id="alxtabs-2" class="widget widget_hu_tabs">
+<ul class="alx-tabs-nav group tab-count-3"><li class="alx-tab tab-recent"><a href="#tab-recent-2" title="熱門文章"><i class="far fa-clock"></i></a></li><li class="alx-tab tab-tags"><a href="#tab-tags-2" title="標籤"><i class="fas fa-star"></i> </a></li></ul>
+<div class="alx-tabs-container">
+<ul id="tab-recent-2" class="alx-tab group">
+<li>
+<div class="tab-item-inner group">
+<p class="tab-item-category"><a href="" rel="category tag">最新資訊</a></p><p class="tab-item-title"><a href="" rel="bookmark" title="港人漸趨手機網購 商家應如何抓緊機遇">港人漸趨手機網購 商家應如何抓緊機遇</a></p>
+<p class="tab-item-date">26 七月, 2018</p></div>
+
+</li> 
+</ul><!--/.alx-tab-->
+
+<ul id="tab-tags-2" class="alx-tab group">
+<li>
+<a href="https://www.itread01.com/android/" class="tag-cloud-link tag-link-9 tag-link-position-1" style="font-size: 12.15625pt;">Android</a> </li>
+</ul><!--/.alx-tab-->
+
+</div>
+</div>
+</div><!--/.sidebar-content-->
+
+</div><!--/.sidebar-->
+
+</div><!--/.main-inner-->
+</div><!--/.main-->
+</div><!--/.container-inner-->
+</div><!--/.container-->
+<footer id="footer">
+<nav class="nav-container group" id="nav-footer" data-menu-id="footer-4" data-menu-scrollable="false">
+<!-- <div class="ham__navbar-toggler collapsed" aria-expanded="false">
+<div class="ham__navbar-span-wrapper">
+<span class="ham-toggler-menu__span"></span>
+</div>
+</div> -->
+<div class="ham__navbar-toggler-two collapsed" title="Menu" aria-expanded="false">
+<div class="ham__navbar-span-wrapper">
+<span class="line line-1"></span>
+<span class="line line-2"></span>
+<span class="line line-3"></span>
+</div>
+</div>
+<div class="nav-text"></div>
+<div class="nav-wrap">
+<ul id="menu-top-2" class="nav container group">
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-290"><a href="/" rel="nofollow">首頁</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-290"><a href="/study/python-tutorial.html" >Python教學</a></li>
+ 
+</ul></div>
+</nav><!--/#nav-footer-->
+
+<section class="container" id="footer-bottom">
+<div class="container-inner">
+
+<a id="back-to-top" href="#"><i class="fas fa-angle-up"></i></a>
+
+<div class="pad group">
+
+<div class="grid one-half">
+
+<div id="copyright">
+<p>ITREAD01.COM &copy; 2018. 版權所有。 </p>
+</div><!--/#copyright-->
+</div>
+</div><!--/.pad-->
+
+</div><!--/.container-inner-->
+</section><!--/.container-->
+
+</footer><!--/#footer-->
+
+</div><!--/#wrapper-->
+
+<!-- Powered by WPtouch: 4.3.27 --><script type='text/javascript' src='/img/css/js/jQuerySharrre.min.js?ver=4.8.2'></script>
+<script type='text/javascript' src='/img/css/js/underscore.min.js?ver=1.8.3'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var HUParams = {"_disabled":[],"SmoothScroll":{"Enabled":true,"Options":{"touchpadSupport":false}},"centerAllImg":"1","timerOnScrollAllBrowsers":"1","extLinksStyle":"1","extLinksTargetExt":"1","extLinksSkipSelectors":{"classes":["btn","button"],"ids":[]},"imgSmartLoadEnabled":"","imgSmartLoadOpts":{"parentSelectors":[".container .content",".container .sidebar","#footer","#header-widgets"],"opts":{"excludeImg":[".tc-holder-img"],"fadeIn_options":100}},"goldenRatio":"1.618","gridGoldenRatioLimit":"350","sbStickyUserSettings":{"desktop":true,"mobile":false},"isWPMobile":"","menuStickyUserSettings":{"desktop":"stick_up","mobile":"stick_up"},"isDevMode":"","ajaxUrl":"https:\/\/www.itread01.com\/?huajax=1","frontNonce":{"id":"HuFrontNonce","handle":"d9125fec3b"},"userStarted":{"with":"with|3.3.27","on":{"date":"2018-03-27 03:41:18.000000","timezone_type":3,"timezone":"UTC"}},"isWelcomeNoteOn":"","welcomeContent":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='/img/css/js/scripts.min.js?ver=3.3.27'></script>
+<script type='text/javascript' src='/img/css/js/wp-embed.min.js?ver=4.8.2'></script>
+
+<!--[if lt IE 9]>
+<script src="/img/css/js/respond.js"></script>
+<![endif]-->
+<div style="display:none"><script type='text/javascript' src='/js/c.js'></script>1593181405.6259</div>
+</body>
+</html>

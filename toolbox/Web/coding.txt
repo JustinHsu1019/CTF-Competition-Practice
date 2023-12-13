@@ -1,0 +1,17 @@
+while True:    
+    try:
+        m = input()
+    except:
+        break
+    mlen_old=len(m)-2
+    mlen=len(m)-1
+    tran=""
+    while(mlen>=0):
+        tran=tran+m[mlen]
+        mlen=mlen-1
+    if(tran[0]==0):
+        while(mlen_old>=0):
+            tran=""
+            tran=tran+m[mlen_old]
+            mlen_old=mlen_old-1
+    print(tran)

