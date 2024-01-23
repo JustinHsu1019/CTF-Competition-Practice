@@ -16,3 +16,7 @@
 ## Assembly
 
 - [Assembly 學習紀錄](https://github.com/JustinHsu1019/Computer-Science-Study-Notes/tree/main/Assembly)
+
+## Crack Me 練習漏洞檔案
+
+- [Crack Me 網址](https://crackmes.one)
