@@ -19,4 +19,4 @@
 
 ## Crack Me 練習漏洞檔案
 
-- [Crack Me](https://crackmes.one)
+- [Crack Me 網址](https://crackmes.one)
