@@ -1,4 +1,13 @@
-# CTF-Competition-Practice
+# Cybersecurity - Penetration Testing and Research
+
+# Vulnerability Reporting Record
+ZeroDay Personal Profile: [https://zeroday.hitcon.org/user/JustinHsu/vulnerability](https://zeroday.hitcon.org/user/JustinHsu/vulnerability)
+
+- **National Chengchi University General Course Search System DES Encryption Key Leakage Vulnerability**
+  - Identified and reported the vulnerability, prompting the university to apply an urgent fix.
+
+- **National Chengchi University - Department of Applied Mathematics Cloud Learning System Password Bypass Vulnerability**
+  - Identified and reported the vulnerability, prompting the university to apply an urgent fix.
 
 ## CTF Competition Preparation - Starting from December 13th, 2023.
 1. During university, solve at least one to two Bugku CTF or XCTF problems daily (Web, Crypto, Misc and Reverse)
